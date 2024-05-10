@@ -72,3 +72,8 @@ button:focus-visible {
   margin: 0;
   box-sizing: border-box;
 }
+input:focus {
+  outline: none !important;
+  border-color: #4d5255;
+  box-shadow: 0 0 10px #d3d3d4;
+}
