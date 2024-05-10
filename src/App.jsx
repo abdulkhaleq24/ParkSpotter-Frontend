@@ -4,8 +4,6 @@ function App() {
   return (
     <div>
       <h1>Welcome to ParkSport application</h1>
-      <h1>Hello Jafor_Sadek</h1>
-      <h1>Hello morshed_ahmeds</h1>
     </div>
   );
 }
