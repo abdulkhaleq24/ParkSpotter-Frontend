@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const Container = styled.div`
   width: 50%;
@@ -6,12 +6,12 @@ export const Container = styled.div`
   border: 1px solid black;
   border-radius: 10px;
   padding: 20px;
-`
+`;
 
 export const Header = styled.h1`
   text-align: center;
   margin-bottom: 10px;
-`
+`;
 
 export const Form = styled.form`
   display: flex;
@@ -38,4 +38,19 @@ export const Form = styled.form`
     background: #fdede8;
     border-radius: 5px;
   }
-`
+`;
+
+export const Loader = styled.div`
+  margintop: 10px;
+  width: 20px;
+  aspect-ratio: 4;
+  background: radial-gradient(circle closest-side, #000 90%, #0000) 0 /
+    calc(100% / 3) 100% space;
+  clip-path: inset(0 100% 0 0);
+  animation: l1 1s steps(4) infinite;
+  @keyframes l1 {
+    to {
+      clip-path: inset(0 -34% 0 0);
+    }
+  }
+`;

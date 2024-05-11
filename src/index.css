@@ -77,3 +77,8 @@ input:focus {
   border-color: #4d5255;
   box-shadow: 0 0 10px #d3d3d4;
 }
+textarea:focus {
+  outline: none !important;
+  border-color: #4d5255;
+  box-shadow: 0 0 10px #d3d3d4;
+}
