@@ -234,7 +234,7 @@
 import { useRef } from "react"
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom"
-import { FormBody, FormContainer, FormHeader } from "../SignIn/SingIn.styles"
+import { FormBody, FormContainer, FormHeader } from "../SignUp/SignUp.styles"
 
 const SignUp = () => {
   const {

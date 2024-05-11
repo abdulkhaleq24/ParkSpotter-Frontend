@@ -1,19 +1,19 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
-export const Container = styled.div`
+export const FormContainer = styled.div`
   width: 50%;
   margin: auto;
   border: 1px solid black;
   border-radius: 10px;
   padding: 20px;
-`
+`;
 
-export const Header = styled.h1`
+export const FormHeader = styled.h1`
   text-align: center;
   margin-bottom: 10px;
-`
+`;
 
-export const Form = styled.form`
+export const FormBody = styled.form`
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -21,13 +21,13 @@ export const Form = styled.form`
   input {
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #cccccc;
+    border: 1px solid #CCCCCC;
   }
 
   input[type="submit"] {
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #cccccc;
+    border: 1px solid #CCCCCC;
     cursor: pointer;
   }
 
@@ -35,7 +35,7 @@ export const Form = styled.form`
     color: red;
     border: 1px solid red;
     padding: 10px;
-    background: #fdede8;
+    background: #FDEDE8;
     border-radius: 5px;
   }
-`
+`;
