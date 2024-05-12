@@ -1,24 +1,115 @@
-import { Link } from "react-router-dom";
+import { useState } from "react"
+import { NavLink } from "react-router-dom"
+import styled from "styled-components"
+import { FiAlignJustify } from "react-icons/fi"
+import { parkSpotterLogo } from "../../../assets/Logo/Logo"
 
-const Header = () => {
+const NavbarContainer = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 91%;
+  margin: auto;
+  height: 80px;
+`
+
+const Logo = styled.div``
+
+const Menu = styled.ul`
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 45px;
+
+  @media (max-width: 768px) {
+    display: ${({ isopen }) => (isopen === "true" ? "flex" : "none")};
+    flex-direction: column;
+    position: absolute;
+    top: 12%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+`
+
+const MenuItem = styled(NavLink)`
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 14px;
+  color: black;
+`
+
+const ToggleButton = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`
+
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen)
+  }
+
+  const user_id = localStorage.getItem("user_id")
+  // console.log(user_id);
+
   return (
-    <div
-      style={{
-        display: "flex",
-        width: "100%",
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
-      <h1>This is Header</h1>
-      <Link to={"/"}>Home</Link>
-      <div style={{ display: "flex", gap: "10px" }}>
-        <Link to={"/login"}>Login</Link>
-        <Link to={"/signup"}>Register</Link>
-        <Link to={"/dashboard"}>Dashboard</Link>
-      </div>
-    </div>
-  );
-};
+    <NavbarContainer>
+      <Logo>
+        <img style={{ width: "50px" }} src={parkSpotterLogo} alt="" />
+      </Logo>
+      <ToggleButton onClick={toggleMenu}>
+        <FiAlignJustify size={"25px"} cursor={"pointer"} />
+      </ToggleButton>
+      <Menu isopen={isOpen.toString()}>
+        <MenuItem to={"/login"}>LogIn</MenuItem>
+      
 
-export default Header;
+        <div>
+          {user_id ? (
+            <>
+              <NavLink to={"/dashboard"}>
+                <button
+                  style={{
+                    padding: "15px 30px ",
+                    fontSize: "18px",
+                    borderRadius: "18px",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  Dashboard
+                </button>
+              </NavLink>
+            </>
+          ) : (
+            <>
+              <NavLink to={"/signup"}>
+                <button
+                  style={{
+                    padding: "15px 30px ",
+                    fontSize: "18px",
+                    borderRadius: "18px",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  Signup 👋
+                </button>
+              </NavLink>
+            </>
+          )}
+        </div>
+      </Menu>
+    </NavbarContainer>
+  )
+}
+
+export default Navbar
