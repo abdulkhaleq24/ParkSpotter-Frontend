@@ -26,6 +26,10 @@ const Home = () => {
       <HappyCarOwnersCounterSection />
       <FeatureSection />
 
+      <ParkBusinesses/>
+      <BusinessQuery/>      
+
+
       <AchivementSection />
 
       <ClientSection />
