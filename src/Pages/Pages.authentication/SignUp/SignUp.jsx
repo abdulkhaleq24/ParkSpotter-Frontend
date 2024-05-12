@@ -55,7 +55,7 @@ const SignUp = () => {
   return (
     <div>
       <Link to={"/"}>
-        <button>Home</button>
+        <button style={{ margin: "10px", padding: "10px" }}>Home</button>
       </Link>
       <FormContainer>
         <FormHeader>Create your account</FormHeader>

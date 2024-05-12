@@ -13,42 +13,47 @@ const SignIn = () => {
     handleSubmit,
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     // console.log(data);
     setLoading(true);
-    fetch("https://parkspottermain.pythonanywhere.com/accounts/user_login/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+
+    try {
+      const response = await fetch(
+        "https://parkspottermain.pythonanywhere.com/accounts/user_login/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.is_staff) {
-          setLoading(false);
-          toast.success("Login successful");
-          navigate("/dashboard");
-          console.log("Success:", data);
-        } else {
-          navigate("/login");
-        }
-      })
-      .catch((error) => {
-        // console.error("Error:", error);
-        toast.error(error);
-      });
+      );
+
+      const responseData = await response.json();
+      console.log(responseData);
+
+      if (responseData.error) {
+        toast.error("Invalid credentials");
+        setLoading(false);
+        throw new Error("Invalid credentials");
+      }
+
+      localStorage.setItem("token", responseData.token);
+      localStorage.setItem("user_id", responseData.user_id);
+
+      navigate("/dashboard");
+      toast.success("Login successful");
+      setLoading(false);
+    } catch (error) {
+      toast.error("Invalid credentials");
+      setLoading(false);
+    }
   };
 
   return (
     <div>
       <Link to={"/"}>
-        <button>Home</button>
+        <button style={{ margin: "10px", padding: "10px" }}>Home</button>
       </Link>
       <Container>
         <Header>Sign in</Header>
