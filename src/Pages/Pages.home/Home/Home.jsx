@@ -9,6 +9,8 @@ import MentionsSection from "./Sections/MentionsSection/MentionsSection.componen
 import HeroSection from "./Sections/HeroSection/HeroSection"
 import HappyCarOwnersCounterSection from "./Sections/HappyCarOwnersCounterSection/HappyCarOwnersCounterSection"
 import FeatureSection from "./Sections/FeatureSection/FeatureSection"
+import ParkBusinesses from "../ParkBusinesses/ParkBusinesses"
+import BusinessQuery from "../BusinessQuery/BusinessQuery"
 
 const Home = () => {
   /*testing reducers and selectors and state*/
