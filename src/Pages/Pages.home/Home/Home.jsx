@@ -6,6 +6,9 @@ import { setCurrentUser } from "../../../store/user/user.reducer"
 import AchivementSection from "./Sections/AchivementSection/AchivementSection.component"
 import ClientSection from "./Sections/ClientsSection/ClientSection.component"
 import MentionsSection from "./Sections/MentionsSection/MentionsSection.component"
+import HeroSection from "./Sections/HeroSection/HeroSection"
+import HappyCarOwnersCounterSection from "./Sections/HappyCarOwnersCounterSection/HappyCarOwnersCounterSection"
+import FeatureSection from "./Sections/FeatureSection/FeatureSection"
 
 const Home = () => {
   /*testing reducers and selectors and state*/
@@ -19,6 +22,10 @@ const Home = () => {
 
   return (
     <>
+      <HeroSection />
+      <HappyCarOwnersCounterSection />
+      <FeatureSection />
+
       <AchivementSection />
 
       <ClientSection />
