@@ -29,7 +29,7 @@ const Home = () => {
       <FeatureSection />
 
       <ParkBusinesses/>
-      <BusinessQuery/>      
+      
 
 
       <AchivementSection />
@@ -37,6 +37,9 @@ const Home = () => {
       <ClientSection />
 
       <MentionsSection />
+
+
+<BusinessQuery/>      
     </>
   )
 }
