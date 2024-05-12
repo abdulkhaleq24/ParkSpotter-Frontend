@@ -11,7 +11,7 @@ const Footer = () => {
     <footer>
       <div className="w-10/12 m-auto grid grid-cols-4">
         <div>
-          <h2>ParkSpotter</h2>
+          <h2 className="text-sky-400/100">ParkSpotter</h2>
           <br />
           <div>
             <ul className="flex space-x-4">
@@ -60,9 +60,11 @@ const Footer = () => {
         </div>
       </div>
       <br />
-      <div style={{ backgroundColor: '#331f6c', padding: '33px 82px 43px 82px', display: 'flex', justifyContent: 'space-between', color: '#ffff' }}>
-        <p>© 2020 Park+. All rights reserved</p>
-        <p>Terms & Conditions | Privacy Policy</p>
+      <div className="bg-[#331f6c] py-8">
+        <div className="w-10/12 m-auto flex justify-between text-white">
+          <p>© 2020 Park+. All rights reserved</p>
+          <p>Terms & Conditions | Privacy Policy</p>
+        </div>
       </div>
     </footer>
   );
