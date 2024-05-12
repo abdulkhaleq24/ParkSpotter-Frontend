@@ -30,16 +30,13 @@ const Home = () => {
 
       <ParkBusinesses/>
       
-
-
       <AchivementSection />
 
       <ClientSection />
 
       <MentionsSection />
 
-
-<BusinessQuery/>      
+      <BusinessQuery/>      
     </>
   )
 }
