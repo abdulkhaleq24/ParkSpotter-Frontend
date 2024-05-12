@@ -1,4 +1,4 @@
-import * as carouselIcons from "../../../../assets/CarouselIcons/CarouselIcons"
+import * as carouselIcons from "../../../../../../assets/CarouselIcons/CarouselIcons"
 
 function SliderCarouselCard() {
   return (
