@@ -18,8 +18,9 @@ function MentionsSection() {
           textAlign: "right",
           position: "absolute",
           left: "5.25em",
-          top: "25px",
+          top: "20px",
           fontSize: "40px",
+          zIndex: "0",
         }}
       >
         <p style={{ fontSize: "80px", fontWeight: "bold" }}>Media Mentions</p>
@@ -36,20 +37,13 @@ function MentionsSection() {
               }}
             >
               <div style={{ gridColumn: "1 / 2", alignSelf: "center" }}>
-                {/* card */}
                 <SliderCarouselCard />
-                {/* card */}
               </div>
 
               <div style={{ gridColumn: "2 / 3" }}>
-                {/* card */}
                 <SliderCarouselCard />
 
-                {/* card */}
-                {/* card */}
                 <SliderCarouselCard />
-
-                {/* card */}
               </div>
             </div>
           </CarouselItem>
@@ -61,19 +55,13 @@ function MentionsSection() {
                 height: "100%",
               }}
             >
-              {/* card */}
-              <SliderCarouselCard />
-
-              {/* card */}
-
-              {/* card */}
               <SliderCarouselCard />
 
               <SliderCarouselCard />
 
               <SliderCarouselCard />
 
-              {/* card */}
+              <SliderCarouselCard />
             </div>
           </CarouselItem>
           <CarouselItem>
@@ -84,23 +72,13 @@ function MentionsSection() {
                 height: "100%",
               }}
             >
-              {/* card */}
               <SliderCarouselCard />
 
-              {/* card */}
-
-              {/* card */}
               <SliderCarouselCard />
 
-              {/* card */}
-              {/* card */}
               <SliderCarouselCard />
 
-              {/* card */}
-              {/* card */}
               <SliderCarouselCard />
-
-              {/* card */}
             </div>
           </CarouselItem>
         </SliderCarousel>

@@ -15,6 +15,8 @@ function SliderCarouselCard() {
         boxShadow:
           "-10px 10px 20px 0 rgba(0, 0, 0, 0.1), 5px 5px 10px 0 rgba(0, 0, 0, 0.08)",
         marginBottom: "30px",
+        zIndex: "99",
+        backgroundColor: "white",
       }}
     >
       <div

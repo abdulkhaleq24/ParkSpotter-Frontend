@@ -10,7 +10,7 @@ export const CarouselContainer = styled.div`
 export const CarouselWrapper = styled.div`
   display: flex;
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); /* Custom cubic bezier for smoother motion */
-  height:800px;
+  height: 800px;
 `
 
 export const CarouselItem = styled.div`
@@ -40,7 +40,7 @@ const SliderCarousel = ({ children }) => {
     const currentPosition = event.touches[0].clientX
     const diff = currentPosition - startPosition
 
-    const sensitivity = 0.002 // Adjust sensitivity for smoother swipe
+    const sensitivity = 0.003 // Adjust sensitivity for smoother swipe
     const newIndex = startIndex - diff * sensitivity
     setStartIndex(newIndex)
     setStartPosition(currentPosition)
@@ -72,7 +72,7 @@ const SliderCarousel = ({ children }) => {
     const currentPosition = event.clientX
     const diff = currentPosition - startPosition
 
-    const sensitivity = 0.002 // Adjust sensitivity for smoother swipe
+    const sensitivity = 0.003 // Adjust sensitivity for smoother swipe
     const newIndex = startIndex - diff * sensitivity
     setStartIndex(newIndex)
     setStartPosition(currentPosition)
