@@ -3,6 +3,13 @@ import { selectCurrentUser } from "../../../store/user/user.selector"
 import { useEffect } from "react"
 import { setCurrentUser } from "../../../store/user/user.reducer"
 
+import AchivementSection from "./Sections/AchivementSection/AchivementSection.component"
+import ClientSection from "./Sections/ClientsSection/ClientSection.component"
+import MentionsSection from "./Sections/MentionsSection/MentionsSection.component"
+import HeroSection from "./Sections/HeroSection/HeroSection"
+import HappyCarOwnersCounterSection from "./Sections/HappyCarOwnersCounterSection/HappyCarOwnersCounterSection"
+import FeatureSection from "./Sections/FeatureSection/FeatureSection"
+
 const Home = () => {
   /*testing reducers and selectors and state*/
   const dispatch = useDispatch()
@@ -14,9 +21,17 @@ const Home = () => {
   /*testing reducers and selectors and state*/
 
   return (
-    <div>
-      <h1>This is home page</h1>
-    </div>
+    <>
+      <HeroSection />
+      <HappyCarOwnersCounterSection />
+      <FeatureSection />
+
+      <AchivementSection />
+
+      <ClientSection />
+
+      <MentionsSection />
+    </>
   )
 }
 
