@@ -1,351 +1,148 @@
+import styled from "styled-components"
 import * as carouselIcons from "../../../../../assets/CarouselIcons/CarouselIcons"
-import Carousel from "./Carousel/Carousel"
-import { CarouselItem } from "./Carousel/Carousel"
+import Carousel, { CarouselItem } from "./Carousel/Carousel"
+
+const SectionContainer = styled.div`
+  background-color: #f6f7fb;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+`
+
+const ClientsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`
+
+const Title = styled.h1`
+  margin-bottom: 10px;
+`
+
+const Subtitle = styled.p`
+  margin-bottom: 30px;
+`
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+`
+
+const ClientItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`
+
+const ClientLogo = styled.img`
+  height: 60px;
+  max-width: 100%;
+  max-height: 100%;
+`
+
+const ClientName = styled.p`
+  margin-top: 10px;
+`
 
 function ClientSection() {
   return (
-    <div
-      style={{
-        backgroundColor: "#f6f7fb",
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexDirection: "column",
-        }}
-      >
-        <h1>Our Clients</h1>
-        <p>We are trusted by some of the best</p>
-      </div>
+    <SectionContainer>
+      <ClientsContainer>
+        <Title>Our Clients</Title>
+        <Subtitle>We are trusted by some of the best</Subtitle>
+      </ClientsContainer>
       <div>
         <Carousel>
           <CarouselItem>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr",
-                gap: "20px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.adobeIcon}
-                  />
-                </div>
-                <p>Adobe</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.atiIcon}
-                  />
-                </div>
-                <p>ATI</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.brandIcon}
-                  />
-                </div>
-                <p>Brilliant</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.caffeineIcon}
-                  />
-                </div>
-                <p>Caffeine</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.huaweiIcon}
-                  />
-                </div>
-                <p>Huawei</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.itunesIcon}
-                  />
-                </div>
-                <p>iTunes</p>
-              </div>
-            </div>
+            <GridContainer>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.adobeIcon} />
+                <ClientName>Adobe</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.atiIcon} />
+                <ClientName>ATI</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.brandIcon} />
+                <ClientName>Brilliant</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.caffeineIcon} />
+                <ClientName>Caffeine</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.huaweiIcon} />
+                <ClientName>Huawei</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.itunesIcon} />
+                <ClientName>iTunes</ClientName>
+              </ClientItem>
+            </GridContainer>
           </CarouselItem>
           <CarouselItem>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr",
-                gap: "20px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.logoIcon}
-                  />
-                </div>
-                <p>Logo</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.pinterestIcon}
-                  />
-                </div>
-                <p>Pinterest</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.mcdonaldsIcon}
-                  />
-                </div>
-                <p>McDonald&lsquo;s</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.unityIcon}
-                  />
-                </div>
-                <p>Unity</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.nikeIcon}
-                  />
-                </div>
-                <p>Nike</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.msnIcon}
-                  />
-                </div>
-                <p>MSN</p>
-              </div>
-            </div>
+            <GridContainer>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.logoIcon} />
+                <ClientName>Logo</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.pinterestIcon} />
+                <ClientName>Pinterest</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.mcdonaldsIcon} />
+                <ClientName>McDonald&lsquo;s</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.unityIcon} />
+                <ClientName>Unity</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.nikeIcon} />
+                <ClientName>Nike</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.msnIcon} />
+                <ClientName>MSN</ClientName>
+              </ClientItem>
+            </GridContainer>
           </CarouselItem>
           <CarouselItem>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr",
-                gap: "20px",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.astrazenecaIcon}
-                  />
-                </div>
-                <p>AstraZeneca</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.telegramIcon}
-                  />
-                </div>
-                <p>Telegram</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.upsIcon}
-                  />
-                </div>
-                <p>UPS</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.enterpriseIcon}
-                  />
-                </div>
-                <p>Enterprise</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.adobeIcon}
-                  />
-                </div>
-                <p>Adobe</p>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <div style={{ height: "60px" }}>
-                  <img
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
-                    src={carouselIcons.atiIcon}
-                  />
-                </div>
-                <p>ATI</p>
-              </div>
-            </div>
+            <GridContainer>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.astrazenecaIcon} />
+                <ClientName>AstraZeneca</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.telegramIcon} />
+                <ClientName>Telegram</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.upsIcon} />
+                <ClientName>UPS</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.enterpriseIcon} />
+                <ClientName>Enterprise</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.adobeIcon} />
+                <ClientName>Adobe</ClientName>
+              </ClientItem>
+              <ClientItem>
+                <ClientLogo src={carouselIcons.atiIcon} />
+                <ClientName>ATI</ClientName>
+              </ClientItem>
+            </GridContainer>
           </CarouselItem>
           {/* Add more CarouselItems as needed */}
         </Carousel>
       </div>
-    </div>
+    </SectionContainer>
   )
 }
 
