@@ -1,90 +1,84 @@
-import SliderCarousel, { CarouselItem } from "./SliderCarousel/SliderCarousel"
-import SliderCarouselCard from "./SliderCarouselCard/SliderCarouselCard.component"
+import styled from 'styled-components';
+import SliderCarousel, { CarouselItem } from "./SliderCarousel/SliderCarousel";
+import SliderCarouselCard from "./SliderCarouselCard/SliderCarouselCard.component";
+
+const MentionsSectionContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+`;
+
+const TitleContainer = styled.div`
+  width: 30%;
+  align-self: baseline;
+  text-align: right;
+  position: absolute;
+  left: 5.25em;
+  top: 20px;
+  font-size: 40px;
+  z-index: 0;
+`;
+
+const Title = styled.p`
+  font-size: 80px;
+  font-weight: bold;
+`;
+
+const ContentContainer = styled.div`
+  width: 70%;
+  z-index: 1;
+`;
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+`;
 
 function MentionsSection() {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        position: "relative",
-      }}
-    >
-      <div
-        style={{
-          width: "30%",
-          alignSelf: "baseline",
-          textAlign: "right",
-          position: "absolute",
-          left: "5.25em",
-          top: "20px",
-          fontSize: "40px",
-          zIndex: "0",
-        }}
-      >
-        <p style={{ fontSize: "80px", fontWeight: "bold" }}>Media Mentions</p>
-      </div>
+    <MentionsSectionContainer>
+      <TitleContainer>
+        <Title>Media Mentions</Title>
+      </TitleContainer>
 
-      <div style={{ width: "70%", zIndex: "1" }}>
+      <ContentContainer>
         <SliderCarousel>
           <CarouselItem>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                height: "100%",
-              }}
-            >
+            <GridContainer>
               <div style={{ gridColumn: "1 / 2", alignSelf: "center" }}>
                 <SliderCarouselCard />
               </div>
 
               <div style={{ gridColumn: "2 / 3" }}>
                 <SliderCarouselCard />
-
                 <SliderCarouselCard />
               </div>
-            </div>
+            </GridContainer>
           </CarouselItem>
+
           <CarouselItem>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                height: "100%",
-              }}
-            >
+            <GridContainer>
               <SliderCarouselCard />
-
               <SliderCarouselCard />
-
               <SliderCarouselCard />
-
               <SliderCarouselCard />
-            </div>
+            </GridContainer>
           </CarouselItem>
+
           <CarouselItem>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                height: "100%",
-              }}
-            >
+            <GridContainer>
               <SliderCarouselCard />
-
               <SliderCarouselCard />
-
               <SliderCarouselCard />
-
               <SliderCarouselCard />
-            </div>
+            </GridContainer>
           </CarouselItem>
         </SliderCarousel>
-      </div>
-    </div>
-  )
+      </ContentContainer>
+    </MentionsSectionContainer>
+  );
 }
 
-export default MentionsSection
+export default MentionsSection;
