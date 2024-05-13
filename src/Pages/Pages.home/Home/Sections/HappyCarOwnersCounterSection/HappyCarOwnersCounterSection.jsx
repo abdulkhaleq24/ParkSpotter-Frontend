@@ -12,7 +12,7 @@ const HappyCarOwnersCounterSection = () => {
                     <div className="w-3/6 grid grid-cols-2 gap-4">
                         <div className="space-y-3">
                             <h3 className="text-3xl text-[#5430bb] font-semibold">6 Million+</h3>
-                            <p>Cars listed on PARK+</p>
+                            <p>Cars listed on ParkSpotter</p>
                         </div>
                         <div className="space-y-3">
                             <h3 className="text-3xl text-[#5430bb] font-semibold">12 Million+</h3>
