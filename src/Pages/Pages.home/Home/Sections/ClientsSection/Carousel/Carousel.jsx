@@ -4,7 +4,7 @@ import styled from "styled-components"
 export const CarouselContainer = styled.div`
   width: 100%;
   overflow: hidden;
-  padding:50px;
+  padding: 50px;
 `
 
 export const CarouselWrapper = styled.div`
@@ -15,8 +15,8 @@ export const CarouselWrapper = styled.div`
 export const CarouselItem = styled.div`
   flex: 0 0 auto;
   width: 100%;
-  height: 200px; /* Adjust height as needed */
- 
+  height: 200px;
+
   box-sizing: border-box;
 `
 

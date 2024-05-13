@@ -13,7 +13,19 @@ const NavbarContainer = styled.nav`
   height: 80px;
 `
 
-const Logo = styled.div``
+const Logo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h1 {
+    font-weight: bold;
+    font-size: 1.94rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.4rem;
+    }
+  }
+`
 
 const Menu = styled.ul`
   list-style: none;
@@ -64,13 +76,13 @@ const Navbar = () => {
     <NavbarContainer>
       <Logo>
         <img style={{ width: "50px" }} src={parkSpotterLogo} alt="" />
+        <h1>ParkSpotter</h1>
       </Logo>
       <ToggleButton onClick={toggleMenu}>
         <FiAlignJustify size={"25px"} cursor={"pointer"} />
       </ToggleButton>
       <Menu isopen={isOpen.toString()}>
         <MenuItem to={"/login"}>LogIn</MenuItem>
-      
 
         <div>
           {user_id ? (

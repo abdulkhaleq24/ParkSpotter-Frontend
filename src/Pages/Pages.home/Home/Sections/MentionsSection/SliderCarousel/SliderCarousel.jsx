@@ -5,19 +5,33 @@ export const CarouselContainer = styled.div`
   width: 100%;
   overflow: hidden;
   padding: 50px;
+
+  @media (max-width: 768px) {
+    padding: 20px;
+  }
 `
 
 export const CarouselWrapper = styled.div`
   display: flex;
-  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); /* Custom cubic bezier for smoother motion */
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   height: 800px;
+  @media (max-width: 768px) {
+    height: auto;
+    flex-wrap: nowrap;
+  }
 `
 
 export const CarouselItem = styled.div`
   flex: 0 0 auto;
   width: 100%;
-  height: 400px; /* Adjust height as needed */
+  height: 400px;
   box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    height: auto;
+    width: 90%; /* Adjust width to show one item at a time */
+    margin-right: 5%; /* Adjust margin to separate items */
+  }
 `
 
 const SliderCarousel = ({ children }) => {
@@ -40,7 +54,7 @@ const SliderCarousel = ({ children }) => {
     const currentPosition = event.touches[0].clientX
     const diff = currentPosition - startPosition
 
-    const sensitivity = 0.003 // Adjust sensitivity for smoother swipe
+    const sensitivity = 0.003
     const newIndex = startIndex - diff * sensitivity
     setStartIndex(newIndex)
     setStartPosition(currentPosition)
@@ -48,8 +62,8 @@ const SliderCarousel = ({ children }) => {
 
   const handleTouchEnd = () => {
     setIsDragging(false)
-    // Add inertia based on the last touch velocity
-    const decelerationRate = 0.7 // Adjust deceleration rate for smoother motion
+
+    const decelerationRate = 0.7
     const timer = setInterval(() => {
       setStartIndex((prevIndex) => {
         const newIndex = prevIndex + velocity
@@ -72,7 +86,7 @@ const SliderCarousel = ({ children }) => {
     const currentPosition = event.clientX
     const diff = currentPosition - startPosition
 
-    const sensitivity = 0.003 // Adjust sensitivity for smoother swipe
+    const sensitivity = 0.003
     const newIndex = startIndex - diff * sensitivity
     setStartIndex(newIndex)
     setStartPosition(currentPosition)
@@ -80,8 +94,8 @@ const SliderCarousel = ({ children }) => {
 
   const handleMouseUp = () => {
     setIsDragging(false)
-    // Add inertia based on the last mouse movement velocity
-    const decelerationRate = 0.7 // Adjust deceleration rate for smoother motion
+
+    const decelerationRate = 0.7
     const timer = setInterval(() => {
       setStartIndex((prevIndex) => {
         const newIndex = prevIndex + velocity
@@ -108,7 +122,7 @@ const SliderCarousel = ({ children }) => {
       ref={containerRef}
     >
       <CarouselWrapper
-        style={{ transform: `translateX(-${startIndex * 90}%)` }} // Adjust multiplier for full-width scrolling
+        style={{ transform: `translateX(-${startIndex * 100}%)` }} // Adjusted to show one item at a time
       >
         {children}
       </CarouselWrapper>
