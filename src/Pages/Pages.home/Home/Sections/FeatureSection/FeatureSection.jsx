@@ -3,7 +3,7 @@ const FeatureSection = () => {
     return (
         <div>
             <div className="w-10/12 m-auto py-16">
-                <h1 className="text-4xl font-bold text-center">More reasons than one to love Park+</h1>
+                <h1 className="text-4xl font-bold text-center">More reasons than one to love ParkSpotter</h1>
                 <div className="grid grid-cols-4 gap-4">
                     <div className="flex flex-col justify-center items-center">
                         <img className="h-24 w-24 my-12" src="./Group_33680_d728cbaf93.webp" alt="..." />

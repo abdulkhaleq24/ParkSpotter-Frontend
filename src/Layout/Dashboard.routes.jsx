@@ -26,7 +26,7 @@ const Dashboard = () => {
             <path d="M4 18h16v-2H4v2zm0-5h16v-2H4v2zm0-7v2h16V6H4z" />
           </MenuIcon>
         </MenuButton>
-        <div style={{ fontWeight: "bold" }}>Dashboard</div>
+        <div style={{ fontWeight: "bold" }}>ParkSpotter Dashboard</div>
         <div style={{ width: "24px" }}></div>
       </Header>
       <Content>
