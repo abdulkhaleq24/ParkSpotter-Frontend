@@ -72,7 +72,7 @@ function SliderCarouselCard() {
         <h1>&quot;</h1>
         <div>
           <TitleContainer>
-            Mooving, Park+ to deploy 2,000 battery swapping stations in Delhi NCR, Mumbai and Bengaluru
+            Mooving, ParkSpotter to deploy 200 battery swapping stations in Delhi NCR, Mumbai and Bengaluru
           </TitleContainer>
           <Description>
             Battery swapping stations will play a pivotal role in expediting the Indian EV adoption rate across India.

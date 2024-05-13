@@ -225,7 +225,7 @@ const ParkBusinesses = () => {
     <Container>
       <ParkBusinessesTitle>
         <h1>
-          Park+ for <br /> Businesses
+          ParkSpotter for <br /> Businesses
         </h1>
         <p>
           Our technology has transformed the tricky traffic movement in parking{" "}
@@ -380,7 +380,7 @@ const ParkBusinesses = () => {
               <ul style={{ marginLeft: "18px" }}>
                 <li>FASTag enabled automatic parking system</li>
                 <li>Automatic number plate recognition system</li>
-                <li>Valet Parking software (Park+ Valet)</li>
+                <li>Valet Parking software (ParkSpotter Valet)</li>
                 <li>Automatic parking guidance system</li>
                 <li>Online bookings for parking</li>
                 <li>Tie ups with EV charging network providers</li>

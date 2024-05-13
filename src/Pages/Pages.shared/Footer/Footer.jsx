@@ -52,8 +52,8 @@ const Footer = () => {
         <div>
           <h4 className="text-2xl font-medium py-3">Reach us</h4>
           <ul className="leading-loose">
-            <li><a className="flex" href="#"> <MdEmail /> <span>support@myparkplus.com</span></a></li>
-            <li><a href="#"> <MdEmail /> sales@myparkplus.com</a></li>
+            <li><a className="flex" href="#"> <MdEmail /> <span>support@myparkspotter.com</span></a></li>
+            <li><a href="#"> <MdEmail /> sales@myparkspotter.com</a></li>
             <li><a href="#"><FaLocationDot /> <span>Unitech Cyber Park, 5th Floor, <br /> Tower A, Sec-39, Gurugram, <br /> Haryana 122022</span></a></li>
 
           </ul>
@@ -62,7 +62,7 @@ const Footer = () => {
       <br />
       <div className="bg-[#331f6c] py-8">
         <div className="w-10/12 m-auto flex justify-between text-white">
-          <p>© 2020 Park+. All rights reserved</p>
+          <p>© 2024 ParkSpotter. All rights reserved</p>
           <p>Terms & Conditions | Privacy Policy</p>
         </div>
       </div>
