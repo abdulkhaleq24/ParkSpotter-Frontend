@@ -12,7 +12,7 @@ import {
 } from "./DashBoardRoutes.styles"
 
 const Dashboard = () => {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(true)
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen)
@@ -26,12 +26,15 @@ const Dashboard = () => {
             <path d="M4 18h16v-2H4v2zm0-5h16v-2H4v2zm0-7v2h16V6H4z" />
           </MenuIcon>
         </MenuButton>
-        <div style={{ fontWeight: "bold" }}>Dashboard</div>
+        <div style={{ fontWeight: "bold" }}>ParkSpotter Dashboard</div>
         <div style={{ width: "24px" }}></div>
       </Header>
       <Content>
         <MenuContainer open={menuOpen}>
           <MenuItem to={"/"}>Home</MenuItem>
+          <MenuItem to={"/dashboard/CreateParkingTicket"}>
+            Create Parking Ticket
+          </MenuItem>
           <MenuItem to={"/dashboard/AvailableParkingSlot"}>
             Available Parking Slot
           </MenuItem>

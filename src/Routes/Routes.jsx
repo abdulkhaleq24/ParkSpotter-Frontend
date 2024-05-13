@@ -6,6 +6,7 @@ import SignUp from "../Pages/Pages.authentication/SignUp/SignUp";
 import DashboardRoutes from "../Layout/Dashboard.routes";
 import AvailableParkingSlot from "../Pages/Pages.dashboard/AvailableParkingSlot/AvailableParkingSlot";
 import UnpaidTickets from "../Pages/Pages.dashboard/UnpaidTickets/UnpaidTickets";
+import CreateTicket from "../Pages/Pages.dashboard/CreateTicket/CreateTicket.component";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
     path: "dashboard",
     element: <DashboardRoutes />,
     children: [
+      {
+        path: "CreateParkingTicket",
+        element: <CreateTicket />,
+      },
       {
         path: "AvailableParkingSlot",
         element: <AvailableParkingSlot />,
