@@ -1,6 +1,6 @@
+import { useState, useEffect } from "react"
 import AchivementSection from "./Sections/AchivementSection/AchivementSection.component"
 import ClientSection from "./Sections/ClientsSection/ClientSection.component"
-
 import HeroSection from "./Sections/HeroSection/HeroSection"
 import HappyCarOwnersCounterSection from "./Sections/HappyCarOwnersCounterSection/HappyCarOwnersCounterSection"
 import FeatureSection from "./Sections/FeatureSection/FeatureSection"
@@ -10,7 +10,19 @@ import MentionsSectionMobileDevice from "./Sections/MentionsSection/MentionsSect
 import MentionsSectionOtherDevices from "./Sections/MentionsSection/MentionsSectionOtherDevices.component"
 
 const Home = () => {
-  const isMobileDevice = window.innerWidth <= 768
+  const [isMobileDevice, setIsMobileDevice] = useState(window.innerWidth <= 768)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileDevice(window.innerWidth <= 768)
+    }
+
+    window.addEventListener("resize", handleResize)
+
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
 
   return <>{isMobileDevice ? <MobileContent /> : <DesktopContent />}</>
 }
@@ -25,7 +37,6 @@ const MobileContent = () => {
       <AchivementSection />
       <ClientSection />
       <MentionsSectionMobileDevice />
-
       <BusinessQuery />
     </>
   )
