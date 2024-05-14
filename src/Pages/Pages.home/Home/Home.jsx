@@ -8,6 +8,7 @@ import ParkBusinesses from "./Sections/ParkBusinesses/ParkBusinesses"
 import BusinessQuery from "./Sections/BusinessQuery/BusinessQuery"
 import MentionsSectionMobileDevice from "./Sections/MentionsSection/MentionsSectionMobileDevice.component"
 import MentionsSectionOtherDevices from "./Sections/MentionsSection/MentionsSectionOtherDevices.component"
+import PaymentForm from "../../../Components/PaymentForm/PaymentForm.component"
 
 const Home = () => {
   const [isMobileDevice, setIsMobileDevice] = useState(window.innerWidth <= 768)
@@ -30,8 +31,10 @@ const Home = () => {
 const MobileContent = () => {
   return (
     <>
+      <PaymentForm />
       <HeroSection />
       <HappyCarOwnersCounterSection />
+
       <FeatureSection />
       <ParkBusinesses />
       <AchivementSection />
@@ -45,6 +48,7 @@ const MobileContent = () => {
 const DesktopContent = () => {
   return (
     <>
+      <PaymentForm />
       <HeroSection />
       <HappyCarOwnersCounterSection />
       <FeatureSection />
