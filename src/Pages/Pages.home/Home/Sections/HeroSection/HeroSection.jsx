@@ -5,7 +5,7 @@ const HeroSection = () => {
         <h1 className="mb-10 text-3xl md:text-4xl font-bold text-center md:text-left md:mb-4 ">
           Everything for your car
         </h1>
-        <p className="mb-2 text-sm md:text-lg pt-2 md:pt-8 font-medium text-center md:text-left">
+        <p className="mb-2 text-lg md:text-lg pt-2 md:pt-8 font-medium text-center md:text-left">
           Begin your car journey with ParkSpotter and say goodbye to all your
           car-related worries - one service at a time
         </p>
