@@ -31,7 +31,6 @@ const Home = () => {
 const MobileContent = () => {
   return (
     <>
-      <PaymentForm />
       <HeroSection />
       <HappyCarOwnersCounterSection />
 
@@ -48,7 +47,6 @@ const MobileContent = () => {
 const DesktopContent = () => {
   return (
     <>
-      <PaymentForm />
       <HeroSection />
       <HappyCarOwnersCounterSection />
       <FeatureSection />
