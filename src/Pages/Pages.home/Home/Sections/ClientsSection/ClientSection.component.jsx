@@ -6,6 +6,10 @@ const SectionContainer = styled.div`
   background-color: #f6f7fb;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
 `
 
 const ClientsContainer = styled.div`
@@ -17,6 +21,9 @@ const ClientsContainer = styled.div`
 
 const Title = styled.h1`
   margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: bold;
+  padding-top:60px
 `
 
 const Subtitle = styled.p`

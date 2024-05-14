@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components";
-import { FaArrowRightLong } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react"
+import styled from "styled-components"
+import { Link } from "react-router-dom"
 
 const Container = styled.div`
   background-color: #f6f7fb;
-`;
+`
 const ParkBusinessesTitle = styled.div`
   width: 85%;
   margin: auto;
@@ -28,24 +27,39 @@ const ParkBusinessesTitle = styled.div`
   @media (max-width: 768px) {
     h1 {
       font-size: 40px;
-      line-height: 40px;
+      line-height: 54px;
     }
     p {
-      line-height: 20px;
+      line-height: 26px;
     }
+    text-align: center;
   }
-`;
+`
 const TabsContainer = styled.div`
   width: 85%;
   margin: auto;
   display: flex;
   gap: 40px;
   border-bottom: 1px solid #b3b3b3;
+  grid-template-column: 1fr 1fr;
+  column-gap: 70px;
 
   @media (max-width: 768px) {
     gap: 10px;
+    display: grid;
+    grid-template-column: 1fr 1fr;
+    column-gap: 10%;
+    border-bottom: none;
   }
-`;
+`
+const TabCoupleContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 70px;
+  @media (max-width: 768px) {
+    column-gap: auto;
+  }
+`
 
 const Tab = styled.div`
   padding: 10px 0px;
@@ -70,20 +84,23 @@ const Tab = styled.div`
   @media (max-width: 768px) {
     font-size: 13px;
     font-weight: 700;
-    line-height: 30px;
+    background-color: #202123;
+    text-align: center;
+    border-radius: 60px;
+    color: ${({ active }) => (active ? "coral" : "#fff")};
   }
-`;
+`
 
 const Content = styled.div`
   margin: 70px 0;
-`;
+`
 
 const ContentBox = styled.div`
   display: flex;
   @media (max-width: 768px) {
     flex-direction: column;
   }
-`;
+`
 
 const ContentImage = styled.div`
   width: 50%;
@@ -94,7 +111,7 @@ const ContentImage = styled.div`
   @media (max-width: 768px) {
     width: 100%;
   }
-`;
+`
 const ContentDescription = styled.div`
   width: 50%;
   padding: 33px;
@@ -132,31 +149,55 @@ const ContentDescription = styled.div`
       font-weight: 600;
       line-height: 22px;
     }
+    text-align: center;
+    background-color: #202123;
   }
-`;
-
+`
 const ContentDescriptionLink = styled(Link)`
   display: flex;
   align-items: center;
   gap: 100px;
   color: white;
-`;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 40px;
+
+    p {
+      font-family: "Roboto", sans-serif;
+      font-weight: 900;
+      font-size: 3em;
+      line-height: 25px;
+      background-color: #fff;
+      border-radius: 40px;
+      padding: 0 16px 7px 16px;
+      color: coral;
+      margin: 0;
+
+      &:hover {
+        color: white;
+        background-color: coral;
+      }
+    }
+  }
+`
 
 const CarouselContainer = styled.div`
   width: 100%;
   overflow: hidden;
   position: relative;
-`;
+`
 
 const SlideWrapper = styled.div`
   display: flex;
   transition: transform 0.5s ease-in-out;
-`;
+`
 
 const Slide = styled.img`
   width: 100%;
   height: auto;
-`;
+`
 
 const BusinessesProblemSolve = styled.div`
   text-align: center;
@@ -180,47 +221,47 @@ const BusinessesProblemSolve = styled.div`
       line-height: 26px;
     }
   }
-`;
+`
 
 const CorporatesImages = [
   "https://parkplus.io/_next/image?url=https%3A%2F%2Fstrapi-file-uploads.s3.ap-south-1.amazonaws.com%2FSoftware_Technology_Park_Gurgaon_1_2_5a107f7fba.jpg&w=1920&q=75",
   "https://parkplus.io/_next/image?url=https%3A%2F%2Fstrapi-file-uploads.s3.ap-south-1.amazonaws.com%2FSoftware_Technology_Park_Gurgaon_1_2_5a107f7fba.jpg&w=1920&q=75",
   "https://parkplus.io/_next/image?url=https%3A%2F%2Fstrapi-file-uploads.s3.ap-south-1.amazonaws.com%2FSoftware_Technology_Park_Gurgaon_1_2_5a107f7fba.jpg&w=1920&q=75",
-];
+]
 const SocietiesImages = [
   "https://parkplus.io/_next/image?url=https%3A%2F%2Fstrapi-file-uploads.s3.ap-south-1.amazonaws.com%2Fglo_car_parking_garage_floor_03_7bfe159128.webp&w=1920&q=75",
   "https://parkplus.io/_next/image?url=https%3A%2F%2Fstrapi-file-uploads.s3.ap-south-1.amazonaws.com%2Fglo_car_parking_garage_floor_03_7bfe159128.webp&w=1920&q=75",
   "https://parkplus.io/_next/image?url=https%3A%2F%2Fstrapi-file-uploads.s3.ap-south-1.amazonaws.com%2Fglo_car_parking_garage_floor_03_7bfe159128.webp&w=1920&q=75",
-];
+]
 const ParkingOwnersImages = [
   "https://parkplus.io/_next/image?url=https%3A%2F%2Fstrapi-file-uploads.s3.ap-south-1.amazonaws.com%2Fback_parking_8d924a1fe6.jpg&w=1920&q=75",
   "https://parkplus.io/_next/image?url=https%3A%2F%2Fstrapi-file-uploads.s3.ap-south-1.amazonaws.com%2Fback_parking_8d924a1fe6.jpg&w=1920&q=75",
   "https://parkplus.io/_next/image?url=https%3A%2F%2Fstrapi-file-uploads.s3.ap-south-1.amazonaws.com%2Fback_parking_8d924a1fe6.jpg&w=1920&q=75",
-];
+]
 const MallsHotelsImages = [
   "https://parkplus.io/_next/image?url=https%3A%2F%2Fstrapi-file-uploads.s3.ap-south-1.amazonaws.com%2F1597042333_Vxc_Np_X_parking_featured_the_tech_portal_aa61e1ab08.jpg&w=1920&q=75",
   "https://parkplus.io/_next/image?url=https%3A%2F%2Fstrapi-file-uploads.s3.ap-south-1.amazonaws.com%2F1597042333_Vxc_Np_X_parking_featured_the_tech_portal_aa61e1ab08.jpg&w=1920&q=75",
   "https://parkplus.io/_next/image?url=https%3A%2F%2Fstrapi-file-uploads.s3.ap-south-1.amazonaws.com%2F1597042333_Vxc_Np_X_parking_featured_the_tech_portal_aa61e1ab08.jpg&w=1920&q=75",
-];
+]
 
 const ParkBusinesses = () => {
-  const [activeTab, setActiveTab] = useState("Corporates");
+  const [activeTab, setActiveTab] = useState("Corporates")
 
   const handleTabClick = (tab) => {
-    setActiveTab(tab);
-  };
+    setActiveTab(tab)
+  }
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentIndex((prevIndex) =>
         prevIndex === CorporatesImages.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 3000); // Change slide every 3 seconds
+      )
+    }, 3000) 
 
-    return () => clearInterval(intervalId);
-  }, []);
+    return () => clearInterval(intervalId)
+  }, [])
   return (
     <Container>
       <ParkBusinessesTitle>
@@ -228,36 +269,40 @@ const ParkBusinesses = () => {
           ParkSpotter for <br /> Businesses
         </h1>
         <p>
-          Our technology has transformed the tricky traffic movement in parking{" "}
+          Our technology has transformed the tricky traffic movement in parking
           <br />
           lots for various business establishments
         </p>
       </ParkBusinessesTitle>
       <TabsContainer>
-        <Tab
-          active={activeTab === "Corporates"}
-          onClick={() => handleTabClick("Corporates")}
-        >
-          Corporates
-        </Tab>
-        <Tab
-          active={activeTab === "Societies"}
-          onClick={() => handleTabClick("Societies")}
-        >
-          Societies
-        </Tab>
-        <Tab
-          active={activeTab === "Parking owners"}
-          onClick={() => handleTabClick("Parking owners")}
-        >
-          Parking owners
-        </Tab>
-        <Tab
-          active={activeTab === "Malls/Hotels"}
-          onClick={() => handleTabClick("Malls/Hotels")}
-        >
-          Malls/Hotels
-        </Tab>
+        <TabCoupleContainer>
+          <Tab
+            active={activeTab === "Corporates"}
+            onClick={() => handleTabClick("Corporates")}
+          >
+            Corporates
+          </Tab>
+          <Tab
+            active={activeTab === "Societies"}
+            onClick={() => handleTabClick("Societies")}
+          >
+            Societies
+          </Tab>
+        </TabCoupleContainer>
+        <TabCoupleContainer>
+          <Tab
+            active={activeTab === "Parking owners"}
+            onClick={() => handleTabClick("Parking owners")}
+          >
+            Parking owners
+          </Tab>
+          <Tab
+            active={activeTab === "Malls/Hotels"}
+            onClick={() => handleTabClick("Malls/Hotels")}
+          >
+            Malls/Hotels
+          </Tab>
+        </TabCoupleContainer>
       </TabsContainer>
       <Content>
         {activeTab === "Corporates" && (
@@ -293,7 +338,7 @@ const ParkBusinesses = () => {
                   See how we solved the parking <br />
                   problem for RBS
                 </h2>
-                <FaArrowRightLong />
+                <p>&rarr;</p>
               </ContentDescriptionLink>
             </ContentDescription>
           </ContentBox>
@@ -325,7 +370,7 @@ const ParkBusinesses = () => {
                   See how we solved the parking <br />
                   problem for Emaar Palm Drive
                 </h2>
-                <FaArrowRightLong />
+                <p>&rarr;</p>
               </ContentDescriptionLink>
             </ContentDescription>
           </ContentBox>
@@ -357,7 +402,7 @@ const ParkBusinesses = () => {
                   See how we solved the parking <br />
                   problem for Celestia Spaces
                 </h2>
-                <FaArrowRightLong />
+                <p>&rarr;</p>
               </ContentDescriptionLink>
             </ContentDescription>
           </ContentBox>
@@ -391,7 +436,7 @@ const ParkBusinesses = () => {
                   <br />
                   problem for Phoenix Marketcity
                 </h2>
-                <FaArrowRightLong />
+                <p>&rarr;</p>
               </ContentDescriptionLink>
             </ContentDescription>
           </ContentBox>
@@ -405,7 +450,7 @@ const ParkBusinesses = () => {
         <button>Get in touch</button>
       </BusinessesProblemSolve>
     </Container>
-  );
-};
+  )
+}
 
-export default ParkBusinesses;
+export default ParkBusinesses
