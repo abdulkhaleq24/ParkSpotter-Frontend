@@ -61,7 +61,7 @@ const PaymentForm = () => {
   data.slot_size = useSelector(selectSlotSize)
   data.username = useSelector(selectUsername)
 
-  const paymentHandler = async (e) => {
+  const paymentHandler = async (e, data) => {
     e.preventDefault()
 
     if (!stripe || !elements) {
@@ -131,7 +131,7 @@ const PaymentForm = () => {
     <StyledPaymentFormContainer>
       <StyledPaymentForm>
         <StyledHeading>Secure Payment</StyledHeading>
-        <StyledForm onSubmit={paymentHandler}>
+        <StyledForm onSubmit={(e) => paymentHandler(e,data)}>
           <div>
             <StyledLabel htmlFor="card-element">
               Credit Card Information
