@@ -64,6 +64,7 @@ const ToggleButton = styled.div`
 
 // Subscription Modal style start
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import UserProfile from "../../Pages.UserProfile/UserProfile/UserProfile";
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -241,6 +242,9 @@ const Navbar = () => {
                   Dashboard
                 </button>
               </NavLink>
+
+
+
             </>
           ) : (
             <>
@@ -255,6 +259,20 @@ const Navbar = () => {
                   }}
                 >
                   Signup 👋
+                </button>
+              </NavLink>
+
+              <NavLink to={""}>
+                <button
+                  style={{
+                    padding: "15px 30px ",
+                    fontSize: "18px",
+                    borderRadius: "18px",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  <UserProfile />
                 </button>
               </NavLink>
             </>
