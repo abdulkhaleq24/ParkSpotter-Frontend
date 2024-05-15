@@ -1,6 +1,6 @@
-import { useRef } from "react";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useRef } from "react"
+import { useForm } from "react-hook-form"
+import { Link, useNavigate } from "react-router-dom"
 import {
   FlexContainer,
   FormBody,
@@ -8,49 +8,29 @@ import {
   FormHeader,
   FullWidthInputBox,
   InputContainer,
-} from "../SignUp/SignUp.styles";
-import toast from "react-hot-toast";
+} from "../SignUp/SignUp.styles"
+import { useDispatch } from "react-redux"
+import { setRegistrationField } from "../../../store/registration/registration.reducer"
 
 const SignUp = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const {
     register,
     formState: { errors },
     handleSubmit,
     watch,
-  } = useForm();
+  } = useForm()
 
-  const password = useRef({});
-  password.current = watch("password", "");
+  const password = useRef({})
+  const dispatch = useDispatch()
+  password.current = watch("password", "")
 
   const onSubmit = (data) => {
-    data.payment_method = "stripe";
-    data.payment_date = "2024-05-11";
-    data.amount = 2000;
-    data.nid_card_no = 12345678901;
-    // console.log(data);
-    fetch("https://parkspottermain.pythonanywhere.com/accounts/register/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          console.error("Error:");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        toast.success(data);
-        navigate("/login");
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
+    data.nid_card_no = 12345678901
+    dispatch(setRegistrationField(data))
+
+    navigate("/payment")
+  }
 
   return (
     <div>
@@ -228,7 +208,7 @@ const SignUp = () => {
         </FormBody>
       </FormContainer>
     </div>
-  );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp

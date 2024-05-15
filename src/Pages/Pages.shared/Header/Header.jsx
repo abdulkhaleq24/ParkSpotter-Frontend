@@ -1,9 +1,11 @@
 import { useState } from "react"
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { FiAlignJustify } from "react-icons/fi"
 import { parkSpotterLogo } from "../../../assets/Logo/Logo"
 import { IoIosCloseCircleOutline } from "react-icons/io"
+import { useDispatch } from "react-redux"
+import { setSubscriptionAmount } from "../../../store/payment/payment.reducer"
 
 const PrimaryColor = "#202123"
 const SecondaryColor = "#ffffff"
@@ -178,6 +180,8 @@ const CustomModal = ({ isOpen, onClose, children }) => {
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
@@ -192,8 +196,11 @@ const Navbar = () => {
   const closeModal = () => {
     setModalOpen(false)
   }
-  const handlePrice = (price) => {
-    
+
+  const handlePrice = (priceString) => {
+    const priceNumeric = parseFloat(priceString.replace("$", ""))
+    dispatch(setSubscriptionAmount(priceNumeric))
+    navigate("/signup")
   }
 
   return (
