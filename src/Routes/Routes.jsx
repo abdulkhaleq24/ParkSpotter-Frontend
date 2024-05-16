@@ -1,12 +1,13 @@
-import { createBrowserRouter } from "react-router-dom";
-import Main from "../Layout/Main";
-import Home from "../Pages/Pages.home/Home/Home";
-import SignIn from "../Pages/Pages.authentication/SignIn/SignIn";
-import SignUp from "../Pages/Pages.authentication/SignUp/SignUp";
-import DashboardRoutes from "../Layout/Dashboard.routes";
-import AvailableParkingSlot from "../Pages/Pages.dashboard/AvailableParkingSlot/AvailableParkingSlot";
-import UnpaidTickets from "../Pages/Pages.dashboard/UnpaidTickets/UnpaidTickets";
-import CreateTicket from "../Pages/Pages.dashboard/CreateTicket/CreateTicket.component";
+import { createBrowserRouter } from "react-router-dom"
+import Main from "../Layout/Main"
+import Home from "../Pages/Pages.home/Home/Home"
+import SignIn from "../Pages/Pages.authentication/SignIn/SignIn"
+import SignUp from "../Pages/Pages.authentication/SignUp/SignUp"
+import DashboardRoutes from "../Layout/Dashboard.routes"
+import AvailableParkingSlot from "../Pages/Pages.dashboard/AvailableParkingSlot/AvailableParkingSlot"
+import UnpaidTickets from "../Pages/Pages.dashboard/UnpaidTickets/UnpaidTickets"
+import CreateTicket from "../Pages/Pages.dashboard/CreateTicket/CreateTicket.component"
+import PaymentForm from "../Components/PaymentForm/PaymentForm.component"
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
       {
         path: "signup",
         element: <SignUp />,
+      },
+      {
+        path: "payment",
+        element: <PaymentForm />,
       },
     ],
   },
@@ -45,4 +50,4 @@ export const router = createBrowserRouter([
       },
     ],
   },
-]);
+])
