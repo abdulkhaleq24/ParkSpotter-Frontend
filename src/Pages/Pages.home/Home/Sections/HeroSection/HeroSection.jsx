@@ -1,3 +1,4 @@
+
 const HeroSection = () => {
   return (
     <div className="mt-20 mb-10 flex flex-col md:flex-row w-full md:w-10/12 mx-auto">
