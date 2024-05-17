@@ -1,16 +1,14 @@
-import styled from "styled-components";
-import {NavLink} from 'react-router-dom'
-import * as css from '../Utils/Styles/styles';
-
-
+import styled from "styled-components"
+import { NavLink } from "react-router-dom"
+import * as css from "../Utils/Styles/styles"
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
   background-color: ${css.primaryColor};
-  color: ${css.secondaryColor}; 
-`;
+  color: ${css.secondaryColor};
+`
 
 export const Header = styled.div`
   display: flex;
@@ -18,11 +16,11 @@ export const Header = styled.div`
   align-items: center;
   padding: 1rem;
   border-bottom: 1px solid #ccc;
-`;
+`
 
 export const MenuButton = styled.div`
   cursor: pointer;
-`;
+`
 
 export const MenuIcon = styled.svg`
   width: 24px;
@@ -33,7 +31,7 @@ export const MenuIcon = styled.svg`
   &:hover {
     fill: ${css.complimentaryColor};
   }
-`;
+`
 
 export const MenuContainer = styled.div`
   width: ${(props) => (props.open ? "240px" : "0px")};
@@ -44,7 +42,7 @@ export const MenuContainer = styled.div`
   @media (max-width: 768px) {
     width: ${(props) => (props.open ? "200px" : "0px")};
   }
-`;
+`
 
 export const MenuItem = styled(NavLink)`
   display: block;
@@ -56,24 +54,26 @@ export const MenuItem = styled(NavLink)`
 
   &:hover {
     background-color: ${css.complimentaryColor};
-    font-weight:bold;
-     
+    font-weight: bold;
   }
 
   @media (max-width: 768px) {
-    font-size: 0.9rem; 
+    font-size: 0.9rem;
   }
-`;
+`
 
 export const Content = styled.div`
   display: flex;
   flex: 1;
   overflow-y: auto;
-`;
+`
 
 export const OutletWrapper = styled.div`
   flex: 1;
   padding: 20px;
-  background-color: ${css.secondaryColor}; 
+  background-color: ${css.secondaryColor};
   color: ${css.primaryColor};
-`;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  min-height: calc(100vh - 64px);
+`

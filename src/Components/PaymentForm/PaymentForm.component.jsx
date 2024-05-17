@@ -101,13 +101,16 @@ const PaymentForm = () => {
       alert(`Error: ${paymentResult.error.message}`)
     } else {
       if (paymentResult.paymentIntent.status === "succeeded") {
-        fetch("https://parkspottermain.pythonanywhere.com/accounts/register/", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        })
+        const response = await fetch(
+          "https://parkspottermain.pythonanywhere.com/accounts/register/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          }
+        )
           .then((response) => {
             if (!response.ok) {
               console.error("Error:")
@@ -121,7 +124,7 @@ const PaymentForm = () => {
           .catch((error) => {
             console.error("Error:", error)
           })
-
+        console.log(response)
         alert("Payment Success")
       }
     }
@@ -131,7 +134,7 @@ const PaymentForm = () => {
     <StyledPaymentFormContainer>
       <StyledPaymentForm>
         <StyledHeading>Secure Payment</StyledHeading>
-        <StyledForm onSubmit={(e) => paymentHandler(e,data)}>
+        <StyledForm onSubmit={(e) => paymentHandler(e, data)}>
           <div>
             <StyledLabel htmlFor="card-element">
               Credit Card Information
@@ -173,3 +176,6 @@ const PaymentForm = () => {
 }
 
 export default PaymentForm
+
+
+// comment
