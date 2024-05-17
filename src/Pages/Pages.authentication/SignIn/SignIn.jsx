@@ -37,7 +37,9 @@ const SignIn = () => {
         setLoading(false);
         throw new Error("Invalid credentials");
       }
-
+      if (responseData.is_staff) {
+        localStorage.setItem("is_staff", responseData.is_staff);
+      }
       localStorage.setItem("token", responseData.token);
       localStorage.setItem("user_id", responseData.user_id);
 
