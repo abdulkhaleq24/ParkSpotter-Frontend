@@ -2,6 +2,8 @@ import styled from "styled-components"
 import { NavLink } from "react-router-dom"
 import * as css from "../Utils/Styles/styles"
 
+// Dashboard starts
+
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -80,3 +82,56 @@ export const OutletWrapper = styled.div`
   overflow-y: auto;
   min-height: calc(100vh - 64px);
 `
+
+
+// Dashboard ends
+
+// Profile Dropdown style Start
+export const DropdownContainer = styled.div`
+  position: relative;
+  display: inline-block;
+`
+
+export const CircularImageContainer = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+`
+
+export const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`
+
+export const DropdownContent = styled.div`
+  display: ${(props) => (props.isOpen ? "block" : "none")};
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  right: 1px;
+  border-radius: 10px;
+  @media (max-width: 768px) {
+    min-width: 120px;
+  }
+`
+
+export const DropdownItem = styled.button`
+  color: black;
+  padding: 10px 20px;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  background-color: transparent;
+
+  &:hover {
+    background-color: #ddd;
+    border-radius: 10px;
+  }
+`
+// Profile Dropdown style End
