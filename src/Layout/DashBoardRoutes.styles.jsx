@@ -55,9 +55,11 @@ export const MenuItem = styled(NavLink)`
   &:hover {
     background-color: ${css.complimentaryColor};
     font-weight: bold;
+    font-weight: bold;
   }
 
   @media (max-width: 768px) {
+    font-size: 0.9rem;
     font-size: 0.9rem;
   }
 `
@@ -71,6 +73,7 @@ export const Content = styled.div`
 export const OutletWrapper = styled.div`
   flex: 1;
   padding: 20px;
+  background-color: ${css.secondaryColor};
   background-color: ${css.secondaryColor};
   color: ${css.primaryColor};
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
