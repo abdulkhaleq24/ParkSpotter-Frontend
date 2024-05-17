@@ -8,8 +8,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: ${css.primaryColor};
-  color: ${css.secondaryColor};
+  background-color: ${css.secondaryColor};
+  color: ${css.primaryColor};
 `
 
 export const Header = styled.div`
@@ -17,7 +17,9 @@ export const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  border-bottom: 1px solid #ccc;
+  color: #fff;
+  background-color: #202123;
+  border-bottom: 4px solid #fff;
 `
 
 export const MenuButton = styled.div`
@@ -25,8 +27,8 @@ export const MenuButton = styled.div`
 `
 
 export const MenuIcon = styled.svg`
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   fill: currentColor;
   transition: fill 0.2s ease;
 
@@ -38,8 +40,10 @@ export const MenuIcon = styled.svg`
 export const MenuContainer = styled.div`
   width: ${(props) => (props.open ? "240px" : "0px")};
   transition: width 0.3s ease;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid #202123;
   overflow: hidden;
+  background-color: #202123;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 
   @media (max-width: 768px) {
     width: ${(props) => (props.open ? "200px" : "0px")};
@@ -53,6 +57,8 @@ export const MenuItem = styled(NavLink)`
   color: ${css.secondaryColor};
   font-size: 1rem;
   transition: background-color 0.3s ease;
+  margin: 20px 5px;
+  border-radius: 25px;
 
   &:hover {
     background-color: ${css.complimentaryColor};
@@ -70,19 +76,24 @@ export const Content = styled.div`
   display: flex;
   flex: 1;
   overflow-y: auto;
-`
+  overflow-x: hidden;
+  box-sizing: border-box;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+`
 export const OutletWrapper = styled.div`
   flex: 1;
-  padding: 20px;
-  background-color: ${css.secondaryColor};
   background-color: ${css.secondaryColor};
   color: ${css.primaryColor};
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   min-height: calc(100vh - 64px);
 `
-
 
 // Dashboard ends
 

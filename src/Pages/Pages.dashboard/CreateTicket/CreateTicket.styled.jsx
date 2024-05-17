@@ -1,17 +1,30 @@
 import styled from "styled-components"
 
 export const Container = styled.div`
-  background-color: #202123;
-  color: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  width: 95%;
-  margin: -10px auto;
+  background-color: #fff;
+  color: #202123;
+  padding: 60px;
+  border-radius: 15px;
+  max-width: 50%;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    margin: 20px;
+  }
 `
 
 export const Title = styled.h2`
+  color: coral;
+  background-color: #fff;
+  margin: 20px auto;
   text-align: center;
-  margin-bottom: 20px;
+  width: 25%;
+  border-radius: 35px;
+  font-size: 1.5em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 5px 7px;
 `
 
 export const FormGroup = styled.div`
@@ -29,7 +42,7 @@ export const Input = styled.input`
   border: none;
   border-radius: 5px;
   background-color: #333;
-  color: #ffffff;
+  color: #fff;
 `
 
 export const Select = styled.select`
@@ -38,7 +51,7 @@ export const Select = styled.select`
   border: none;
   border-radius: 5px;
   background-color: #333;
-  color: #ffffff;
+  color: #fff;
 `
 
 export const Button = styled.button`
@@ -70,4 +83,8 @@ export const StaticParkingNumber = styled.div`
 export const WarningMessage = styled.div`
   margin-top: 20px;
   color: #ff0000;
+
+  span {
+    font-weight: bold;
+  }
 `

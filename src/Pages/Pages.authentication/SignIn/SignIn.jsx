@@ -14,7 +14,6 @@ const SignIn = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // console.log(data);
     setLoading(true);
 
     try {
@@ -55,7 +54,7 @@ const SignIn = () => {
   return (
     <div>
       <Link to={"/"}>
-        <button style={{ margin: "10px", padding: "10px" }}>Home</button>
+        <button style={{ margin: "10px", padding: "10px", backgroundColor: "#202123", color: "#ffffff", border: "none", borderRadius: "4px", cursor: "pointer" }}>Home</button>
       </Link>
       <Container>
         <Header>Sign in</Header>
@@ -79,17 +78,13 @@ const SignIn = () => {
           {errors.password && <p role="alert">{errors.password?.message}</p>}
 
           {loading ? (
-            <>
-              <Loader type="submit"></Loader>
-            </>
+            <Loader />
           ) : (
-            <>
-              <input type="submit" value={"Sign In"} />
-            </>
+            <input type="submit" value={"Sign In"} />
           )}
 
           <p>
-            Dont have an account? <Link to={"/signup"}>Sign Up</Link>
+            Don&apos;t have an account? <Link to={"/signup"}>Sign Up</Link>
           </p>
         </Form>
       </Container>

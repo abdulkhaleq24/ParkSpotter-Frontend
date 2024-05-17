@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { useState } from "react"
+import { Outlet } from "react-router-dom"
 import {
   Container,
   Content,
@@ -9,29 +9,29 @@ import {
   MenuIcon,
   MenuItem,
   OutletWrapper,
-} from "./DashBoardRoutes.styles";
+} from "./DashBoardRoutes.styles"
 import {
   DropdownContainer,
   DropdownContent,
   DropdownItem,
   CircularImageContainer,
   Image,
-} from "./DashBoardRoutes.styles";
-import UserProfile from "../Pages/Pages.UserProfile/UserProfile/UserProfile";
+} from "./DashBoardRoutes.styles"
+import UserProfile from "../Pages/Pages.UserProfile/UserProfile/UserProfile"
 
 const Dashboard = () => {
-  const [menuOpen, setMenuOpen] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(true)
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+    setMenuOpen(!menuOpen)
+  }
 
   /* Profile Dropdown start */
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
+    setIsOpen(!isOpen)
+  }
   /* Profile Dropdown end */
 
   return (
@@ -42,7 +42,9 @@ const Dashboard = () => {
             <path d="M4 18h16v-2H4v2zm0-5h16v-2H4v2zm0-7v2h16V6H4z" />
           </MenuIcon>
         </MenuButton>
-        <div style={{ fontWeight: "bold" }}>ParkSpotter Dashboard</div>
+        <div style={{ fontWeight: "bold", fontSize: "1.3rem" }}>
+          <span>ParkSpotter</span>
+        </div>
         {/* Profile Dropdown start */}
         <DropdownContainer>
           <CircularImageContainer onClick={toggleDropdown}>
@@ -71,14 +73,16 @@ const Dashboard = () => {
             Available Parking Slot
           </MenuItem>
           <MenuItem to={"/dashboard/UnpaidTickets"}>Unpaid tickets</MenuItem>
-          <MenuItem to={"/dashboard/RegisterEmployee"}>Register Employee</MenuItem>
+          <MenuItem to={"/dashboard/RegisterEmployee"}>
+            Register Employee
+          </MenuItem>
         </MenuContainer>
         <OutletWrapper>
           <Outlet />
         </OutletWrapper>
       </Content>
     </Container>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard
