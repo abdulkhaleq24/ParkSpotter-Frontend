@@ -449,8 +449,6 @@
 //                 </button>
 //               </NavLink>
 
-
-
 //             </>
 //           ) : (
 //             <>
@@ -490,19 +488,18 @@
 //   );
 // };
 
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { FiAlignJustify } from "react-icons/fi";
+import { parkSpotterLogo } from "../../../assets/Logo/Logo";
+import { IoIosCloseCircleOutline } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { setSubscriptionAmount } from "../../../store/payment/payment.reducer";
 
-import { useState } from "react"
-import { NavLink, useNavigate } from "react-router-dom"
-import styled from "styled-components"
-import { FiAlignJustify } from "react-icons/fi"
-import { parkSpotterLogo } from "../../../assets/Logo/Logo"
-import { IoIosCloseCircleOutline } from "react-icons/io"
-import { useDispatch } from "react-redux"
-import { setSubscriptionAmount } from "../../../store/payment/payment.reducer"
-
-const PrimaryColor = "#202123"
-const SecondaryColor = "#ffffff"
-const ComplementaryColor = "coral"
+const PrimaryColor = "#202123";
+const SecondaryColor = "#ffffff";
+const ComplementaryColor = "coral";
 
 const NavbarContainer = styled.nav`
   display: flex;
@@ -515,7 +512,7 @@ const NavbarContainer = styled.nav`
   position: fixed;
   top: 0;
   z-index: 999;
-`
+`;
 
 const Logo = styled.div`
   display: flex;
@@ -530,7 +527,7 @@ const Logo = styled.div`
     width: 40px;
     margin-right: 10px;
   }
-`
+`;
 
 const Menu = styled.ul`
   list-style: none;
@@ -549,7 +546,7 @@ const Menu = styled.ul`
     padding: 20px 0;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   }
-`
+`;
 
 const MenuItem = styled(NavLink)`
   text-decoration: none;
@@ -561,7 +558,7 @@ const MenuItem = styled(NavLink)`
   &:hover {
     color: ${ComplementaryColor};
   }
-`
+`;
 
 const ToggleButton = styled.div`
   display: none;
@@ -571,7 +568,7 @@ const ToggleButton = styled.div`
     color: ${PrimaryColor};
     cursor: pointer;
   }
-`
+`;
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -586,7 +583,7 @@ const ModalBackground = styled.div`
   transition: opacity 0.3s ease;
   opacity: ${(props) => (props.isModalOpen ? "1" : "0")};
   visibility: ${(props) => (props.isModalOpen ? "visible" : "hidden")};
-`
+`;
 
 const ModalContent = styled.div`
   background-color: ${SecondaryColor};
@@ -599,7 +596,7 @@ const ModalContent = styled.div`
   transition: transform 0.3s ease, opacity 0.3s ease;
   transform: translateY(${(props) => (props.isModalOpen ? "0" : "-50px")});
   opacity: ${(props) => (props.isModalOpen ? "1" : "0")};
-`
+`;
 
 const CloseButton = styled.button`
   position: absolute;
@@ -609,14 +606,14 @@ const CloseButton = styled.button`
   border: none;
   cursor: pointer;
   color: ${PrimaryColor};
-`
+`;
 
 const SubscriptionCardsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   justify-content: center;
-`
+`;
 
 const SubscriptionCard = styled.div`
   cursor: pointer;
@@ -638,25 +635,25 @@ const SubscriptionCard = styled.div`
   @media (max-width: 480px) {
     width: calc(100% - 20px);
   }
-`
+`;
 
 const Title = styled.h2`
   font-size: 1.2rem;
   margin-bottom: 10px;
   color: ${PrimaryColor};
-`
+`;
 
 const Description = styled.p`
   font-size: 1rem;
   color: #666;
-`
+`;
 
 const Price = styled.div`
   font-size: 1.2rem;
   font-weight: bold;
   margin-top: 20px;
   color: ${ComplementaryColor};
-`
+`;
 
 const CustomModal = ({ isOpen, onClose, children }) => {
   return (
@@ -668,40 +665,48 @@ const CustomModal = ({ isOpen, onClose, children }) => {
         {children}
       </ModalContent>
     </ModalBackground>
-  )
-}
+  );
+};
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen)
-  }
+    setIsOpen(!isOpen);
+  };
 
-  const user_id = localStorage.getItem("user_id")
+  const user_id = localStorage.getItem("user_id");
 
-  const [modalOpen, setModalOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => {
-    setModalOpen(true)
-  }
+    setModalOpen(true);
+  };
   const closeModal = () => {
-    setModalOpen(false)
-  }
+    setModalOpen(false);
+  };
 
   const handlePrice = (priceString) => {
-    const priceNumeric = parseFloat(priceString.replace("$", ""))
-    dispatch(setSubscriptionAmount(priceNumeric))
-    navigate("/signup")
-  }
+    const priceNumeric = parseFloat(priceString.replace("$", ""));
+    dispatch(setSubscriptionAmount(priceNumeric));
+    const is_staff = localStorage.getItem("is_staff");
+    if (!is_staff) {
+      navigate("/signup");
+    } else {
+      setModalOpen(false);
+      navigate("/payment");
+    }
+  };
 
   return (
     <NavbarContainer>
-      <Logo>
-        <img src={parkSpotterLogo} alt="ParkSpotter Logo" />
-        ParkSpotter
-      </Logo>
+      <NavLink to={"/"}>
+        <Logo>
+          <img src={parkSpotterLogo} alt="ParkSpotter Logo" />
+          ParkSpotter
+        </Logo>
+      </NavLink>
       <ToggleButton onClick={toggleMenu}>
         <FiAlignJustify size={"25px"} />
       </ToggleButton>
@@ -753,11 +758,9 @@ const Navbar = () => {
         </div>
       </Menu>
     </NavbarContainer>
-  )
-}
+  );
+};
 
-export default Navbar
-
-
+export default Navbar;
 
 // export default Navbar;

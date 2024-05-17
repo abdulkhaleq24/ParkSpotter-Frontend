@@ -17,6 +17,7 @@ import {
   CircularImageContainer,
   Image,
 } from "./DashBoardRoutes.styles";
+import UserProfile from "../Pages/Pages.UserProfile/UserProfile/UserProfile";
 
 const Dashboard = () => {
   const [menuOpen, setMenuOpen] = useState(true);
@@ -53,7 +54,8 @@ const Dashboard = () => {
             />
           </CircularImageContainer>
           <DropdownContent isOpen={isOpen}>
-            <DropdownItem>Profile</DropdownItem>
+            {/* <DropdownItem>Profile</DropdownItem> */}
+            <UserProfile />
             <DropdownItem>Log Out</DropdownItem>
           </DropdownContent>
         </DropdownContainer>
