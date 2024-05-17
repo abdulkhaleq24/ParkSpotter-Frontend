@@ -69,6 +69,7 @@ const Dashboard = () => {
             Available Parking Slot
           </MenuItem>
           <MenuItem to={"/dashboard/UnpaidTickets"}>Unpaid tickets</MenuItem>
+          <MenuItem to={"/dashboard/RegisterEmployee"}>Register Employee</MenuItem>
         </MenuContainer>
         <OutletWrapper>
           <Outlet />

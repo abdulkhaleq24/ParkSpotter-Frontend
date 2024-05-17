@@ -86,7 +86,7 @@ const AvailableParkingSlot = () => {
       <h1>Available Parking Slots</h1>
       {Object.keys(groupedParkingSlots).map((zone) => (
         <div key={zone}>
-          <h2 style={{margin:'30px 0'}}>Zone {zone}</h2>
+          <h2 style={{ margin: "30px 0" }}>Zone {zone}</h2>
           <BoardContainer>
             {groupedParkingSlots[zone].map((slot, index) => (
               <Column key={index}>

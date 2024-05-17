@@ -8,6 +8,7 @@ import AvailableParkingSlot from "../Pages/Pages.dashboard/AvailableParkingSlot/
 import UnpaidTickets from "../Pages/Pages.dashboard/UnpaidTickets/UnpaidTickets"
 import CreateTicket from "../Pages/Pages.dashboard/CreateTicket/CreateTicket.component"
 import PaymentForm from "../Components/PaymentForm/PaymentForm.component"
+import RegisterEmployee from "../Pages/Pages.dashboard/RegisterEmployee/RegisterEmployee.component"
 
 export const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
       {
         path: "UnpaidTickets",
         element: <UnpaidTickets />,
+      },
+      {
+        path: "RegisterEmployee",
+        element: <RegisterEmployee />,
       },
     ],
   },

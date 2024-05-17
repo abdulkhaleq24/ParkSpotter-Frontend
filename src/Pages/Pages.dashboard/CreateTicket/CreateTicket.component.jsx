@@ -1,122 +1,80 @@
-import { useState } from "react"
-import styled from "styled-components"
-
-const Container = styled.div`
-  background-color: #202123;
-  color: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  width: 95%;
-  margin: -10px auto;
-`
-
-const Title = styled.h2`
-  text-align: center;
-  margin-bottom: 20px;
-`
-
-const FormGroup = styled.div`
-  margin-bottom: 20px;
-`
-
-const Label = styled.label`
-  display: block;
-  margin-bottom: 5px;
-`
-
-const Input = styled.input`
-  width: 100%;
-  padding: 8px;
-  border: none;
-  border-radius: 5px;
-  background-color: #333;
-  color: #ffffff;
-`
-
-const Select = styled.select`
-  width: 100%;
-  padding: 8px;
-  border: none;
-  border-radius: 5px;
-  background-color: #333;
-  color: #ffffff;
-`
-
-const Button = styled.button`
-  width: 30%;
-  padding: 12px;
-  border: none;
-  border-radius: 5px;
-  background-color: #4caf50;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: 20px;
-  &:hover {
-    background-color: #45a049;
-  }
-`
-
-const TotalAmount = styled.div`
-  margin-top: 20px;
-  font-size: 18px;
-`
-
-const StaticParkingNumber = styled.div`
-  margin-top: 20px;
-  font-size: 18px;
-`
-
-const WarningMessage = styled.div`
-  margin-top: 20px;
-  color: #ff0000;
-`
+import React, { useState } from "react";
+import {
+  Button,
+  Container,
+  FormGroup,
+  Input,
+  Label,
+  Select,
+  StaticParkingNumber,
+  Title,
+  TotalAmount,
+  WarningMessage
+} from "./CreateTicket.styled";
 
 function CreateTicket() {
-  const [carMake, setCarMake] = useState("")
-  const [carNumber, setCarNumber] = useState("")
-  const [phone, setPhone] = useState("")
-  const [parkingDuration, setParkingDuration] = useState("")
-  const [totalAmount, setTotalAmount] = useState(0)
-  const parkingNumber = "Zone 1, Parking Lot 7"
-  const [warningMessage, setWarningMessage] = useState("")
+  const [carMake, setCarMake] = useState("");
+  const [vehicle, setVehicle] = useState("");
+  const [phone, setPhone] = useState("");
+  const [time_slot, setTime_slot] = useState("");
+  const [totalAmount, setTotalAmount] = useState(0);
+  const parkingNumber = "Zone 1, Parking Lot 7";
+  const [warningMessage, setWarningMessage] = useState("");
 
   const calculateTotalAmount = (duration) => {
-    let price = 0
+    let price = 0;
     switch (duration) {
       case "1":
-        price = 10
-        break
+        price = 10;
+        break;
       case "2":
-        price = 25
-        break
+        price = 25;
+        break;
       case "3":
-        price = 40
-        break
+        price = 40;
+        break;
       default:
-        price = 0
+        price = 0;
     }
-    setTotalAmount(price)
-  }
+    setTotalAmount(price);
+  };
 
   const generateWarningMessage = () => {
     setWarningMessage(
       `Please be aware that if you exceed your selected parking duration, you will be fined 1 taka per second.`
-    )
-  }
+    );
+  };
 
   const generateParkingTicket = () => {
     const ticket = {
-      carMake,
-      carNumber,
-      phone,
-      parkingDuration,
-      totalAmount,
-      parkingNumber,
-    }
-    console.log("Parking ticket generated:", ticket)
-  }
+      // carMake,
+      vehicle,
+      // phone,
+      time_slot,
+      // totalAmount,
+      // parkingNumber
+    };
+
+    fetch("https://parkspottermain.pythonanywhere.com/accounts/bookings/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(ticket)
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to create ticket");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Ticket created:", data);
+      })
+      .catch((error) => {
+        console.error("Error creating ticket:", error);
+      });
+  };
 
   return (
     <Container>
@@ -133,8 +91,8 @@ function CreateTicket() {
         <Label>Car Number</Label>
         <Input
           type="text"
-          value={carNumber}
-          onChange={(e) => setCarNumber(e.target.value)}
+          value={vehicle}
+          onChange={(e) => setVehicle(e.target.value)}
         />
       </FormGroup>
       <FormGroup>
@@ -148,11 +106,11 @@ function CreateTicket() {
       <FormGroup>
         <Label>Parking Duration</Label>
         <Select
-          value={parkingDuration}
+          value={time_slot}
           onChange={(e) => {
-            setParkingDuration(e.target.value)
-            calculateTotalAmount(e.target.value)
-            generateWarningMessage(parseInt(e.target.value))
+            setTime_slot(e.target.value);
+            calculateTotalAmount(e.target.value);
+            generateWarningMessage(parseInt(e.target.value));
           }}
         >
           <option value="">Select Duration</option>
@@ -166,7 +124,7 @@ function CreateTicket() {
       {warningMessage && <WarningMessage>{warningMessage}</WarningMessage>}
       <Button onClick={generateParkingTicket}>Generate Parking Ticket</Button>
     </Container>
-  )
+  );
 }
 
-export default CreateTicket
+export default CreateTicket;
