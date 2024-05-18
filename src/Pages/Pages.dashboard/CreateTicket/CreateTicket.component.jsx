@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react"
 import {
   Button,
   Container,
@@ -9,41 +9,41 @@ import {
   StaticParkingNumber,
   Title,
   TotalAmount,
-  WarningMessage
-} from "./CreateTicket.styled";
+  WarningMessage,
+} from "./CreateTicket.styled"
 
 function CreateTicket() {
-  const [carMake, setCarMake] = useState("");
-  const [vehicle, setVehicle] = useState("");
-  const [phone, setPhone] = useState("");
-  const [time_slot, setTime_slot] = useState("");
-  const [totalAmount, setTotalAmount] = useState(0);
-  const parkingNumber = "Zone 1, Parking Lot 7";
-  const [warningMessage, setWarningMessage] = useState("");
+  const [carMake, setCarMake] = useState("")
+  const [vehicle, setVehicle] = useState("")
+  const [phone, setPhone] = useState("")
+  const [time_slot, setTime_slot] = useState("")
+  const [totalAmount, setTotalAmount] = useState(0)
+  const parkingNumber = "Zone 1, Parking Lot 7"
+  const [warningMessage, setWarningMessage] = useState("")
 
   const calculateTotalAmount = (duration) => {
-    let price = 0;
+    let price = 0
     switch (duration) {
       case "1":
-        price = 10;
-        break;
+        price = 10
+        break
       case "2":
-        price = 25;
-        break;
+        price = 25
+        break
       case "3":
-        price = 40;
-        break;
+        price = 40
+        break
       default:
-        price = 0;
+        price = 0
     }
-    setTotalAmount(price);
-  };
+    setTotalAmount(price)
+  }
 
   const generateWarningMessage = () => {
     setWarningMessage(
       `Please be aware that if you exceed your selected parking duration, you will be fined 1 taka per second.`
-    );
-  };
+    )
+  }
 
   const generateParkingTicket = () => {
     const ticket = {
@@ -53,78 +53,91 @@ function CreateTicket() {
       time_slot,
       // totalAmount,
       // parkingNumber
-    };
+    }
 
     fetch("https://parkspottermain.pythonanywhere.com/accounts/bookings/", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(ticket)
+      body: JSON.stringify(ticket),
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Failed to create ticket");
+          throw new Error("Failed to create ticket")
         }
-        return response.json();
+        return response.json()
       })
       .then((data) => {
-        console.log("Ticket created:", data);
+        console.log("Ticket created:", data)
       })
       .catch((error) => {
-        console.error("Error creating ticket:", error);
-      });
-  };
+        console.error("Error creating ticket:", error)
+      })
+  }
 
   return (
-    <Container>
+    <>
+      {" "}
       <Title>Create Ticket</Title>
-      <FormGroup>
-        <Label>Car Make</Label>
-        <Input
-          type="text"
-          value={carMake}
-          onChange={(e) => setCarMake(e.target.value)}
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label>Car Number</Label>
-        <Input
-          type="text"
-          value={vehicle}
-          onChange={(e) => setVehicle(e.target.value)}
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label>Phone Number</Label>
-        <Input
-          type="text"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
-      </FormGroup>
-      <FormGroup>
-        <Label>Parking Duration</Label>
-        <Select
-          value={time_slot}
-          onChange={(e) => {
-            setTime_slot(e.target.value);
-            calculateTotalAmount(e.target.value);
-            generateWarningMessage(parseInt(e.target.value));
-          }}
-        >
-          <option value="">Select Duration</option>
-          <option value="1">1 hour</option>
-          <option value="2">3 hours</option>
-          <option value="3">6 hours</option>
-        </Select>
-      </FormGroup>
-      <TotalAmount>Total Amount: {totalAmount}</TotalAmount>
-      <StaticParkingNumber>Parking Number: {parkingNumber}</StaticParkingNumber>
-      {warningMessage && <WarningMessage>{warningMessage}</WarningMessage>}
-      <Button onClick={generateParkingTicket}>Generate Parking Ticket</Button>
-    </Container>
-  );
+      <Container>
+        <FormGroup>
+          <Label>Car Make</Label>
+          <Input
+            type="text"
+            value={carMake}
+            onChange={(e) => setCarMake(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label>Car Number</Label>
+          <Input
+            type="text"
+            value={vehicle}
+            onChange={(e) => setVehicle(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label>Phone Number</Label>
+          <Input
+            type="text"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label>Parking Duration</Label>
+          <Select
+            value={time_slot}
+            onChange={(e) => {
+              setTime_slot(e.target.value)
+              calculateTotalAmount(e.target.value)
+              generateWarningMessage(parseInt(e.target.value))
+            }}
+          >
+            <option value="">Select Duration</option>
+            <option value="1">1 hour</option>
+            <option value="2">3 hours</option>
+            <option value="3">6 hours</option>
+          </Select>
+        </FormGroup>
+        <TotalAmount>
+          Total Amount:{" "}
+          <span style={{ fontWeight: "bold" }}>{totalAmount}tk</span>
+        </TotalAmount>
+        <StaticParkingNumber>
+          Parking Number: {parkingNumber}
+        </StaticParkingNumber>
+        {warningMessage && <WarningMessage>{warningMessage}</WarningMessage>}
+        <Button onClick={generateParkingTicket}>Generate Parking Ticket</Button>
+      </Container>
+    </>
+  )
 }
 
-export default CreateTicket;
+export default CreateTicket
+
+
+
+
+// original

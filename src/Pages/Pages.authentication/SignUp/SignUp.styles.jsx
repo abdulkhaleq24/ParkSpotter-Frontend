@@ -1,21 +1,20 @@
-import styled from "styled-components";
+import styled from "styled-components"
 
 export const FormContainer = styled.div`
-  width: 50%;
+  width: 60%;
   margin: auto;
-  border: 1px solid black;
   border-radius: 10px;
-  padding: 20px;
+  padding: 20px 40px;
 
   @media (max-width: 768px) {
-    width: 90%;
+    width: 100%;
   }
-`;
+`
 
 export const FormHeader = styled.h1`
   text-align: center;
   margin-bottom: 10px;
-`;
+`
 
 export const FormBody = styled.form`
   display: flex;
@@ -47,23 +46,29 @@ export const FormBody = styled.form`
     background: #fdede8;
     border-radius: 5px;
   }
-`;
+`
 
 export const FlexContainer = styled.div`
   display: flex;
   gap: 10px;
-`;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`
 
 export const InputContainer = styled.div`
   width: 50%;
   display: flex;
   flex-direction: column;
   gap: 5px;
-`;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
 
 export const FullWidthInputBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 5px;
-`;
+`
