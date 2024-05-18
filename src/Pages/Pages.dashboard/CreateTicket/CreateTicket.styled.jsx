@@ -20,9 +20,9 @@ export const Title = styled.h2`
   background-color: #fff;
   margin: 20px auto;
   text-align: center;
-  width: 25%;
+  width: 18%;
   border-radius: 35px;
-  font-size: 1.5em;
+  font-size: 1.2em;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 5px 7px;
 `

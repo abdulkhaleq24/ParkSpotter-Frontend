@@ -5,7 +5,7 @@ import { FaCar, FaTicketAlt, FaCalendarAlt } from "react-icons/fa"
 const Container = styled.div`
   background-color: #ffffff;
   color: #ffffff;
-  padding: 40px 50px 40px 50px;
+  padding: 20px 50px;
   border-radius: 8px;
   max-width: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -16,9 +16,9 @@ const Title = styled.h1`
   background-color: #fff;
   margin: 0 auto 60px auto;
   text-align: center;
-  width: 26%;
+  width: 22%;
   border-radius: 35px;
-  font-size: 1.5em;
+  font-size: 1.2em;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 5px 7px;
 `

@@ -111,11 +111,11 @@ const AvailableParkingSlot = () => {
           textAlign: "center",
           color: "coral",
           backgroundColor: "#fff",
-          width: "33%",
-          margin: "20px auto",
+          width: "28%",
+          margin: "20px auto ",
           borderRadius: "25px",
           padding: "5px 0",
-          fontSize: "1.5em",
+          fontSize: "1.2em",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
         }}
       >

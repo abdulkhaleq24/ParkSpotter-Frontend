@@ -19,7 +19,7 @@ export const Header = styled.div`
   padding: 1rem;
   color: #fff;
   background-color: #202123;
-  border-bottom: 4px solid #fff;
+  // border-bottom: 4px solid #fff;
 `
 
 export const MenuButton = styled.div`
@@ -44,6 +44,7 @@ export const MenuContainer = styled.div`
   overflow: hidden;
   background-color: #202123;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-top: 4px solid #fff;
 
   @media (max-width: 768px) {
     width: ${(props) => (props.open ? "200px" : "0px")};
