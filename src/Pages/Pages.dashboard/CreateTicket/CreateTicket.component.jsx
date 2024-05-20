@@ -48,10 +48,10 @@ function CreateTicket() {
   const generateParkingTicket = async () => {
     const ticket = {
       zone: 1,
-      time_slot: 1,
+      time_slot: time_slot,
       vehicle: {
-        plate_number: "ABC123",
-        mobile_no: "1234567890",
+        plate_number: vehicle,
+        mobile_no: phone,
       },
     }
 
