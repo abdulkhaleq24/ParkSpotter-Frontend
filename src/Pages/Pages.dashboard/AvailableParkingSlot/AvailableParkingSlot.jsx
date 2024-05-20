@@ -1,27 +1,26 @@
-import { useState } from "react"
+// const availableParkingSlots = [
+//   { zone: 1, slot: 1, available: true },
+//   { zone: 1, slot: 2, available: false },
+//   { zone: "padma", slot: 1, available: false },
+//   { zone: "padma", slot: 18, available: true },
+//   { zone: 2, slot: 2, available: true },
+//   { zone: 3, slot: 2, available: false },
+//   { zone: 1, slot: 1, available: true },
+//   { zone: 1, slot: 2, available: false },
+//   { zone: "padma", slot: 1, available: false },
+//   { zone: "padma", slot: 18, available: false },
+//   { zone: 2, slot: 2, available: true },
+//   { zone: 3, slot: 2, available: true },
+//   { zone: 1, slot: 1, available: true },
+//   { zone: 1, slot: 2, available: false },
+//   { zone: "padma", slot: 1, available: false },
+//   { zone: "padma", slot: 18, available: false },
+//   { zone: 2, slot: 2, available: true },
+//   { zone: 3, slot: 2, available: true },
+// ]
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { car } from "../../../assets/AvailableParkingSlotIcons/availabParkingIcons"
-
-const availableParkingSlots = [
-  { zone: 1, slot: 1, available: true },
-  { zone: 1, slot: 2, available: false },
-  { zone: "padma", slot: 1, available: false },
-  { zone: "padma", slot: 18, available: true },
-  { zone: 2, slot: 2, available: true },
-  { zone: 3, slot: 2, available: false },
-  { zone: 1, slot: 1, available: true },
-  { zone: 1, slot: 2, available: false },
-  { zone: "padma", slot: 1, available: false },
-  { zone: "padma", slot: 18, available: false },
-  { zone: 2, slot: 2, available: true },
-  { zone: 3, slot: 2, available: true },
-  { zone: 1, slot: 1, available: true },
-  { zone: 1, slot: 2, available: false },
-  { zone: "padma", slot: 1, available: false },
-  { zone: "padma", slot: 18, available: false },
-  { zone: 2, slot: 2, available: true },
-  { zone: 3, slot: 2, available: true },
-]
 
 const BoardContainer = styled.div`
   display: flex;
@@ -61,9 +60,29 @@ const theme = {
 }
 
 const AvailableParkingSlot = () => {
+  const [availableParkingSlots, setAvailableParkingSlots] = useState([])
   const [selectedZone, setSelectedZone] = useState(null)
   const [selectedAvailability, setSelectedAvailability] = useState(null)
   const [selectedSlot, setSelectedSlot] = useState("")
+
+  useEffect(() => {
+    const fetchParkingSlots = async () => {
+      try {
+        const response = await fetch(
+          "https://parkspottermain.pythonanywhere.com/accounts/zone/"
+        )
+        if (!response.ok) {
+          throw new Error("Failed to fetch parking slots")
+        }
+        const data = await response.json()
+        setAvailableParkingSlots(data)
+      } catch (error) {
+        console.error("Error fetching parking slots:", error)
+      }
+    }
+
+    fetchParkingSlots()
+  }, [])
 
   const groupByZone = (parkingSlots) => {
     const grouped = {}
