@@ -1,4 +1,4 @@
-import  { useState } from "react"
+import { useState } from "react"
 import {
   Button,
   Container,
@@ -45,35 +45,37 @@ function CreateTicket() {
     )
   }
 
-  const generateParkingTicket = () => {
+  const generateParkingTicket = async () => {
     const ticket = {
-      // carMake,
-      vehicle,
-      // phone,
-      time_slot,
-      // totalAmount,
-      // parkingNumber
+      zone: 1,
+      time_slot: 1,
+      vehicle: {
+        plate_number: "ABC123",
+        mobile_no: "1234567890",
+      },
     }
 
-    fetch("https://parkspottermain.pythonanywhere.com/accounts/bookings/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(ticket),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to create ticket")
+    try {
+      const response = await fetch(
+        "https://parkspottermain.pythonanywhere.com/accounts/bookings/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(ticket),
         }
-        return response.json()
-      })
-      .then((data) => {
-        console.log("Ticket created:", data)
-      })
-      .catch((error) => {
-        console.error("Error creating ticket:", error)
-      })
+      )
+
+      if (!response.ok) {
+        throw new Error("Failed to create ticket")
+      }
+
+      const data = await response.json()
+      console.log("Ticket created:", data)
+    } catch (error) {
+      console.error("Error creating ticket:", error)
+    }
   }
 
   return (
@@ -136,8 +138,5 @@ function CreateTicket() {
 }
 
 export default CreateTicket
-
-
-
 
 // original
