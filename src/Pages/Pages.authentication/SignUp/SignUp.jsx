@@ -1,16 +1,26 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { setRegistrationField } from "../../../store/registration/registration.reducer"
 import {
+  FormContainer,
   FlexContainer,
   FormBody,
-  FormContainer,
   FormHeader,
   FullWidthInputBox,
   InputContainer,
-} from "../SignUp/SignUp.styles"
-import { useDispatch } from "react-redux"
-import { setRegistrationField } from "../../../store/registration/registration.reducer"
+  AlertMessage,
+  Container,
+  HomeButton,
+  LoginLink,
+  StyledFormBody,
+  StyledFormContainer,
+  StyledFormHeader,
+  StyledInput,
+  StyledTextArea,
+  SubmitButton,
+} from "./SignUp.styles"
 
 const SignUp = () => {
   const navigate = useNavigate()
@@ -20,161 +30,108 @@ const SignUp = () => {
     handleSubmit,
     watch,
   } = useForm()
-
+  
   const password = useRef({})
   const dispatch = useDispatch()
   password.current = watch("password", "")
 
+  const [zoneCount, setZoneCount] = useState(0)
+  const [zoneSlots, setZoneSlots] = useState([])
+
+  const handleZoneCountChange = (e) => {
+    const count = parseInt(e.target.value, 10)
+    setZoneCount(count)
+    setZoneSlots(new Array(count).fill(0))
+  }
+
+  const handleZoneSlotChange = (index, value) => {
+    const newZoneSlots = [...zoneSlots]
+    newZoneSlots[index] = parseInt(value, 10)
+    setZoneSlots(newZoneSlots)
+  }
+
   const onSubmit = (data) => {
     data.nid_card_no = 12345678901
+    data.zones = zoneSlots
     dispatch(setRegistrationField(data))
-
     navigate("/payment")
   }
 
   return (
-    <div style={{ color: "#202123", backgroundColor: "#fff", padding: "20px" }}>
+    <Container>
       <Link to={"/"}>
-        <button
-          style={{
-            margin: "10px",
-            padding: "10px",
-            backgroundColor: "#202123",
-            color: "#fff",
-            borderRadius: "5px",
-          }}
-        >
-          Home
-        </button>
+        <HomeButton>Home</HomeButton>
       </Link>
-      <FormContainer
-        style={{
-          backgroundColor: "#fff",
-          color: "#202123",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
-          borderRadius: "10px",
-        }}
-      >
-        <FormHeader
-          style={{
-            fontSize: "1.5em",
-            margin: "20px auto 40px auto",
-            width: "60%",
-            color: "#202123",
-            fontWeight: "bold",
-            padding: "7px 14px",
-            borderRadius: "30px",
-          }}
-        >
-          Create your account
-        </FormHeader>
-        <FormBody
-          onSubmit={handleSubmit(onSubmit)}
-          style={{ display: "flex", flexDirection: "column", gap: "15px" }}
-        >
+      <StyledFormContainer>
+        <StyledFormHeader>Create your account</StyledFormHeader>
+        <StyledFormBody onSubmit={handleSubmit(onSubmit)}>
+          {/* Existing Input Fields */}
           <FullWidthInputBox>
-            <input
-              style={{
-                padding: "10px",
-                borderRadius: "5px",
-                width: "100%",
-              }}
+            <StyledInput
               placeholder="Create a username"
               type="text"
               {...register("username", { required: true })}
               aria-invalid={errors.username ? "true" : "false"}
             />
             {errors.username?.type === "required" && (
-              <p role="alert" style={{ color: "coral" }}>
-                Username is required
-              </p>
+              <AlertMessage role="alert">Username is required</AlertMessage>
             )}
           </FullWidthInputBox>
-          <FlexContainer style={{ display: "flex", gap: "10px" }}>
+          <FlexContainer>
             <InputContainer>
-              <input
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  width: "100%",
-                }}
+              <StyledInput
                 placeholder="First name"
                 type="text"
                 {...register("first_name", { required: true })}
                 aria-invalid={errors.first_name ? "true" : "false"}
               />
               {errors.first_name?.type === "required" && (
-                <p role="alert" style={{ color: "coral" }}>
-                  First name is required
-                </p>
+                <AlertMessage role="alert">First name is required</AlertMessage>
               )}
             </InputContainer>
             <InputContainer>
-              <input
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  width: "100%",
-                }}
+              <StyledInput
                 placeholder="Last name"
                 type="text"
                 {...register("last_name", { required: true })}
                 aria-invalid={errors.last_name ? "true" : "false"}
               />
               {errors.last_name?.type === "required" && (
-                <p role="alert" style={{ color: "coral" }}>
-                  Last name is required
-                </p>
+                <AlertMessage role="alert">Last name is required</AlertMessage>
               )}
             </InputContainer>
           </FlexContainer>
-          <FlexContainer style={{ display: "flex", gap: "10px" }}>
+          <FlexContainer>
             <InputContainer>
-              <input
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  width: "100%",
-                }}
+              <StyledInput
                 placeholder="Email address"
                 type="email"
                 {...register("email", { required: true })}
                 aria-invalid={errors.email ? "true" : "false"}
               />
               {errors.email?.type === "required" && (
-                <p role="alert" style={{ color: "coral" }}>
+                <AlertMessage role="alert">
                   Email address is required
-                </p>
+                </AlertMessage>
               )}
             </InputContainer>
             <InputContainer>
-              <input
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  width: "100%",
-                }}
+              <StyledInput
                 placeholder="Phone number"
                 type="text"
                 {...register("mobile_no", { required: true })}
                 aria-invalid={errors.mobile_no ? "true" : "false"}
               />
               {errors.mobile_no?.type === "required" && (
-                <p role="alert" style={{ color: "coral" }}>
+                <AlertMessage role="alert">
                   Phone number is required
-                </p>
+                </AlertMessage>
               )}
             </InputContainer>
           </FlexContainer>
-
-          <FlexContainer style={{ display: "flex", gap: "10px" }}>
+          <FlexContainer>
             <InputContainer>
-              <input
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  width: "100%",
-                }}
+              <StyledInput
                 placeholder="Password"
                 type="password"
                 {...register("password", {
@@ -186,34 +143,27 @@ const SignUp = () => {
                 aria-invalid={errors.password ? "true" : "false"}
               />
               {errors.password?.type === "required" && (
-                <p role="alert" style={{ color: "coral" }}>
-                  Password is required
-                </p>
+                <AlertMessage role="alert">Password is required</AlertMessage>
               )}
               {errors.password?.type === "minLength" && (
-                <p role="alert" style={{ color: "coral" }}>
+                <AlertMessage role="alert">
                   Password must be 6 characters
-                </p>
+                </AlertMessage>
               )}
               {errors.password?.type === "maxLength" && (
-                <p role="alert" style={{ color: "coral" }}>
+                <AlertMessage role="alert">
                   Password must be less than 20 characters
-                </p>
+                </AlertMessage>
               )}
               {errors.password?.type === "pattern" && (
-                <p role="alert" style={{ color: "coral" }}>
+                <AlertMessage role="alert">
                   Password must have one uppercase letter, one lowercase letter,
                   one number, and one special character.
-                </p>
+                </AlertMessage>
               )}
             </InputContainer>
             <InputContainer>
-              <input
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  width: "100%",
-                }}
+              <StyledInput
                 placeholder="Confirm Password"
                 type="password"
                 {...register("confirm_password", {
@@ -224,123 +174,91 @@ const SignUp = () => {
                 aria-invalid={errors.confirm_password ? "true" : "false"}
               />
               {errors.confirm_password && (
-                <p role="alert" style={{ color: "coral" }}>
+                <AlertMessage role="alert">
                   {errors.confirm_password?.message}
-                </p>
+                </AlertMessage>
               )}
             </InputContainer>
           </FlexContainer>
-
-          <FlexContainer style={{ display: "flex", gap: "10px" }}>
+          <FlexContainer>
             <InputContainer>
-              <input
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  width: "100%",
-                }}
+              <StyledInput
                 placeholder="Slot size"
                 type="number"
                 {...register("slot_size", { required: true })}
                 aria-invalid={errors.slot_size ? "true" : "false"}
               />
               {errors.slot_size?.type === "required" && (
-                <p role="alert" style={{ color: "coral" }}>
-                  Slot size is required
-                </p>
+                <AlertMessage role="alert">Slot size is required</AlertMessage>
               )}
             </InputContainer>
             <InputContainer>
-              <input
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  width: "100%",
-                }}
+              <StyledInput
                 placeholder="Capacity"
                 type="number"
                 {...register("capacity", { required: true })}
                 aria-invalid={errors.capacity ? "true" : "false"}
               />
               {errors.capacity?.type === "required" && (
-                <p role="alert" style={{ color: "coral" }}>
-                  Capacity is required
-                </p>
+                <AlertMessage role="alert">Capacity is required</AlertMessage>
               )}
             </InputContainer>
           </FlexContainer>
-
-          <FlexContainer style={{ display: "flex", gap: "10px" }}>
+          <FlexContainer>
             <InputContainer>
-              <textarea
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  width: "100%",
-                  resize: "none",
-                }}
+              <StyledTextArea
                 placeholder="Address"
                 rows="3"
                 {...register("address", { required: true })}
                 aria-invalid={errors.address ? "true" : "false"}
               />
               {errors.address?.type === "required" && (
-                <p role="alert" style={{ color: "coral" }}>
-                  Address is required
-                </p>
+                <AlertMessage role="alert">Address is required</AlertMessage>
               )}
             </InputContainer>
             <InputContainer>
-              <textarea
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  width: "100%",
-                  resize: "none",
-                }}
+              <StyledTextArea
                 placeholder="Area"
                 rows="3"
                 {...register("area", { required: true })}
                 aria-invalid={errors.area ? "true" : "false"}
               />
               {errors.area?.type === "required" && (
-                <p role="alert" style={{ color: "coral" }}>
-                  Area is required
-                </p>
+                <AlertMessage role="alert">Area is required</AlertMessage>
               )}
             </InputContainer>
           </FlexContainer>
 
-          <input
-            style={{
-              padding: "10px",
-              borderRadius: "5px",
-              backgroundColor: "#202123",
-              color: "#fff",
-              fontWeight: "bold",
-              cursor: "pointer",
-              width: "100%",
-              marginTop: "20px",
-            }}
-            type="submit"
-            value="Create Account"
-          />
+          {/* Zone Input Fields */}
+          <FullWidthInputBox>
+            <StyledInput
+              placeholder="Number of zones"
+              type="number"
+              value={zoneCount}
+              onChange={handleZoneCountChange}
+              aria-invalid={errors.zones ? "true" : "false"}
+            />
+          </FullWidthInputBox>
+
+          {zoneSlots.map((slot, index) => (
+            <FullWidthInputBox key={index}>
+              <StyledInput
+                placeholder={`Slots in zone ${index + 1}`}
+                type="number"
+                value={zoneSlots[index]}
+                onChange={(e) => handleZoneSlotChange(index, e.target.value)}
+              />
+            </FullWidthInputBox>
+          ))}
+
+          <SubmitButton type="submit" value="Create Account" />
           <p style={{ marginTop: "10px" }}>
             Don&apos;t have an account?{" "}
-            <Link
-              to={"/login"}
-              style={{
-                color: "#1e90ff",
-                fontWeight: "normal",
-                fontSize: "1.05em",
-              }}
-            >
-              Log In
-            </Link>
+            <LoginLink to={"/login"}>Log In</LoginLink>
           </p>
-        </FormBody>
-      </FormContainer>
-    </div>
+        </StyledFormBody>
+      </StyledFormContainer>
+    </Container>
   )
 }
 

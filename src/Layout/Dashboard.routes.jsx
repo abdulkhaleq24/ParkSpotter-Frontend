@@ -76,6 +76,9 @@ const Dashboard = () => {
           <MenuItem to={"/dashboard/RegisterEmployee"}>
             Register Employee
           </MenuItem>
+          <MenuItem to={"/dashboard/TicketPayment"}>Ticket Payment</MenuItem>
+          <MenuItem to={"/dashboard/EmployeeList"}>Employee List</MenuItem>
+          <MenuItem to={"/dashboard/Statistics"}>Statistics</MenuItem>
         </MenuContainer>
         <OutletWrapper>
           <Outlet />

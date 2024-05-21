@@ -10,6 +10,10 @@ import CreateTicket from "../Pages/Pages.dashboard/CreateTicket/CreateTicket.com
 import PaymentForm from "../Components/PaymentForm/PaymentForm.component"
 import RegisterEmployee from "../Pages/Pages.dashboard/RegisterEmployee/RegisterEmployee.component"
 
+import TicketPayment from "../Pages/Pages.dashboard/TicketPayment/TicketPayment.component"
+import EmployeeList from "../Pages/Pages.dashboard/EmployeeList/EmployeeList.component"
+import Statistics from "../Pages/Pages.dashboard/Statistics/Statistics.component"
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -52,6 +56,18 @@ export const router = createBrowserRouter([
       {
         path: "RegisterEmployee",
         element: <RegisterEmployee />,
+      },
+      {
+        path: "TicketPayment",
+        element: <TicketPayment/>,
+      },
+      {
+        path: "EmployeeList",
+        element: <EmployeeList/>,
+      },
+      {
+        path: "Statistics",
+        element: <Statistics/>,
       },
     ],
   },
