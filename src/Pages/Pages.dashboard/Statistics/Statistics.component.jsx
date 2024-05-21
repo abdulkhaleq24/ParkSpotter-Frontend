@@ -56,7 +56,6 @@ const Select = styled.select`
   font-size: 14px;
   border: 2px solid #202123;
   border-radius: 8px;
-  //   margin-bottom: 20px;
   outline: none;
   width: 100%;
   max-width: 300px;
@@ -107,9 +106,35 @@ const getFilteredData = (
   minTickets,
   maxTickets
 ) => {
-  // Filter logic can be implemented here based on the filters
-  // For simplicity, returning dummy data
-  return dummyData
+  const start = startDate ? new Date(startDate) : null
+  const end = endDate ? new Date(endDate) : null
+
+  const filteredData = {
+    labels: [],
+    ticketsSold: [],
+    revenueGenerated: [],
+  }
+
+  dummyData.labels.forEach((label, index) => {
+    const date = new Date(2021, index) 
+    const price = dummyData.revenueGenerated[index]
+    const tickets = dummyData.ticketsSold[index]
+
+    if (
+      (!start || date >= start) &&
+      (!end || date <= end) &&
+      (!minPrice || price >= minPrice) &&
+      (!maxPrice || price <= maxPrice) &&
+      (!minTickets || tickets >= minTickets) &&
+      (!maxTickets || tickets <= maxTickets)
+    ) {
+      filteredData.labels.push(label)
+      filteredData.ticketsSold.push(tickets)
+      filteredData.revenueGenerated.push(price)
+    }
+  })
+
+  return filteredData
 }
 
 const ChartComponent = () => {

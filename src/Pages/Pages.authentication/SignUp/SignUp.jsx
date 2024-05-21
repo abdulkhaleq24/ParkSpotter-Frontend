@@ -4,7 +4,10 @@ import { Link, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { setRegistrationField } from "../../../store/registration/registration.reducer"
 import {
+  FormContainer,
   FlexContainer,
+  FormBody,
+  FormHeader,
   FullWidthInputBox,
   InputContainer,
   AlertMessage,
