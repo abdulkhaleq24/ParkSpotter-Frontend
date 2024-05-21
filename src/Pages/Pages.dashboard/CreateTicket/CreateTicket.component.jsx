@@ -11,6 +11,7 @@ import {
   TotalAmount,
   WarningMessage,
 } from "./CreateTicket.styled"
+import toast from "react-hot-toast"
 
 function CreateTicket() {
   const [carMake, setCarMake] = useState("")
@@ -93,9 +94,9 @@ function CreateTicket() {
       }
 
       const data = await response.json()
-      console.log("Ticket created:", data)
+      toast.success("Ticket created:", data)
     } catch (error) {
-      console.error("Error creating ticket:", error)
+      toast.error("Error creating ticket:", error)
     }
   }
 
