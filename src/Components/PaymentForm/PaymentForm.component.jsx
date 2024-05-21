@@ -102,7 +102,7 @@ const PaymentForm = () => {
     } else {
       if (paymentResult.paymentIntent.status === "succeeded") {
         const response = await fetch(
-          "https:/parkspottermain.pythonanywhere.com/accounts/register/",
+          "https://parkspotter-backened.onrender.com/accounts/register/",
           {
             method: "POST",
             headers: {
