@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from "react";
 import {
   Button,
   Form,
@@ -6,7 +6,7 @@ import {
   Input,
   Label,
   Title,
-} from "./RegisterEmployee.styled"
+} from "./RegisterEmployee.styled";
 
 const EmployeeRegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -16,29 +16,60 @@ const EmployeeRegistrationForm = () => {
     password: "",
     first_name: "",
     last_name: "",
-    email: "",
     joined_date: "",
     qualification: "",
     nid_card_no: "",
     address: "",
-  })
+  });
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // API call to submit the formData
-    console.log(formData)
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirm_password) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    const payload = { ...formData };
+    delete payload.confirm_password;
+
+    const token = localStorage.getItem("token");
+
+    try {
+      const response = await fetch(
+        "https://parkspotter-backened.onrender.com/accounts/employee-register/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Token ${token}`, 
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to register employee");
+      }
+
+      const data = await response.json();
+      console.log("Employee registered:", data);
+      alert("Employee registered successfully");
+    } catch (error) {
+      console.error("Error registering employee:", error);
+      alert("Error registering employee");
+    }
+  };
 
   return (
     <>
-      {" "}
       <Title>Register Employee</Title>
       <FormContainer>
         <Form onSubmit={handleSubmit}>
@@ -108,14 +139,14 @@ const EmployeeRegistrationForm = () => {
             required
           />
 
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="qualification">Qualification</Label>
           <Input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
+            type="text"
+            id="qualification"
+            name="qualification"
+            value={formData.qualification}
             onChange={handleChange}
-            placeholder="Enter your email"
+            placeholder="Enter your qualification"
             required
           />
 
@@ -153,8 +184,7 @@ const EmployeeRegistrationForm = () => {
         </Form>
       </FormContainer>
     </>
-  )
-}
+  );
+};
 
-export default EmployeeRegistrationForm
-// original
+export default EmployeeRegistrationForm;

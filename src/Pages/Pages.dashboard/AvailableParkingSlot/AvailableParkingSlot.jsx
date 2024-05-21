@@ -1,67 +1,26 @@
-// const availableParkingSlots = [
-//   { zone: 1, slot: 1, available: true },
-//   { zone: 1, slot: 2, available: false },
-//   { zone: "padma", slot: 1, available: false },
-//   { zone: "padma", slot: 18, available: true },
-//   { zone: 2, slot: 2, available: true },
-//   { zone: 3, slot: 2, available: false },
-//   { zone: 1, slot: 1, available: true },
-//   { zone: 1, slot: 2, available: false },
-//   { zone: "padma", slot: 1, available: false },
-//   { zone: "padma", slot: 18, available: false },
-//   { zone: 2, slot: 2, available: true },
-//   { zone: 3, slot: 2, available: true },
-//   { zone: 1, slot: 1, available: true },
-//   { zone: 1, slot: 2, available: false },
-//   { zone: "padma", slot: 1, available: false },
-//   { zone: "padma", slot: 18, available: false },
-//   { zone: 2, slot: 2, available: true },
-//   { zone: 3, slot: 2, available: true },
-// ]
-import React, { useState, useEffect } from "react"
-import styled from "styled-components"
+import { useState, useEffect } from "react"
 import { car } from "../../../assets/AvailableParkingSlotIcons/availabParkingIcons"
+import {
+  BoardContainer,
+  Column,
+  FilterContainer,
+  FilterItem,
+  FilterSection,
+  Input,
+  Label,
+  Select,
+  Slot,
+  theme,
+  Title,
+  ZoneContainer,
+  ZoneTitle,
+} from "./AvailableParkingSlots.styled"
+import toast from "react-hot-toast"
 
-const BoardContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-`
-
-const Column = styled.div`
-  width: calc(100% / 6);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
-
-const Slot = styled.div`
-  width: 80px;
-  height: 80px;
-  border: 1px solid ${({ theme }) => theme.secondaryColor};
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  border-radius: 99px;
-  background-color: ${({ available }) => (available ? "#00c04b" : "#fff")};
-  color: ${({ theme }) => theme.secondaryColor};
-  cursor: ${({ available }) => (available ? "pointer" : "not-allowed")};
-  transition: background-color 0.3s ease;
-  &:hover {
-    background-color: ${({ theme }) => theme.complementaryColor};
-  }
-`
-
-const theme = {
-  primaryColor: "#202123",
-  secondaryColor: "#ffffff",
-  complementaryColor: "coral",
-}
-
-const AvailableParkingSlot = () => {
+const AvailableParkingSlotTest = () => {
   const [availableParkingSlots, setAvailableParkingSlots] = useState([])
-  const [selectedZone, setSelectedZone] = useState(null)
+  const [zones, setZones] = useState([])
+  const [selectedZoneName, setSelectedZoneName] = useState("")
   const [selectedAvailability, setSelectedAvailability] = useState(null)
   const [selectedSlot, setSelectedSlot] = useState("")
 
@@ -69,19 +28,42 @@ const AvailableParkingSlot = () => {
     const fetchParkingSlots = async () => {
       try {
         const response = await fetch(
-          "https://parkspottermain.pythonanywhere.com/accounts/zone/"
+          "https://parkspotter-backened.onrender.com/accounts/slot/"
         )
         if (!response.ok) {
           throw new Error("Failed to fetch parking slots")
         }
         const data = await response.json()
-        setAvailableParkingSlots(data)
+        const correctedData = data.map((slot) => ({
+          ...slot,
+          available: !slot.available,
+        }))
+        setAvailableParkingSlots(correctedData)
       } catch (error) {
         console.error("Error fetching parking slots:", error)
       }
     }
 
     fetchParkingSlots()
+  }, [])
+
+  useEffect(() => {
+    const fetchZones = async () => {
+      try {
+        const response = await fetch(
+          "https://parkspotter-backened.onrender.com/accounts/zone/"
+        )
+        if (!response.ok) {
+          throw new Error("Failed to fetch zones")
+        }
+        const data = await response.json()
+        setZones(data)
+      } catch (error) {
+        console.error("Error fetching zones:", error)
+      }
+    }
+
+    fetchZones()
   }, [])
 
   const groupByZone = (parkingSlots) => {
@@ -97,9 +79,8 @@ const AvailableParkingSlot = () => {
 
   const groupedParkingSlots = groupByZone(availableParkingSlots)
 
-  const handleZoneChange = (event) => {
-    const selectedZone = event.target.value
-    setSelectedZone(selectedZone === "" ? null : selectedZone)
+  const handleZoneNameChange = (event) => {
+    setSelectedZoneName(event.target.value)
   }
 
   const handleAvailabilityChange = (event) => {
@@ -116,209 +97,122 @@ const AvailableParkingSlot = () => {
   const filterSlots = (slots) => {
     return slots.filter(
       (slot) =>
-        (selectedZone === null || slot.zone.toString() === selectedZone) &&
+        (selectedZoneName === "" || slot.zone === selectedZoneName) &&
         (selectedAvailability === null ||
-          slot.available === selectedAvailability) &&
-        (selectedSlot === "" || slot.slot === parseInt(selectedSlot))
+          slot.available === (selectedAvailability === "true")) &&
+        (selectedSlot === "" || slot.slot_number === parseInt(selectedSlot))
     )
+  }
+
+  const filterZones = (zones, selectedZoneName) => {
+    if (!selectedZoneName) return zones
+    return zones.filter((zone) => zone.name === selectedZoneName)
+  }
+
+  const generateParkingTicket = async () => {
+    const selectedZoneObj = zones.find((zone) => zone.name === selectedZoneName)
+    const zoneNumber = selectedZoneObj ? selectedZoneObj.park_owner : null
+
+    const ticket = {
+      zone: zoneNumber,
+      time_slot: 1,
+      vehicle: {
+        plate_number: "ABC123",
+        mobile_no: "1234567890",
+      },
+    }
+
+    try {
+      const response = await fetch(
+        "https://parkspotter-backened.onrender.com/accounts/bookings/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(ticket),
+        }
+      )
+
+      if (!response.ok) {
+        toast.error("Error creating ticket")
+        throw new Error("Failed to create ticket")
+      }
+
+      const data = await response.json()
+      toast.success("Ticket created:", data)
+    } catch (error) {
+      toast.error("Error creating ticket:", error)
+    }
   }
 
   return (
     <div>
-      <h1
-        style={{
-          textAlign: "center",
-          color: "coral",
-          backgroundColor: "#fff",
-          width: "28%",
-          margin: "20px auto ",
-          borderRadius: "25px",
-          padding: "5px 0",
-          fontSize: "1.2em",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-        }}
-      >
-        Available Parking Slots
-      </h1>
-      <div
-        style={{
-          textAlign: "center",
-          marginBottom: "20px",
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "space-between",
-          gap: "25px",
-          flexDirection: "column",
-          margin: "20px 35px",
-          padding: "24px",
-          borderRadius: "19px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
+      {/* <Title>Available Parking Slots</Title> */}
+      <FilterContainer>
+        <FilterSection>
           <div>
-            <label
-              style={{
-                fontWeight: "bold",
-                marginRight: "10px",
-                color: "#202123",
-                fontSize: "1rem",
-                textTransform: "uppercase",
-              }}
-              htmlFor="slot-number"
-            >
-              Enter Slot Number:
-            </label>
-            <input
+            <Label htmlFor="slot-number">Enter Slot Number:</Label>
+            <Input
               type="number"
               id="slot-number"
               onChange={handleSlotChange}
               value={selectedSlot}
               placeholder="Slot Number"
-              style={{
-                padding: "5px 12px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.4)",
-                borderRadius: "15px",
-                border: "4px solid #202123",
-                backgroundColor: "#202123",
-                color: "#ffffff",
-                fontSize: "0.8rem",
-                outline: "none",
-              }}
             />
           </div>
           <div>
-            <label
-              style={{
-                fontWeight: "bold",
-                marginRight: "10px",
-                color: "#202123",
-                fontSize: "1rem",
-                textTransform: "uppercase",
-              }}
-              htmlFor="availability-select"
-            >
-              Select Availability:
-            </label>
-            <select
+            <Label htmlFor="availability-select">Select Availability:</Label>
+            <Select
               id="availability-select"
               onChange={handleAvailabilityChange}
               value={selectedAvailability === null ? "" : selectedAvailability}
-              style={{
-                padding: "5px 12px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.4)",
-                borderRadius: "15px",
-                border: "4px solid #202123",
-                marginRight: "20px",
-                backgroundColor: "#202123",
-                color: "#ffffff",
-                fontSize: "0.8rem",
-                outline: "none",
-              }}
             >
               <option value="">All</option>
               <option value="true">Available</option>
               <option value="false">Booked</option>
-            </select>
+            </Select>
           </div>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            width: "100%",
-          }}
-        >
+        </FilterSection>
+        <FilterItem>
           <div>
-            {" "}
-            <label
-              style={{
-                fontWeight: "bold",
-                marginRight: "10px",
-                color: "#202123",
-                fontSize: "1rem",
-                textTransform: "uppercase",
-              }}
-              htmlFor="zone-select"
-            >
-              Select Zone:
-            </label>
-            <select
+            <Label htmlFor="zone-select">Select Zone:</Label>
+            <Select
               id="zone-select"
-              onChange={handleZoneChange}
-              value={selectedZone || ""}
-              style={{
-                padding: "5px 12px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.4)",
-                borderRadius: "15px",
-                border: "4px solid #202123",
-                marginRight: "20px",
-                backgroundColor: "#202123",
-                color: "#ffffff",
-                fontSize: "0.8rem",
-                outline: "none",
-              }}
+              onChange={handleZoneNameChange}
+              value={selectedZoneName}
             >
-              <option value="">All Zones</option>
-              {Object.keys(groupedParkingSlots).map((zone) => (
-                <option key={zone} value={zone}>
-                  Zone {zone}
+              <option value="">Select Zone</option>
+              {zones.map((zone, index) => (
+                <option key={index} value={zone.name}>
+                  {zone.name}
                 </option>
               ))}
-            </select>
+            </Select>
           </div>
-        </div>
-      </div>
+        </FilterItem>
+      </FilterContainer>
 
-      {Object.keys(groupedParkingSlots).map((zone) => (
-        <div
-          key={zone}
-          style={{
-            display: selectedZone && selectedZone !== zone ? "none" : "block",
-            backgroundColor: "#ffffff",
-            padding: "0px 25px 50px 25px",
-          }}
-        >
-          <h2
-            style={{
-              margin: "30px 0",
-              fontSize: "22px",
-              fontWeight: "bold",
-              textAlign: "start",
-              marginBottom: "35px",
-            }}
-          >
-            Zone {zone}
-          </h2>
-          <BoardContainer>
-            {filterSlots(groupedParkingSlots[zone] || []).map((slot, index) => (
-              <Column
-                style={{
-                  borderRadius: "15px",
-                  margin: "15px",
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)",
-                  padding: "60px 0",
-                }}
-                key={index}
-              >
-                <Slot available={slot.available} theme={theme}>
-                  {slot.available ? slot.slot : <img src={car} />}
-                </Slot>
-              </Column>
-            ))}
-          </BoardContainer>
-        </div>
-      ))}
+      {filterZones(Object.keys(groupedParkingSlots), selectedZoneName).map(
+        (zone) => (
+          <ZoneContainer key={zone}>
+            <ZoneTitle>Zone {zone}</ZoneTitle>
+            <BoardContainer>
+              {filterSlots(groupedParkingSlots[zone] || []).map(
+                (slot, index) => (
+                  <Column key={index}>
+                    <Slot available={slot.available} theme={theme}>
+                      {slot.available ? slot.slot_number : <img src={car} />}
+                    </Slot>
+                  </Column>
+                )
+              )}
+            </BoardContainer>
+          </ZoneContainer>
+        )
+      )}
     </div>
   )
 }
 
-export default AvailableParkingSlot
+export default AvailableParkingSlotTest

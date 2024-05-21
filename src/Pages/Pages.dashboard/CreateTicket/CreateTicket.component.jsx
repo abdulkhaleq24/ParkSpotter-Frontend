@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState, useEffect } from "react"
 import {
   Button,
   Container,
@@ -18,8 +18,28 @@ function CreateTicket() {
   const [phone, setPhone] = useState("")
   const [time_slot, setTime_slot] = useState("")
   const [totalAmount, setTotalAmount] = useState(0)
-  const parkingNumber = "Zone 1, Parking Lot 7"
+  const [zones, setZones] = useState([])
+  const [selectedZone, setSelectedZone] = useState("")
   const [warningMessage, setWarningMessage] = useState("")
+
+  useEffect(() => {
+    const fetchZones = async () => {
+      try {
+        const response = await fetch(
+          "https://parkspotter-backened.onrender.com/accounts/zone/"
+        )
+        if (!response.ok) {
+          throw new Error("Failed to fetch zones")
+        }
+        const data = await response.json()
+        setZones(data)
+      } catch (error) {
+        console.error("Error fetching zones:", error)
+      }
+    }
+
+    fetchZones()
+  }, [])
 
   const calculateTotalAmount = (duration) => {
     let price = 0
@@ -46,8 +66,9 @@ function CreateTicket() {
   }
 
   const generateParkingTicket = async () => {
+    const selectedZoneData = zones.find((zone) => zone.name === selectedZone)
     const ticket = {
-      zone: 1,
+      zone: selectedZoneData ? selectedZoneData.park_owner : null,
       time_slot: time_slot,
       vehicle: {
         plate_number: vehicle,
@@ -57,7 +78,7 @@ function CreateTicket() {
 
     try {
       const response = await fetch(
-        "https://parkspottermain.pythonanywhere.com/accounts/bookings/",
+        "https://parkspotter-backened.onrender.com/accounts/bookings/",
         {
           method: "POST",
           headers: {
@@ -80,7 +101,6 @@ function CreateTicket() {
 
   return (
     <>
-      {" "}
       <Title>Create Ticket</Title>
       <Container>
         <FormGroup>
@@ -108,6 +128,20 @@ function CreateTicket() {
           />
         </FormGroup>
         <FormGroup>
+          <Label>Parking Zone</Label>
+          <Select
+            value={selectedZone}
+            onChange={(e) => setSelectedZone(e.target.value)}
+          >
+            <option value="">Select Zone</option>
+            {zones.map((zone) => (
+              <option key={zone.name} value={zone.name}>
+                {zone.name}
+              </option>
+            ))}
+          </Select>
+        </FormGroup>
+        <FormGroup>
           <Label>Parking Duration</Label>
           <Select
             value={time_slot}
@@ -128,7 +162,7 @@ function CreateTicket() {
           <span style={{ fontWeight: "bold" }}>{totalAmount}tk</span>
         </TotalAmount>
         <StaticParkingNumber>
-          Parking Number: {parkingNumber}
+          Parking Number: Zone 1, Parking Lot 7
         </StaticParkingNumber>
         {warningMessage && <WarningMessage>{warningMessage}</WarningMessage>}
         <Button onClick={generateParkingTicket}>Generate Parking Ticket</Button>
@@ -138,5 +172,3 @@ function CreateTicket() {
 }
 
 export default CreateTicket
-
-// original
