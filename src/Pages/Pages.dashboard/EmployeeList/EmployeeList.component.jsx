@@ -1,7 +1,6 @@
-// EmployeeList.js
-import React, { useState, useEffect } from "react"
-import styled from "styled-components"
-import EmployeeCard from "./EmployeeCard"
+import styled from "styled-components";
+import EmployeeCard from "./EmployeeCard";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   padding: 20px;
@@ -10,7 +9,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 
 const FilterContainer = styled.div`
   margin-bottom: 20px;
@@ -23,7 +22,7 @@ const FilterContainer = styled.div`
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 20px;
-`
+`;
 
 const FilterSection = styled.div`
   display: flex;
@@ -31,14 +30,14 @@ const FilterSection = styled.div`
   align-items: center;
   margin-bottom: 20px;
   width: 100%;
-`
+`;
 
 const Label = styled.label`
   font-size: 18px;
   font-weight: bold;
   color: #202123;
   margin-right: 10px;
-`
+`;
 
 const Select = styled.select`
   padding: 12px;
@@ -55,7 +54,7 @@ const Select = styled.select`
   &:focus {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   }
-`
+`;
 
 const Input = styled.input`
   padding: 12px;
@@ -71,21 +70,21 @@ const Input = styled.input`
   &:focus {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   }
-`
+`;
 
 const SalaryFilterSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-`
+`;
 
 const SalaryFilterHeader = styled.h4`
   font-size: 18px;
   font-weight: bold;
   color: #202123;
   margin-bottom: 10px;
-`
+`;
 
 const CardsContainer = styled.div`
   display: flex;
@@ -93,7 +92,26 @@ const CardsContainer = styled.div`
   justify-content: center;
   width: 100%;
   max-width: 1200px;
-`
+`;
+
+const Loader = styled.div`
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #202123;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  align-self: center;
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
 
 const employeesData = [
   {
@@ -152,63 +170,77 @@ const employeesData = [
     salary: 60000,
     profile_image: "https://via.placeholder.com/100",
   },
-]
+];
 
 const EmployeeList = () => {
-  const [employees, setEmployees] = useState(employeesData)
-  const [filteredEmployees, setFilteredEmployees] = useState(employeesData)
-  const [filterField, setFilterField] = useState("")
-  const [filterValue, setFilterValue] = useState("")
-  const [minSalary, setMinSalary] = useState("")
-  const [maxSalary, setMaxSalary] = useState("")
+  const [employees, setEmployees] = useState();
+  const [filteredEmployees, setFilteredEmployees] = useState();
+  const [filterField, setFilterField] = useState("");
+  const [filterValue, setFilterValue] = useState("");
+  const [minSalary, setMinSalary] = useState("");
+  const [maxSalary, setMaxSalary] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleFilterFieldChange = (e) => {
-    setFilterField(e.target.value)
-    setFilterValue("")
-  }
+    setFilterField(e.target.value);
+    setFilterValue("");
+  };
 
   const handleFilterValueChange = (e) => {
-    setFilterValue(e.target.value)
-    filterEmployees(e.target.value, filterField, minSalary, maxSalary)
-  }
+    setFilterValue(e.target.value);
+    filterEmployees(e.target.value, filterField, minSalary, maxSalary);
+  };
 
   const handleMinSalaryChange = (e) => {
-    setMinSalary(e.target.value)
-    filterEmployees(filterValue, filterField, e.target.value, maxSalary)
-  }
+    setMinSalary(e.target.value);
+    filterEmployees(filterValue, filterField, e.target.value, maxSalary);
+  };
 
   const handleMaxSalaryChange = (e) => {
-    setMaxSalary(e.target.value)
-    filterEmployees(filterValue, filterField, minSalary, e.target.value)
-  }
+    setMaxSalary(e.target.value);
+    filterEmployees(filterValue, filterField, minSalary, e.target.value);
+  };
 
   const filterEmployees = (value, field, minSal, maxSal) => {
-    let filtered = employees
+    let filtered = employees;
 
     if (field && value) {
       filtered = filtered.filter((employee) =>
         employee[field].toString().toLowerCase().includes(value.toLowerCase())
-      )
+      );
     }
 
     if (minSal) {
       filtered = filtered.filter(
         (employee) => employee.salary >= parseFloat(minSal)
-      )
+      );
     }
 
     if (maxSal) {
       filtered = filtered.filter(
         (employee) => employee.salary <= parseFloat(maxSal)
-      )
+      );
     }
 
-    setFilteredEmployees(filtered)
-  }
+    setFilteredEmployees(filtered);
+  };
 
   useEffect(() => {
-    setFilteredEmployees(employees)
-  }, [employees])
+    setLoading(true);
+    const user_id = localStorage.getItem("user_id");
+    fetch("https://parkspotter-backened.onrender.com/accounts/employee-list/")
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data.park_owner_id);
+        const ownerEmployee = data.filter(
+          (data) => data.park_owner_id == user_id
+        );
+        // console.log(ownerEmployee);
+        setEmployees(ownerEmployee);
+        setFilteredEmployees(ownerEmployee);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <Container>
@@ -255,12 +287,22 @@ const EmployeeList = () => {
         </SalaryFilterSection>
       </FilterContainer>
       <CardsContainer>
-        {filteredEmployees.map((employee, index) => (
-          <EmployeeCard key={index} employee={employee} />
-        ))}
+        {loading ? (
+          <>
+            <Loader />
+          </>
+        ) : (
+          <>
+            {filteredEmployees?.map((employee, index) => (
+              <>
+                <EmployeeCard key={index} employee={employee} />
+              </>
+            ))}
+          </>
+        )}
       </CardsContainer>
     </Container>
-  )
-}
+  );
+};
 
-export default EmployeeList
+export default EmployeeList;
