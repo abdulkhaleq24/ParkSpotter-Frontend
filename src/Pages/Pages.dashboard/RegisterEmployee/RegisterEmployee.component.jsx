@@ -7,20 +7,21 @@ import {
   Label,
   Title,
 } from "./RegisterEmployee.styled";
+import toast from "react-hot-toast";
 
 const EmployeeRegistrationForm = () => {
   const [formData, setFormData] = useState({
+    mobile_no: "",
     username: "",
+    email: "",
+    confirm_password: "",
+    password: "",
     first_name: "",
     last_name: "",
-    qualification: "",
-    mobile_no: "",
-    nid_card_no: "",
-    email: "",
-    password: "",
-    confirm_password: "",
-    address: "",
     joined_date: "",
+    qualification: "",
+    nid_card_no: "",
+    address: "",
   });
 
   const handleChange = (e) => {
@@ -39,15 +40,24 @@ const EmployeeRegistrationForm = () => {
     }
 
     const payload = { ...formData };
-    delete payload.confirm_password;
+    // delete payload.confirm_password;
+    console.log(payload);
+
+    const employeeData = {
+      username: payload.username,
+      first_name: payload.first_name,
+      last_name: payload.last_name,
+      qualification: payload.qualification,
+      mobile_no: payload.mobile_no,
+      nid_card_no: payload.nid_card_no,
+      email: payload.email,
+      password: payload.password,
+      confirm_password: payload.confirm_password,
+      address: payload.address,
+      joined_date: payload.joined_date,
+    };
 
     const token = localStorage.getItem("token");
-    if (!token) {
-      alert("No authentication token found");
-      return;
-    }
-
-    console.log("Payload:", payload); 
 
     try {
       const response = await fetch(
@@ -56,24 +66,35 @@ const EmployeeRegistrationForm = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Token ${token}`,
+            Authorization: `Token ${token}`,
           },
-          body: JSON.stringify(payload),
+          body: JSON.stringify(employeeData),
         }
       );
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error details:", errorData);  
-        throw new Error(`Failed to register employee: ${errorData.detail || response.statusText}`);
+        throw new Error("Failed to register employee");
       }
 
       const data = await response.json();
       console.log("Employee registered:", data);
-      alert("Employee registered successfully");
+      toast.success("Employee registered successfully");
+      setFormData({
+        mobile_no: "",
+        username: "",
+        email: "",
+        confirm_password: "",
+        password: "",
+        first_name: "",
+        last_name: "",
+        joined_date: "",
+        qualification: "",
+        nid_card_no: "",
+        address: "",
+      });
     } catch (error) {
       console.error("Error registering employee:", error);
-      alert(`Error registering employee: ${error.message}`);
+      toast.error("Error registering employee");
     }
   };
 
@@ -82,6 +103,17 @@ const EmployeeRegistrationForm = () => {
       <Title>Register Employee</Title>
       <FormContainer>
         <Form onSubmit={handleSubmit}>
+          <Label htmlFor="mobile_no">Mobile No</Label>
+          <Input
+            type="text"
+            id="mobile_no"
+            name="mobile_no"
+            value={formData.mobile_no}
+            onChange={handleChange}
+            placeholder="Enter your mobile number"
+            required
+          />
+
           <Label htmlFor="username">Username</Label>
           <Input
             type="text"
@@ -90,6 +122,38 @@ const EmployeeRegistrationForm = () => {
             value={formData.username}
             onChange={handleChange}
             placeholder="Enter your username"
+            required
+          />
+          <Label htmlFor="email">Email</Label>
+          <Input
+            type="text"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Enter your email"
+            required
+          />
+
+          <Label htmlFor="password">Password</Label>
+          <Input
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Enter your password"
+            required
+          />
+
+          <Label htmlFor="confirm_password">Confirm Password</Label>
+          <Input
+            type="password"
+            id="confirm_password"
+            name="confirm_password"
+            value={formData.confirm_password}
+            onChange={handleChange}
+            placeholder="Confirm your password"
             required
           />
 
@@ -126,14 +190,13 @@ const EmployeeRegistrationForm = () => {
             required
           />
 
-          <Label htmlFor="mobile_no">Mobile No</Label>
+          <Label htmlFor="joined_date">Joined Date</Label>
           <Input
-            type="text"
-            id="mobile_no"
-            name="mobile_no"
-            value={formData.mobile_no}
+            type="datetime-local"
+            id="joined_date"
+            name="joined_date"
+            value={formData.joined_date}
             onChange={handleChange}
-            placeholder="Enter your mobile number"
             required
           />
 
@@ -145,40 +208,6 @@ const EmployeeRegistrationForm = () => {
             value={formData.nid_card_no}
             onChange={handleChange}
             placeholder="Enter your NID card number"
-            required
-          />
-
-          <Label htmlFor="email">Email</Label>
-          <Input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Enter your email"
-            required
-          />
-
-          <Label htmlFor="password">Password</Label>
-          <Input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Enter your password"
-            required
-          />
-
-          <Label htmlFor="confirm_password">Confirm Password</Label>
-          <Input
-            type="password"
-            id="confirm_password"
-            name="confirm_password"
-            value={formData.confirm_password}
-            onChange={handleChange}
-            placeholder="Confirm your password"
-            required
           />
 
           <Label htmlFor="address">Address</Label>
@@ -189,17 +218,6 @@ const EmployeeRegistrationForm = () => {
             value={formData.address}
             onChange={handleChange}
             placeholder="Enter your address"
-            required
-          />
-
-          <Label htmlFor="joined_date">Joined Date</Label>
-          <Input
-            type="datetime-local"
-            id="joined_date"
-            name="joined_date"
-            value={formData.joined_date}
-            onChange={handleChange}
-            required
           />
 
           <Button type="submit">Register</Button>
