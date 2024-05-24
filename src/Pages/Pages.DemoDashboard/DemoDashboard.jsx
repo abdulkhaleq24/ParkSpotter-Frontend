@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import {
   CircularImageContainer,
   Container,
@@ -13,6 +13,7 @@ import {
   MenuIcon,
   MenuItem,
   OutletWrapper,
+  SubscribeButton,
 } from "./DemoDashboard.styles";
 import { useState } from "react";
 import toast from "react-hot-toast";
@@ -79,20 +80,25 @@ const DemoDashboard = () => {
           <span>ParkSpotter</span>
         </div>
         {/* Profile Dropdown start */}
-        <DropdownContainer>
-          <CircularImageContainer onClick={toggleDropdown}>
-            <Image
-              src={
-                "https://img.freepik.com/free-photo/handsome-bearded-guy-posing-against-white-wall_273609-20597.jpg?size=626&ext=jpg&ga=GA1.1.2082370165.1715644800&semt=sph"
-              }
-              alt={"Profile image"}
-            />
-          </CircularImageContainer>
-          <DropdownContent isOpen={isOpen}>
-            <DropdownItem onClick={handleIsOwner}>Profile</DropdownItem>
-            <DropdownItem onClick={handleIsOwner}>Log Out</DropdownItem>
-          </DropdownContent>
-        </DropdownContainer>
+        <div style={{ display: "flex", alignItems: "center", gap: "30px" }}>
+          <NavLink to={"/login"}>Login</NavLink>
+          <SubscribeButton to={"/signup"}>Subscribe</SubscribeButton>
+
+          <DropdownContainer>
+            <CircularImageContainer onClick={toggleDropdown}>
+              <Image
+                src={
+                  "https://img.freepik.com/free-photo/handsome-bearded-guy-posing-against-white-wall_273609-20597.jpg?size=626&ext=jpg&ga=GA1.1.2082370165.1715644800&semt=sph"
+                }
+                alt={"Profile image"}
+              />
+            </CircularImageContainer>
+            <DropdownContent isOpen={isOpen}>
+              <DropdownItem onClick={handleIsOwner}>Profile</DropdownItem>
+              <DropdownItem onClick={handleIsOwner}>Log Out</DropdownItem>
+            </DropdownContent>
+          </DropdownContainer>
+        </div>
         {/* Profile Dropdown End */}
       </Header>
       <Content>
