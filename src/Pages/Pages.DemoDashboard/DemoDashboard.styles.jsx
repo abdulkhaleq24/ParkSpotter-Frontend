@@ -147,3 +147,10 @@ export const DropdownItem = styled.button`
   }
 `;
 // Profile Dropdown style End
+
+export const SubscribeButton = styled(NavLink)`
+  background-color: white;
+  color: black;
+  padding: 8px;
+  border-radius: 15px;
+`;

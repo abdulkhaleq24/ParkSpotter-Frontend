@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Container, Header, Form, Loader } from "./SingIn.styles";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import { TiHomeOutline } from "react-icons/ti";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -54,7 +55,22 @@ const SignIn = () => {
   return (
     <div>
       <Link to={"/"}>
-        <button style={{ margin: "10px", padding: "10px", backgroundColor: "#202123", color: "#ffffff", border: "none", borderRadius: "4px", cursor: "pointer" }}>Home</button>
+        <button
+          style={{
+            margin: "10px",
+            padding: "10px",
+            backgroundColor: "#202123",
+            color: "#ffffff",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            gap: "2px",
+          }}
+        >
+          <TiHomeOutline /> Home
+        </button>
       </Link>
       <Container>
         <Header>Sign in</Header>
@@ -62,10 +78,10 @@ const SignIn = () => {
           <input
             placeholder="Username"
             type="text"
-            {...register("username", { required: true })}
-            aria-invalid={errors.username ? "true" : "false"}
+            {...register("login", { required: true })}
+            aria-invalid={errors.login ? "true" : "false"}
           />
-          {errors.username?.type === "required" && (
+          {errors.login?.type === "required" && (
             <p role="alert">Username is required</p>
           )}
 
@@ -77,11 +93,7 @@ const SignIn = () => {
           />
           {errors.password && <p role="alert">{errors.password?.message}</p>}
 
-          {loading ? (
-            <Loader />
-          ) : (
-            <input type="submit" value={"Sign In"} />
-          )}
+          {loading ? <Loader /> : <input type="submit" value={"Sign In"} />}
 
           <p>
             Don&apos;t have an account? <Link to={"/signup"}>Sign Up</Link>

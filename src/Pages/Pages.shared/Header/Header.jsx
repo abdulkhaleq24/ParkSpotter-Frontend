@@ -274,7 +274,7 @@ const Navbar = () => {
               to={"/dashboard"}
             >
               <MdDashboard />
-              <button style={{ fontWeight: "600" }}>Demo dashboard</button>
+              <button style={{ fontWeight: "600" }}> Dashboard</button>
             </NavLink>
           ) : (
             <SignInLinkContainer>
