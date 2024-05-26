@@ -38,14 +38,13 @@ const SignIn = () => {
         return;
       }
 
-      localStorage.setItem("role", responseData.role);
-      localStorage.setItem("token", responseData.token);
-      localStorage.setItem("user_id", responseData.user_id);
-
       if (
         responseData.role == "park_owner" ||
         responseData.role == "employee"
       ) {
+        localStorage.setItem("role", responseData.role);
+        localStorage.setItem("token", responseData.token);
+        localStorage.setItem("user_id", responseData.user_id);
         navigate("/dashboard");
       } else {
         const url = new URL(
