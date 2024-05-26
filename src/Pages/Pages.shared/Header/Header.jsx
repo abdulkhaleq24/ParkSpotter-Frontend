@@ -3,10 +3,11 @@ import { NavLink, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FiAlignJustify } from "react-icons/fi";
 import { parkSpotterLogo } from "../../../assets/Logo/Logo";
-import { IoIosCloseCircleOutline } from "react-icons/io";
+import { IoIosCloseCircleOutline, IoIosLogOut } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { setSubscriptionAmount } from "../../../store/payment/payment.reducer";
 import { MdDashboard, MdPhoneAndroid } from "react-icons/md";
+import toast from "react-hot-toast";
 
 const PrimaryColor = "#202123";
 const SecondaryColor = "#ffffff";
@@ -221,6 +222,34 @@ const Navbar = () => {
     }
   };
 
+  // Logout
+  const handleLogout = () => {
+    const token = localStorage.getItem("token");
+
+    fetch("https://parkspotter-backened.onrender.com/accounts/logout/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`, // Assuming you're using Token based auth
+      },
+    })
+      .then((res) => {
+        // console.log(res);
+        res.json();
+      })
+      .then((data) => {
+        // console.log(data);
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        localStorage.removeItem("user_id");
+        navigate("/login");
+        toast.success("Log out successful");
+      })
+      .catch((error) => {
+        // console.error("Error logging out:", error);
+      });
+  };
+
   return (
     <NavbarContainer>
       <NavLink to={"/"}>
@@ -269,7 +298,7 @@ const Navbar = () => {
 
         <div>
           {role == "customer" ? (
-            <>
+            <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
               <a href="https://development-parkspotter-pwa.netlify.app/home">
                 <button
                   style={{ display: "flex", alignItems: "center", gap: "2px" }}
@@ -277,7 +306,13 @@ const Navbar = () => {
                   <MdPhoneAndroid /> Your App
                 </button>
               </a>
-            </>
+              <button
+                onClick={handleLogout}
+                style={{ display: "flex", alignItems: "center", gap: "2px" }}
+              >
+                <IoIosLogOut /> Logout
+              </button>
+            </div>
           ) : (
             <>
               {role == "park_owner" || role == "employee" ? (

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const FormContainer = styled.div`
   background-color: #fff;
@@ -13,12 +13,12 @@ export const FormContainer = styled.div`
     padding: 20px;
     margin: 20px;
   }
-`
+`;
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-`
+`;
 
 export const Title = styled.h1`
   text-align: center;
@@ -30,32 +30,35 @@ export const Title = styled.h1`
   margin: 20px auto;
   border-radius: 55px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-`
+`;
 
 export const Label = styled.label`
   margin-bottom: 10px;
   font-weight: bold;
-`
+`;
 
 export const Input = styled.input`
-  padding: 15px;
+  padding: 8px;
   margin-bottom: 20px;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  background-color: #333;
-  color: #fff;
+  border: 2px solid #ccc;
   font-size: 1em;
 
   &:focus {
-    border-color: coral;
+    border: 2px solid #202123;
     outline: none;
   }
 
   &::placeholder {
     color: #bbb;
   }
-`
+`;
 
+export const DateInput = styled(Input)`
+  &::placeholder {
+    color: #bbb;
+  }
+`;
 export const Button = styled.button`
   background-color: coral;
   color: #ffffff;
@@ -68,7 +71,6 @@ export const Button = styled.button`
   width: 50%;
   margin-left: auto;
   margin-right: auto;
-  
 
   &:hover {
     background-color: green;
@@ -77,4 +79,4 @@ export const Button = styled.button`
   &:active {
     transform: scale(0.98);
   }
-`
+`;

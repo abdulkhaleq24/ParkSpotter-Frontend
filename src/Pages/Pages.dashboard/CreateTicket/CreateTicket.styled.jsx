@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const Container = styled.div`
   background-color: #fff;
@@ -13,7 +13,7 @@ export const Container = styled.div`
     padding: 20px;
     margin: 20px;
   }
-`
+`;
 
 export const Title = styled.h2`
   color: coral;
@@ -25,34 +25,33 @@ export const Title = styled.h2`
   font-size: 1.2em;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 5px 7px;
-`
+`;
 
 export const FormGroup = styled.div`
   margin-bottom: 20px;
-`
+`;
 
 export const Label = styled.label`
   display: block;
   margin-bottom: 5px;
-`
+`;
 
 export const Input = styled.input`
   width: 100%;
   padding: 8px;
   border: none;
   border-radius: 5px;
-  background-color: #333;
   color: #fff;
-`
+  border: 2px solid #ddd;
+`;
 
 export const Select = styled.select`
   width: 100%;
   padding: 8px;
-  border: none;
   border-radius: 5px;
-  background-color: #333;
-  color: #fff;
-`
+  color: #202123;
+  border: 2px solid #ddd;
+`;
 
 export const Button = styled.button`
   width: contain;
@@ -68,17 +67,17 @@ export const Button = styled.button`
   &:hover {
     background-color: #45a049;
   }
-`
+`;
 
 export const TotalAmount = styled.div`
   margin-top: 20px;
   font-size: 18px;
-`
+`;
 
 export const StaticParkingNumber = styled.div`
   margin-top: 20px;
   font-size: 18px;
-`
+`;
 
 export const WarningMessage = styled.div`
   margin-top: 20px;
@@ -87,4 +86,4 @@ export const WarningMessage = styled.div`
   span {
     font-weight: bold;
   }
-`
+`;

@@ -96,6 +96,7 @@ const Dashboard = () => {
       <Content>
         <MenuContainer open={menuOpen}>
           <MenuItem to={"/"}>Home</MenuItem>
+          <MenuItem to={"/dashboard"}>Overview</MenuItem>
           <MenuItem to={"/dashboard/CreateParkingTicket"}>
             Create Parking Ticket
           </MenuItem>
@@ -108,7 +109,6 @@ const Dashboard = () => {
           </MenuItem>
           <MenuItem to={"/dashboard/TicketPayment"}>Ticket Payment</MenuItem>
           <MenuItem to={"/dashboard/EmployeeList"}>Employee List</MenuItem>
-          <MenuItem to={"/dashboard/Statistics"}>Statistics</MenuItem>
         </MenuContainer>
         <OutletWrapper>
           <Outlet />
