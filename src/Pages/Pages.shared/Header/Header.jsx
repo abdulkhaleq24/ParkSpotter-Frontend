@@ -6,7 +6,7 @@ import { parkSpotterLogo } from "../../../assets/Logo/Logo";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { setSubscriptionAmount } from "../../../store/payment/payment.reducer";
-import { MdDashboard } from "react-icons/md";
+import { MdDashboard, MdPhoneAndroid } from "react-icons/md";
 
 const PrimaryColor = "#202123";
 const SecondaryColor = "#ffffff";
@@ -199,7 +199,7 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  const user_id = localStorage.getItem("user_id");
+  const role = localStorage.getItem("role");
 
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => {
@@ -268,38 +268,58 @@ const Navbar = () => {
         </div>
 
         <div>
-          {user_id ? (
-            <NavLink
-              style={{ display: "flex", alignItems: "center", gap: "5px" }}
-              to={"/dashboard"}
-            >
-              <MdDashboard />
-              <button style={{ fontWeight: "600" }}> Dashboard</button>
-            </NavLink>
-          ) : (
-            <SignInLinkContainer>
-              <MenuItem to={"/login"}>LogIn</MenuItem>
-              <NavLink to={"/signup"}>
+          {role == "customer" ? (
+            <>
+              <a href="https://development-parkspotter-pwa.netlify.app/home">
                 <button
-                  style={{
-                    fontWeight: "600",
-                    backgroundColor: `${PrimaryColor}`,
-                    padding: "8px 15px",
-                    color: "white",
-                    borderRadius: "29px",
-                  }}
+                  style={{ display: "flex", alignItems: "center", gap: "2px" }}
                 >
-                  Signup 👋
+                  <MdPhoneAndroid /> Your App
                 </button>
-              </NavLink>
-              <NavLink
-                style={{ display: "flex", alignItems: "center", gap: "5px" }}
-                to={"/demoDashboard"}
-              >
-                <MdDashboard />
-                <button style={{ fontWeight: "600" }}>Demo dashboard</button>
-              </NavLink>
-            </SignInLinkContainer>
+              </a>
+            </>
+          ) : (
+            <>
+              {role == "park_owner" || role == "employee" ? (
+                <NavLink
+                  style={{ display: "flex", alignItems: "center", gap: "5px" }}
+                  to={"/dashboard"}
+                >
+                  <MdDashboard />
+                  <button style={{ fontWeight: "600" }}> Dashboard</button>
+                </NavLink>
+              ) : (
+                <SignInLinkContainer>
+                  <MenuItem to={"/login"}>LogIn</MenuItem>
+                  <NavLink to={"/signup"}>
+                    <button
+                      style={{
+                        fontWeight: "600",
+                        backgroundColor: `${PrimaryColor}`,
+                        padding: "8px 15px",
+                        color: "white",
+                        borderRadius: "29px",
+                      }}
+                    >
+                      Signup 👋
+                    </button>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                    to={"/demoDashboard"}
+                  >
+                    <MdDashboard />
+                    <button style={{ fontWeight: "600" }}>
+                      Demo dashboard
+                    </button>
+                  </NavLink>
+                </SignInLinkContainer>
+              )}
+            </>
           )}
         </div>
       </Menu>

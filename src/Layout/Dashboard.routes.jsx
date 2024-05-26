@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { Outlet } from "react-router-dom"
+import { useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import {
   Container,
   Content,
@@ -9,30 +9,60 @@ import {
   MenuIcon,
   MenuItem,
   OutletWrapper,
-} from "./DashBoardRoutes.styles"
+} from "./DashBoardRoutes.styles";
 import {
   DropdownContainer,
   DropdownContent,
   DropdownItem,
   CircularImageContainer,
   Image,
-} from "./DashBoardRoutes.styles"
-import UserProfile from "../Pages/Pages.UserProfile/UserProfile/UserProfile"
+} from "./DashBoardRoutes.styles";
+import UserProfile from "../Pages/Pages.UserProfile/UserProfile/UserProfile";
+import toast from "react-hot-toast";
 
 const Dashboard = () => {
-  const [menuOpen, setMenuOpen] = useState(true)
+  const [menuOpen, setMenuOpen] = useState(true);
 
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen)
-  }
+    setMenuOpen(!menuOpen);
+  };
 
   /* Profile Dropdown start */
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen)
-  }
+    setIsOpen(!isOpen);
+  };
   /* Profile Dropdown end */
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    const token = localStorage.getItem("token");
+
+    fetch("https://parkspotter-backened.onrender.com/accounts/logout/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`, // Assuming you're using Token based auth
+      },
+    })
+      .then((res) => {
+        // console.log(res);
+        res.json();
+      })
+      .then((data) => {
+        // console.log(data);
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        localStorage.removeItem("user_id");
+        navigate("/login");
+        toast.success("Log out successful");
+      })
+      .catch((error) => {
+        // console.error("Error logging out:", error);
+      });
+  };
 
   return (
     <Container>
@@ -58,7 +88,7 @@ const Dashboard = () => {
           <DropdownContent isOpen={isOpen}>
             {/* <DropdownItem>Profile</DropdownItem> */}
             <UserProfile />
-            <DropdownItem>Log Out</DropdownItem>
+            <DropdownItem onClick={handleLogout}>Log Out</DropdownItem>
           </DropdownContent>
         </DropdownContainer>
         {/* Profile Dropdown End */}
@@ -85,7 +115,7 @@ const Dashboard = () => {
         </OutletWrapper>
       </Content>
     </Container>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
