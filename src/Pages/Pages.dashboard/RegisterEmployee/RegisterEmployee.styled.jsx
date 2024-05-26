@@ -9,9 +9,25 @@ export const FormContainer = styled.div`
   margin: 20px auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 
+  @media (max-width: 1200px) {
+    max-width: 80%;
+    padding: 50px 70px;
+  }
+
+  @media (max-width: 992px) {
+    max-width: 90%;
+    padding: 40px 60px;
+  }
+
   @media (max-width: 768px) {
+    max-width: 95%;
+    padding: 30px 40px;
+  }
+
+  @media (max-width: 576px) {
+    max-width: 100%;
     padding: 20px;
-    margin: 20px;
+    margin: 10px;
   }
 `;
 
@@ -30,7 +46,23 @@ export const Title = styled.h1`
   margin: 20px auto;
   border-radius: 55px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 992px) {
+    font-size: 1.1em;
+    width: 30%;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1em;
+    width: 40%;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 0.9em;
+    width: 50%;
+  }
 `;
+
 
 export const Label = styled.label`
   margin-bottom: 10px;
@@ -51,6 +83,21 @@ export const Input = styled.input`
 
   &::placeholder {
     color: #bbb;
+  }
+
+  @media (max-width: 992px) {
+    padding: 12px;
+    font-size: 0.9em;
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    font-size: 0.8em;
+  }
+
+  @media (max-width: 576px) {
+    padding: 8px;
+    font-size: 0.7em;
   }
 `;
 
@@ -78,5 +125,20 @@ export const Button = styled.button`
 
   &:active {
     transform: scale(0.98);
+  }
+
+  @media (max-width: 992px) {
+    width: 60%;
+    padding: 12px;
+  }
+
+  @media (max-width: 768px) {
+    width: 70%;
+    padding: 10px;
+  }
+
+  @media (max-width: 576px) {
+    width: 80%;
+    padding: 8px;
   }
 `;
