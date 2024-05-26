@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Container,
@@ -10,64 +10,64 @@ import {
   Title,
   TotalAmount,
   WarningMessage,
-} from "./CreateTicket.styled"
-import toast from "react-hot-toast"
+} from "./CreateTicket.styled";
+import toast from "react-hot-toast";
 
 function CreateTicket() {
-  const [carMake, setCarMake] = useState("")
-  const [vehicle, setVehicle] = useState("")
-  const [phone, setPhone] = useState("")
-  const [time_slot, setTime_slot] = useState("")
-  const [totalAmount, setTotalAmount] = useState(0)
-  const [zones, setZones] = useState([])
-  const [selectedZone, setSelectedZone] = useState("")
-  const [warningMessage, setWarningMessage] = useState("")
+  const [carMake, setCarMake] = useState("");
+  const [vehicle, setVehicle] = useState("");
+  const [phone, setPhone] = useState("");
+  const [time_slot, setTime_slot] = useState("");
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [zones, setZones] = useState([]);
+  const [selectedZone, setSelectedZone] = useState("");
+  const [warningMessage, setWarningMessage] = useState("");
 
   useEffect(() => {
     const fetchZones = async () => {
       try {
         const response = await fetch(
           "https://parkspotter-backened.onrender.com/accounts/zone/"
-        )
+        );
         if (!response.ok) {
-          throw new Error("Failed to fetch zones")
+          throw new Error("Failed to fetch zones");
         }
-        const data = await response.json()
-        setZones(data)
+        const data = await response.json();
+        setZones(data);
       } catch (error) {
-        console.error("Error fetching zones:", error)
+        console.error("Error fetching zones:", error);
       }
-    }
+    };
 
-    fetchZones()
-  }, [])
+    fetchZones();
+  }, []);
 
   const calculateTotalAmount = (duration) => {
-    let price = 0
+    let price = 0;
     switch (duration) {
       case "1":
-        price = 10
-        break
+        price = 10;
+        break;
       case "2":
-        price = 25
-        break
+        price = 25;
+        break;
       case "3":
-        price = 40
-        break
+        price = 40;
+        break;
       default:
-        price = 0
+        price = 0;
     }
-    setTotalAmount(price)
-  }
+    setTotalAmount(price);
+  };
 
   const generateWarningMessage = () => {
     setWarningMessage(
       `Please be aware that if you exceed your selected parking duration, you will be fined 1 taka per second.`
-    )
-  }
+    );
+  };
 
   const generateParkingTicket = async () => {
-    const selectedZoneData = zones.find((zone) => zone.name === selectedZone)
+    const selectedZoneData = zones.find((zone) => zone.name === selectedZone);
     const ticket = {
       zone: selectedZoneData ? selectedZoneData.park_owner : null,
       time_slot: time_slot,
@@ -75,7 +75,7 @@ function CreateTicket() {
         plate_number: vehicle,
         mobile_no: phone,
       },
-    }
+    };
 
     try {
       const response = await fetch(
@@ -87,18 +87,18 @@ function CreateTicket() {
           },
           body: JSON.stringify(ticket),
         }
-      )
+      );
 
       if (!response.ok) {
-        throw new Error("Failed to create ticket")
+        throw new Error("Failed to create ticket");
       }
 
-      const data = await response.json()
-      toast.success("Ticket created:", data)
+      const data = await response.json();
+      toast.success("Ticket created:", data);
     } catch (error) {
-      toast.error("Error creating ticket:", error)
+      toast.error("Error creating ticket:", error);
     }
-  }
+  };
 
   return (
     <>
@@ -107,6 +107,7 @@ function CreateTicket() {
         <FormGroup>
           <Label>Car Make</Label>
           <Input
+            placeholder="Car make"
             type="text"
             value={carMake}
             onChange={(e) => setCarMake(e.target.value)}
@@ -115,6 +116,7 @@ function CreateTicket() {
         <FormGroup>
           <Label>Car Number</Label>
           <Input
+            placeholder="Car number"
             type="text"
             value={vehicle}
             onChange={(e) => setVehicle(e.target.value)}
@@ -123,6 +125,7 @@ function CreateTicket() {
         <FormGroup>
           <Label>Phone Number</Label>
           <Input
+            placeholder="Phone Number"
             type="text"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
@@ -147,9 +150,9 @@ function CreateTicket() {
           <Select
             value={time_slot}
             onChange={(e) => {
-              setTime_slot(e.target.value)
-              calculateTotalAmount(e.target.value)
-              generateWarningMessage(parseInt(e.target.value))
+              setTime_slot(e.target.value);
+              calculateTotalAmount(e.target.value);
+              generateWarningMessage(parseInt(e.target.value));
             }}
           >
             <option value="">Select Duration</option>
@@ -169,7 +172,7 @@ function CreateTicket() {
         <Button onClick={generateParkingTicket}>Generate Parking Ticket</Button>
       </Container>
     </>
-  )
+  );
 }
 
-export default CreateTicket
+export default CreateTicket;
