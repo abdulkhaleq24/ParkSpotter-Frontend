@@ -28,14 +28,12 @@ const AvailableParkingSlotTest = () => {
   useEffect(() => {
     const fetchZonesAndSlots = async () => {
       try {
-        // Fetch all zones
         const zonesResponse = await fetch("https://parkspotter-backened.onrender.com/accounts/zone/");
         if (!zonesResponse.ok) {
           throw new Error("Failed to fetch zones");
         }
         const zonesData = await zonesResponse.json();
 
-        // Fetch all slots
         const slotsResponse = await fetch("https://parkspotter-backened.onrender.com/accounts/slot/");
         if (!slotsResponse.ok) {
           throw new Error("Failed to fetch slots");
@@ -43,11 +41,9 @@ const AvailableParkingSlotTest = () => {
         const slotsData = await slotsResponse.json();
 
         if (userRole === "park_owner") {
-          // Filter zones by park owner
           const parkOwnerZones = zonesData.filter(zone => zone.park_owner.toString() === userId);
           setZones(parkOwnerZones);
 
-          // Filter slots by park owner zones
           const parkOwnerZoneIds = parkOwnerZones.map(zone => zone.id);
           const filteredSlots = slotsData.filter(slot => parkOwnerZoneIds.includes(slot.zone));
           setAvailableParkingSlots(filteredSlots);
