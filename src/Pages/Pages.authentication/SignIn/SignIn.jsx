@@ -45,6 +45,7 @@ const SignIn = () => {
         localStorage.setItem("role", responseData.role);
         localStorage.setItem("token", responseData.token);
         localStorage.setItem("user_id", responseData.user_id);
+        console.log(responseData.role);
         navigate("/dashboard");
       } else {
         const url = new URL(
