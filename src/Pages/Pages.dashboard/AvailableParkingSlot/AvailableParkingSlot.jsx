@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { car } from "../../../assets/AvailableParkingSlotIcons/availabParkingIcons";
+import { useState, useEffect } from "react"
+import { car } from "../../../assets/AvailableParkingSlotIcons/availabParkingIcons"
 import {
   BoardContainer,
   Column,
@@ -13,79 +13,130 @@ import {
   theme,
   ZoneContainer,
   ZoneTitle,
-} from "./AvailableParkingSlots.styled";
-import toast from "react-hot-toast";
+} from "./AvailableParkingSlots.styled"
+import toast from "react-hot-toast"
 
 const AvailableParkingSlotTest = () => {
-  const [availableParkingSlots, setAvailableParkingSlots] = useState([]);
-  const [zones, setZones] = useState([]);
-  const [selectedZoneName, setSelectedZoneName] = useState("");
-  const [selectedAvailability, setSelectedAvailability] = useState("");
-  const [selectedSlot, setSelectedSlot] = useState("");
-  const userRole = localStorage.getItem("role");
-  const userId = localStorage.getItem("user_id");
+  const [availableParkingSlots, setAvailableParkingSlots] = useState([])
+  const [zones, setZones] = useState([])
+  const [selectedZoneName, setSelectedZoneName] = useState("")
+  const [selectedAvailability, setSelectedAvailability] = useState("")
+  const [selectedSlot, setSelectedSlot] = useState("")
+  const userRole = localStorage.getItem("role")
+  const userId = localStorage.getItem("user_id")
 
   useEffect(() => {
     const fetchZonesAndSlots = async () => {
       try {
-        const zonesResponse = await fetch("https://parkspotter-backened.onrender.com/accounts/zone/");
-        if (!zonesResponse.ok) {
-          throw new Error("Failed to fetch zones");
-        }
-        const zonesData = await zonesResponse.json();
-
-        const slotsResponse = await fetch("https://parkspotter-backened.onrender.com/accounts/slot/");
-        if (!slotsResponse.ok) {
-          throw new Error("Failed to fetch slots");
-        }
-        const slotsData = await slotsResponse.json();
+        let parkOwnerZones = []
 
         if (userRole === "park_owner") {
-          const parkOwnerZones = zonesData.filter(zone => zone.park_owner.toString() === userId);
-          setZones(parkOwnerZones);
-
-          const parkOwnerZoneIds = parkOwnerZones.map(zone => zone.id);
-          const filteredSlots = slotsData.filter(slot => parkOwnerZoneIds.includes(slot.zone));
-          setAvailableParkingSlots(filteredSlots);
+          // Fetch all zones
+          const zonesResponse = await fetch(
+            "https://parkspotter-backened.onrender.com/accounts/zone/"
+          )
+          if (!zonesResponse.ok) {
+            throw new Error("Failed to fetch zones")
+          }
+          const zonesData = await zonesResponse.json()
+          // Filter zones by park owner
+          parkOwnerZones = zonesData.filter(
+            (zone) => zone.park_owner.toString() === userId
+          )
+          setZones(parkOwnerZones)
+        } else if (userRole === "employee") {
+          // Fetch employee details
+          const employeeResponse = await fetch(
+            "https://parkspotter-backened.onrender.com/accounts/employee-list/"
+          )
+          if (!employeeResponse.ok) {
+            throw new Error("Failed to fetch employees")
+          }
+          const employeesData = await employeeResponse.json()
+          const employeeData = employeesData.find(
+            (employee) => employee.employee.id.toString() === userId
+          )
+          console.log({ employeesData })
+          console.log({ employeeData })
+          if (!employeeData) {
+            throw new Error("Employee not found")
+          }
+          const parkOwnerId = employeeData.park_owner_id
+          // Fetch all zones
+          const zonesResponse = await fetch(
+            "https://parkspotter-backened.onrender.com/accounts/zone/"
+          )
+          if (!zonesResponse.ok) {
+            throw new Error("Failed to fetch zones")
+          }
+          const zonesData = await zonesResponse.json()
+          // Filter zones by park owner id
+          parkOwnerZones = zonesData.filter(
+            (zone) => zone.park_owner === parkOwnerId
+          )
+          console.log({ parkOwnerZones })
+          setZones(parkOwnerZones)
         }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
 
-    fetchZonesAndSlots();
-  }, [userRole, userId]);
+        // Fetch all slots
+        const slotsResponse = await fetch(
+          "https://parkspotter-backened.onrender.com/accounts/slot/"
+        )
+        if (!slotsResponse.ok) {
+          throw new Error("Failed to fetch slots")
+        }
+        const slotsData = await slotsResponse.json()
+        // Filter slots by park owner zones
+        const parkOwnerZoneIds = parkOwnerZones.map((zone) => zone.id)
+        const filteredSlots = slotsData.filter((slot) =>
+          parkOwnerZoneIds.includes(slot.zone)
+        )
+        console.log({ filteredSlots })
+        setAvailableParkingSlots(filteredSlots)
+      } catch (error) {
+        console.error("Error fetching data:", error)
+        toast.error("Failed to load data. Please try again.")
+      }
+    }
+
+    fetchZonesAndSlots()
+  }, [userRole, userId])
 
   const handleZoneNameChange = (event) => {
-    setSelectedZoneName(event.target.value);
-  };
+    setSelectedZoneName(event.target.value)
+  }
 
   const handleAvailabilityChange = (event) => {
-    setSelectedAvailability(event.target.value);
-  };
+    setSelectedAvailability(event.target.value)
+  }
 
   const handleSlotChange = (event) => {
-    setSelectedSlot(event.target.value);
-  };
+    setSelectedSlot(event.target.value)
+  }
 
   const filterSlots = () => {
-    return availableParkingSlots.filter(slot => {
-      const matchesZone = selectedZoneName === "" || zones.find(zone => zone.id === slot.zone)?.name === selectedZoneName;
-      const matchesAvailability = selectedAvailability === "" || slot.available.toString() === selectedAvailability;
-      const matchesSlot = selectedSlot === "" || slot.slot_number === parseInt(selectedSlot);
-      return matchesZone && matchesAvailability && matchesSlot;
-    });
-  };
+    return availableParkingSlots.filter((slot) => {
+      const matchesZone =
+        selectedZoneName === "" ||
+        zones.find((zone) => zone.id === slot.zone)?.name === selectedZoneName
+      const matchesAvailability =
+        selectedAvailability === "" ||
+        slot.available.toString() === selectedAvailability
+      const matchesSlot =
+        selectedSlot === "" || slot.slot_number === parseInt(selectedSlot)
+      return matchesZone && matchesAvailability && matchesSlot
+    })
+  }
 
-  const filteredSlots = filterSlots();
+  const filteredSlots = filterSlots()
 
   const groupedParkingSlots = zones.reduce((acc, zone) => {
-    const zoneSlots = filteredSlots.filter(slot => slot.zone === zone.id);
+    const zoneSlots = filteredSlots.filter((slot) => slot.zone === zone.id)
     if (zoneSlots.length > 0) {
-      acc[zone.name] = zoneSlots;
+      acc[zone.name] = zoneSlots
     }
-    return acc;
-  }, {});
+    return acc
+  }, {})
 
   return (
     <div>
@@ -122,7 +173,7 @@ const AvailableParkingSlotTest = () => {
               onChange={handleZoneNameChange}
               value={selectedZoneName}
             >
-              <option value="">All</option>
+              <option value="">Select Zone</option>
               {zones.map((zone, index) => (
                 <option key={index} value={zone.name}>
                   {zone.name}
@@ -133,14 +184,18 @@ const AvailableParkingSlotTest = () => {
         </FilterItem>
       </FilterContainer>
 
-      {Object.keys(groupedParkingSlots).map(zone => (
+      {Object.keys(groupedParkingSlots).map((zone) => (
         <ZoneContainer key={zone}>
           <ZoneTitle>Zone {zone}</ZoneTitle>
           <BoardContainer>
             {groupedParkingSlots[zone].map((slot, index) => (
               <Column key={index}>
                 <Slot available={slot.available} theme={theme}>
-                  {slot.available ? slot.slot_number : <img src={car} alt="car" />}
+                  {slot.available ? (
+                    slot.slot_number
+                  ) : (
+                    <img src={car} alt="car" />
+                  )}
                 </Slot>
               </Column>
             ))}
@@ -148,7 +203,7 @@ const AvailableParkingSlotTest = () => {
         </ZoneContainer>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default AvailableParkingSlotTest;
+export default AvailableParkingSlotTest
