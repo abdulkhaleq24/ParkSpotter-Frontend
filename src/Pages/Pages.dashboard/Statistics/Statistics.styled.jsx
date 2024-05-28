@@ -31,7 +31,10 @@ export const MobileFilterContainer = styled.div`
   flex-direction: column;
   gap: 10px;
   width: 100%;
-
+  background-color: #202123;
+  padding: 35px;
+  border-radius: 0;
+  border: 0;
   @media (max-width: 768px) {
     display: flex;
   }
