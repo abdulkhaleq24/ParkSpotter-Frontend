@@ -1,6 +1,78 @@
 export const chartOptions = {
     responsive: true,
-    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          color: "#202123",
+          font: {
+            family:
+              "'Poppins', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+            size: 14,
+            style: "italic",
+            weight: "bold",
+          },
+          padding: 20,
+          boxWidth: 20,
+        },
+      },
+      title: {
+        display: true,
+        text: "Sales and Revenue Chart",
+        font: {
+          family:
+            "'Poppins', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+          size: 24,
+          weight: "bold",
+        },
+        color: "#202123",
+        padding: {
+          top: 10,
+          bottom: 30,
+        },
+      },
+      subtitle: {
+        display: true,
+        text: "Tickets sold and revenue generated over the months",
+        font: {
+          family:
+            "'Poppins', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+          size: 18,
+          style: "italic",
+        },
+        color: "#505050",
+        padding: {
+          bottom: 20,
+        },
+      },
+      tooltip: {
+        enabled: true,
+        backgroundColor: "rgba(0,0,0,0.7)",
+        titleFont: {
+          family:
+            "'Poppins', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+          size: 16,
+          weight: "bold",
+        },
+        bodyFont: {
+          family:
+            "'Poppins', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+          size: 14,
+        },
+        footerFont: {
+          family:
+            "'Poppins', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+          size: 12,
+          style: "italic",
+        },
+        padding: 10,
+        boxPadding: 5,
+        borderColor: "rgba(0,0,0,0.1)",
+        borderWidth: 1,
+        caretSize: 5,
+        cornerRadius: 4,
+      },
+    },
     scales: {
       x: {
         ticks: {
@@ -71,5 +143,4 @@ export const chartOptions = {
         bottom: 20,
       },
     },
-  };
-  
+  }
