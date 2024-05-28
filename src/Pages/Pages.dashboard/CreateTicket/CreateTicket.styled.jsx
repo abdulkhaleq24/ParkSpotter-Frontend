@@ -61,7 +61,7 @@ export const Input = styled.input`
   padding: 8px;
   border: none;
   border-radius: 5px;
-  color: #fff;
+  color: #202123;
   border: 2px solid #ddd;
 `;
 

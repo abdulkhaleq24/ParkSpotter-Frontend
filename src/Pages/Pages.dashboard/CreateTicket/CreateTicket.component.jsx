@@ -14,63 +14,95 @@ import {
 import toast from "react-hot-toast";
 
 function CreateTicket() {
-  const [carMake, setCarMake] = useState("");
   const [vehicle, setVehicle] = useState("");
   const [phone, setPhone] = useState("");
-  const [time_slot, setTime_slot] = useState("");
+  const [checkInTime, setCheckInTime] = useState("");
+  const [checkoutTime, setCheckoutTime] = useState("");
   const [totalAmount, setTotalAmount] = useState(0);
   const [zones, setZones] = useState([]);
   const [selectedZone, setSelectedZone] = useState("");
   const [warningMessage, setWarningMessage] = useState("");
 
+  const role = localStorage.getItem("role");
+  const userId = localStorage.getItem("user_id");
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     const fetchZones = async () => {
       try {
-        const response = await fetch(
-          "https://parkspotter-backened.onrender.com/accounts/zone/"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch zones");
+        let zonesData = [];
+        if (role === "park_owner") {
+          const response = await fetch(
+            "https://parkspotter-backened.onrender.com/accounts/zone/",
+            {
+              headers: {
+                Authorization: `Token ${token}`,
+              },
+            }
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch zones");
+          }
+          const data = await response.json();
+          zonesData = data.filter((zone) => zone.park_owner.toString() === userId);
+        } else if (role === "employee") {
+          const employeeResponse = await fetch(
+            "https://parkspotter-backened.onrender.com/accounts/employee-list/",
+            {
+              headers: {
+                Authorization: `Token ${token}`,
+              },
+            }
+          );
+          if (!employeeResponse.ok) {
+            throw new Error("Failed to fetch employee details");
+          }
+          const employees = await employeeResponse.json();
+          const employee = employees.find(
+            (emp) => emp.employee.id.toString() === userId
+          );
+          if (employee) {
+            const parkOwnerId = employee.park_owner_id;
+            const zoneResponse = await fetch(
+              "https://parkspotter-backened.onrender.com/accounts/zone/",
+              {
+                headers: {
+                  Authorization: `Token ${token}`,
+                },
+              }
+            );
+            if (!zoneResponse.ok) {
+              throw new Error("Failed to fetch zones");
+            }
+            const allZones = await zoneResponse.json();
+            zonesData = allZones.filter(
+              (zone) => zone.park_owner === parkOwnerId
+            );
+          }
         }
-        const data = await response.json();
-        setZones(data);
+        setZones(zonesData);
       } catch (error) {
         console.error("Error fetching zones:", error);
       }
     };
 
     fetchZones();
-  }, []);
+  }, [role, userId, token]);
 
-  const calculateTotalAmount = (duration) => {
-    let price = 0;
-    switch (duration) {
-      case "1":
-        price = 10;
-        break;
-      case "2":
-        price = 25;
-        break;
-      case "3":
-        price = 40;
-        break;
-      default:
-        price = 0;
-    }
+  const calculateTotalAmount = () => {
+    const checkIn = new Date(checkInTime);
+    const checkout = new Date(checkoutTime);
+    const durationInMinutes = (checkout - checkIn) / 60000;
+    const price = Math.max(0, durationInMinutes * 1); // 1 tk per minute
     setTotalAmount(price);
-  };
-
-  const generateWarningMessage = () => {
-    setWarningMessage(
-      `Please be aware that if you exceed your selected parking duration, you will be fined 1 taka per second.`
-    );
   };
 
   const generateParkingTicket = async () => {
     const selectedZoneData = zones.find((zone) => zone.name === selectedZone);
     const ticket = {
       zone: selectedZoneData ? selectedZoneData.park_owner : null,
-      time_slot: time_slot,
+      check_in_time: checkInTime,
+      approximate_checkout_time: checkoutTime,
       vehicle: {
         plate_number: vehicle,
         mobile_no: phone,
@@ -84,6 +116,7 @@ function CreateTicket() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Token ${token}`,
           },
           body: JSON.stringify(ticket),
         }
@@ -100,19 +133,16 @@ function CreateTicket() {
     }
   };
 
+  useEffect(() => {
+    if (checkInTime && checkoutTime) {
+      calculateTotalAmount();
+    }
+  }, [checkInTime, checkoutTime]);
+
   return (
     <>
       <Title>Create Ticket</Title>
       <Container>
-        <FormGroup>
-          <Label>Car Make</Label>
-          <Input
-            placeholder="Car make"
-            type="text"
-            value={carMake}
-            onChange={(e) => setCarMake(e.target.value)}
-          />
-        </FormGroup>
         <FormGroup>
           <Label>Car Number</Label>
           <Input
@@ -139,27 +169,27 @@ function CreateTicket() {
           >
             <option value="">Select Zone</option>
             {zones.map((zone) => (
-              <option key={zone.name} value={zone.name}>
+              <option key={zone.id} value={zone.name}>
                 {zone.name}
               </option>
             ))}
           </Select>
         </FormGroup>
         <FormGroup>
-          <Label>Parking Duration</Label>
-          <Select
-            value={time_slot}
-            onChange={(e) => {
-              setTime_slot(e.target.value);
-              calculateTotalAmount(e.target.value);
-              generateWarningMessage(parseInt(e.target.value));
-            }}
-          >
-            <option value="">Select Duration</option>
-            <option value="1">1 hour</option>
-            <option value="2">3 hours</option>
-            <option value="3">6 hours</option>
-          </Select>
+          <Label>Check-In Time</Label>
+          <Input
+            type="datetime-local"
+            value={checkInTime}
+            onChange={(e) => setCheckInTime(e.target.value)}
+          />
+        </FormGroup>
+        <FormGroup>
+          <Label>Approximate Checkout Time</Label>
+          <Input
+            type="datetime-local"
+            value={checkoutTime}
+            onChange={(e) => setCheckoutTime(e.target.value)}
+          />
         </FormGroup>
         <TotalAmount>
           Total Amount:{" "}
