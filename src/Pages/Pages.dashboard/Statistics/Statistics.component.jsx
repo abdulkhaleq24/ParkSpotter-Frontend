@@ -1,6 +1,13 @@
-import { useState } from "react";
-import styled from "styled-components";
-import { Line, Bar, Pie, Doughnut, Radar, PolarArea } from "react-chartjs-2";
+import { useState } from "react"
+import styled from "styled-components"
+
+import { FaTicketAlt } from "react-icons/fa"
+import { FaMoneyBillWave } from "react-icons/fa"
+import { FaCarAlt } from "react-icons/fa"
+import { FaMoneyCheckAlt } from "react-icons/fa"
+import { FaCalendarDay } from "react-icons/fa"
+
+import { Line, Bar, Pie, Doughnut, Radar, PolarArea } from "react-chartjs-2"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,7 +20,8 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js";
+} from "chart.js"
+import { Link } from "react-router-dom"
 
 ChartJS.register(
   CategoryScale,
@@ -26,19 +34,19 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend
-);
+)
 
 const Container = styled.div`
-  padding: 20px;
+  // padding: 20px;
   background-color: #ffffff;
   color: #202123;
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
+`
 
 const FilterContainer = styled.div`
-  margin-bottom: 20px;
+  border: 2px solid #fff;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -46,14 +54,13 @@ const FilterContainer = styled.div`
   align-items: center;
   justify-content: center;
   background: #202123;
-  border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  padding: 20px 15px;
 
   @media (max-width: 768px) {
     display: none;
   }
-`;
+`
 
 const MobileFilterContainer = styled.div`
   display: none;
@@ -64,19 +71,19 @@ const MobileFilterContainer = styled.div`
   @media (max-width: 768px) {
     display: flex;
   }
-`;
+`
 
 const MobileFilterInputs = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-`;
+`
 
 const Select = styled.select`
   padding: 8px;
-  font-size: 14px;
-  border: 2px solid #202123;
-  border-radius: 8px;
+  font-size: 13px;
+  border: 3px solid #5f9ea0;
+  border-radius: 4px;
   outline: none;
   width: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -86,13 +93,13 @@ const Select = styled.select`
   &:focus {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   }
-`;
+`
 
 const Input = styled.input`
   padding: 8px;
-  font-size: 14px;
-  border: 2px solid #202123;
-  border-radius: 8px;
+  font-size: 13px;
+  border: 3px solid #264348;
+  border-radius: 4px;
   outline: none;
   width: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -102,18 +109,154 @@ const Input = styled.input`
   &:focus {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   }
-`;
+`
 
 const ChartContainer = styled.div`
   width: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-`;
+`
+
+const DashBoardOverViewContainer = styled.div`
+  background-color: #f3f3f9;
+  padding: 30px 20px;
+  width: 100%;
+`
+const DashBoardOverViewTopSectionContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 20px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`
+
+const DashBoardOverViewContainerTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: baseline;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`
+const DashBoardOverViewContainerHeader = styled.h1`
+  font-size: 22px;
+  font-weight: blod;
+  color: #495057;
+  margin-bottom: 10px;
+`
+const DashBoardOverViewContainerBody = styled.h1`
+  font-size: 16px;
+  font-weight: blod;
+  margin-bottom: 20px;
+  color: #878a99;
+  @media (max-width: 768px) {
+    text-align: center;
+  }
+`
+
+const TopSectionDateContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+const TopSectionDateBox = styled.div`
+  color: #202123;
+  padding: 10px 35px;
+  background-color: #fff;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  font-size: 14px;
+`
+const TopSectionDateIcon = styled.div`
+  background-color: #405189;
+  padding: 10px 20px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+`
+
+const CardContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 20px;
+    margin-bottom: 40px;
+  }
+`
+
+const Card = styled.div`
+  width: 24%;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  background-color: #fff;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
+const CardTitle = styled.p`
+  color: #777;
+  font-size: 14px;
+`
+
+const CardValue = styled.h2`
+  font-weight: bold;
+  font-size: 22px;
+  color: #404143;
+  display: flex;
+  align-items: baseline;
+  flex-direction: row;
+`
+const CardFooter = styled.div`
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+`
+const CardFooterText = styled(Link)`
+  font-weight: bold;
+  color: #333;
+  font-size: 14px;
+`
+
+const CardFooterTextUnderLine = styled.hr`
+  color: #0000cf;
+  border: 1px solid #87cefa;
+`
+const CardFooterIcon = styled.div`
+  width: 50px;
+  height: 50px;
+  background-color: #daf4f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+`
+
+const CardFooterIconEmployee = styled(CardFooterIcon)`
+  background-color: #fef4e4;
+`
+const CardFooterIconRevenue = styled(CardFooterIcon)`
+  background-color: #daf4f0;
+`
+const CardFooterIconTickets = styled(CardFooterIcon)`
+  background-color: #dff0fa;
+`
+const CardFooterIconBookings = styled(CardFooterIcon)`
+  background-color: #e2e5ed;
+`
 
 const dummyData = {
   labels: ["January", "February", "March", "April", "May", "June", "July"],
-  ticketsSold: [65, 59, 80, 81, 56, 55, 40],
+  ticketsSold: [650, 590, 800, 810, 560, 550, 400],
   revenueGenerated: [2800, 4800, 4000, 1900, 8600, 2700, 3800],
-};
+}
 
 const getFilteredData = (
   startDate,
@@ -123,19 +266,19 @@ const getFilteredData = (
   minTickets,
   maxTickets
 ) => {
-  const start = startDate ? new Date(startDate) : null;
-  const end = endDate ? new Date(endDate) : null;
+  const start = startDate ? new Date(startDate) : null
+  const end = endDate ? new Date(endDate) : null
 
   const filteredData = {
     labels: [],
     ticketsSold: [],
     revenueGenerated: [],
-  };
+  }
 
   dummyData.labels.forEach((label, index) => {
-    const date = new Date(2021, index);
-    const price = dummyData.revenueGenerated[index];
-    const tickets = dummyData.ticketsSold[index];
+    const date = new Date(2021, index)
+    const price = dummyData.revenueGenerated[index]
+    const tickets = dummyData.ticketsSold[index]
 
     if (
       (!start || date >= start) &&
@@ -145,56 +288,56 @@ const getFilteredData = (
       (!minTickets || tickets >= minTickets) &&
       (!maxTickets || tickets <= maxTickets)
     ) {
-      filteredData.labels.push(label);
-      filteredData.ticketsSold.push(tickets);
-      filteredData.revenueGenerated.push(price);
+      filteredData.labels.push(label)
+      filteredData.ticketsSold.push(tickets)
+      filteredData.revenueGenerated.push(price)
     }
-  });
+  })
 
-  return filteredData;
-};
+  return filteredData
+}
 
 const ChartComponent = () => {
-  const [chartType, setChartType] = useState("Line");
-  const [selectedFilter, setSelectedFilter] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [minTickets, setMinTickets] = useState("");
-  const [maxTickets, setMaxTickets] = useState("");
+  const [chartType, setChartType] = useState("Doughnut")
+  const [selectedFilter, setSelectedFilter] = useState("")
+  const [startDate, setStartDate] = useState("")
+  const [endDate, setEndDate] = useState("")
+  const [minPrice, setMinPrice] = useState("")
+  const [maxPrice, setMaxPrice] = useState("")
+  const [minTickets, setMinTickets] = useState("")
+  const [maxTickets, setMaxTickets] = useState("")
 
   const handleChartTypeChange = (e) => {
-    setChartType(e.target.value);
-  };
+    setChartType(e.target.value)
+  }
 
   const handleFilterChange = (e) => {
-    setSelectedFilter(e.target.value);
-  };
+    setSelectedFilter(e.target.value)
+  }
 
   const handleStartDateChange = (e) => {
-    setStartDate(e.target.value);
-  };
+    setStartDate(e.target.value)
+  }
 
   const handleEndDateChange = (e) => {
-    setEndDate(e.target.value);
-  };
+    setEndDate(e.target.value)
+  }
 
   const handleMinPriceChange = (e) => {
-    setMinPrice(e.target.value);
-  };
+    setMinPrice(e.target.value)
+  }
 
   const handleMaxPriceChange = (e) => {
-    setMaxPrice(e.target.value);
-  };
+    setMaxPrice(e.target.value)
+  }
 
   const handleMinTicketsChange = (e) => {
-    setMinTickets(e.target.value);
-  };
+    setMinTickets(e.target.value)
+  }
 
   const handleMaxTicketsChange = (e) => {
-    setMaxTickets(e.target.value);
-  };
+    setMaxTickets(e.target.value)
+  }
 
   const filteredData = getFilteredData(
     startDate,
@@ -203,7 +346,7 @@ const ChartComponent = () => {
     maxPrice,
     minTickets,
     maxTickets
-  );
+  )
 
   const data = {
     labels: filteredData.labels,
@@ -223,7 +366,7 @@ const ChartComponent = () => {
         borderWidth: 1,
       },
     ],
-  };
+  }
 
   const chartOptions = {
     responsive: true,
@@ -370,7 +513,7 @@ const ChartComponent = () => {
         bottom: 20,
       },
     },
-  };
+  }
 
   const renderFilterInputs = () => {
     switch (selectedFilter) {
@@ -390,7 +533,7 @@ const ChartComponent = () => {
               placeholder="End Date"
             />
           </>
-        );
+        )
       case "price":
         return (
           <>
@@ -407,7 +550,7 @@ const ChartComponent = () => {
               placeholder="Max Price"
             />
           </>
-        );
+        )
       case "tickets":
         return (
           <>
@@ -424,30 +567,30 @@ const ChartComponent = () => {
               placeholder="Max Tickets Sold"
             />
           </>
-        );
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   const renderChart = () => {
     switch (chartType) {
       case "Line":
-        return <Line data={data} options={chartOptions} />;
+        return <Line data={data} options={chartOptions} />
       case "Bar":
-        return <Bar data={data} options={chartOptions} />;
+        return <Bar data={data} options={chartOptions} />
       case "Pie":
-        return <Pie data={data} options={chartOptions} />;
+        return <Pie data={data} options={chartOptions} />
       case "Doughnut":
-        return <Doughnut data={data} options={chartOptions} />;
+        return <Doughnut data={data} options={chartOptions} />
       case "Radar":
-        return <Radar data={data} options={chartOptions} />;
+        return <Radar data={data} options={chartOptions} />
       case "PolarArea":
-        return <PolarArea data={data} options={chartOptions} />;
+        return <PolarArea data={data} options={chartOptions} />
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   return (
     <Container>
@@ -518,10 +661,112 @@ const ChartComponent = () => {
         )}
       </MobileFilterContainer>
 
+      <DashBoardOverViewContainer>
+        <DashBoardOverViewTopSectionContainer>
+          <DashBoardOverViewContainerTitle>
+            <DashBoardOverViewContainerHeader>
+              Good Morning, User!
+            </DashBoardOverViewContainerHeader>
+            <DashBoardOverViewContainerBody>
+              Here&apos;s what&apos;s happening with your parking-lot today.
+            </DashBoardOverViewContainerBody>
+          </DashBoardOverViewContainerTitle>
+          <TopSectionDateContainer>
+            <TopSectionDateBox>
+              <span style={{ fontWeight: "600" }}>01 Jan, 2024</span>
+              <span style={{ fontWeight: "bold", color: "#405189" }}>
+                &nbsp;&nbsp;To&nbsp;&nbsp;
+              </span>
+              <span style={{ fontWeight: "600" }}>30 Jan, 2024</span>
+            </TopSectionDateBox>
+            <TopSectionDateIcon>
+              <FaCalendarDay
+                color="#fff"
+                style={{ width: "130%", height: "130%" }}
+              />
+            </TopSectionDateIcon>
+          </TopSectionDateContainer>
+        </DashBoardOverViewTopSectionContainer>
+        <CardContainer>
+          <Card>
+            <CardTitle>Tickets Sold:&nbsp;&nbsp;</CardTitle>
+            <CardValue>
+              3265<p style={{ fontSize: "16px" }}></p>
+            </CardValue>
+            <CardFooter>
+              <CardFooterText>
+                View Paid Tickets
+                <CardFooterTextUnderLine />
+              </CardFooterText>
+              <CardFooterIconTickets>
+                <FaTicketAlt
+                  color="#299cdb"
+                  style={{ width: "60%", height: "60%" }}
+                />
+              </CardFooterIconTickets>
+            </CardFooter>
+          </Card>
+
+          <Card>
+            <CardTitle>Total Revenue:&nbsp;&nbsp;</CardTitle>
+            <CardValue>
+              54380<p style={{ fontSize: "16px" }}>৳</p>
+            </CardValue>
+            <CardFooter>
+              <CardFooterText>
+                View Transactions
+                <CardFooterTextUnderLine />
+              </CardFooterText>
+              <CardFooterIconRevenue>
+                <FaMoneyBillWave
+                  color="#0ab39c"
+                  style={{ width: "60%", height: "60%" }}
+                />
+              </CardFooterIconRevenue>
+            </CardFooter>
+          </Card>
+          <Card>
+            <CardTitle>Total Bookings:&nbsp;&nbsp;</CardTitle>
+            <CardValue>
+              7921<p style={{ fontSize: "16px" }}></p>
+            </CardValue>
+            <CardFooter>
+              <CardFooterText>
+                View Bookings
+                <CardFooterTextUnderLine />
+              </CardFooterText>
+              <CardFooterIconBookings>
+                <FaCarAlt
+                  color="#405189"
+                  style={{ width: "60%", height: "60%" }}
+                />
+              </CardFooterIconBookings>
+            </CardFooter>
+          </Card>
+          <Card>
+            <CardTitle>Employee Expenses:&nbsp;&nbsp;</CardTitle>
+            <CardValue>
+              35000<p style={{ fontSize: "16px" }}>৳</p>
+            </CardValue>
+            <CardFooter>
+              <CardFooterText>
+                View Salaries
+                <CardFooterTextUnderLine />
+              </CardFooterText>
+              <CardFooterIconEmployee>
+                <FaMoneyCheckAlt
+                  color="#f7b84b"
+                  style={{ width: "60%", height: "60%" }}
+                />
+              </CardFooterIconEmployee>
+            </CardFooter>
+          </Card>
+        </CardContainer>
+      </DashBoardOverViewContainer>
       <ChartContainer>{renderChart()}</ChartContainer>
     </Container>
-  );
-};
+  )
+}
 
-export default ChartComponent;
+export default ChartComponent
 // original
