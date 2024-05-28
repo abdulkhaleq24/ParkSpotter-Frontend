@@ -1,16 +1,32 @@
-import { useEffect, useState } from "react"
-
-import { chartOptions } from "./Utils/chartOptions"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import {chartOptions} from "./Utils/chartOptions"
 
 import {
-  ChartContainer,
-  Container,
-  FilterContainer,
-  Input,
-  MobileFilterContainer,
-  MobileFilterInputs,
-  Select,
-} from "./Statistics.styled"
+  setChartType,
+  selectChartType,
+} from "../../../store/ChartSlice/chartSlice"
+import {
+  fetchDashboardData,
+  selectDashboardData,
+  selectDashboardError,
+} from "../../../store/DashBoardSlice/dashBoardSlice"
+import {
+  setSelectedFilter,
+  setStartDate,
+  setEndDate,
+  setMinPrice,
+  setMaxPrice,
+  setMinTickets,
+  setMaxTickets,
+  selectSelectedFilter,
+  selectStartDate,
+  selectEndDate,
+  selectMinPrice,
+  selectMaxPrice,
+  selectMinTickets,
+  selectMaxTickets,
+} from "../../../store/FilterSlice/filterSlice"
 
 import { Line, Bar, Pie, Doughnut, Radar, PolarArea } from "react-chartjs-2"
 import {
@@ -27,6 +43,16 @@ import {
   Legend,
 } from "chart.js"
 import DashBoardOverView from "./DashboardOverView/DashBoardOverView.component"
+
+import {
+  ChartContainer,
+  Container,
+  FilterContainer,
+  Input,
+  MobileFilterContainer,
+  MobileFilterInputs,
+  Select,
+} from "./Statistics.styled"
 
 ChartJS.register(
   CategoryScale,
@@ -87,80 +113,53 @@ const getFilteredData = (
 }
 
 const ChartComponent = () => {
-  const [chartType, setChartType] = useState("Doughnut")
-  const [selectedFilter, setSelectedFilter] = useState("")
-  const [startDate, setStartDate] = useState("")
-  const [endDate, setEndDate] = useState("")
-  const [minPrice, setMinPrice] = useState("")
-  const [maxPrice, setMaxPrice] = useState("")
-  const [minTickets, setMinTickets] = useState("")
-  const [maxTickets, setMaxTickets] = useState("")
-  const [dashboardData, setDashboardData] = useState()
-  const [error, setError] = useState(null)
+  const dispatch = useDispatch()
+
+  const chartType = useSelector(selectChartType)
+  const selectedFilter = useSelector(selectSelectedFilter)
+  const startDate = useSelector(selectStartDate)
+  const endDate = useSelector(selectEndDate)
+  const minPrice = useSelector(selectMinPrice)
+  const maxPrice = useSelector(selectMaxPrice)
+  const minTickets = useSelector(selectMinTickets)
+  const maxTickets = useSelector(selectMaxTickets)
+  const dashboardData = useSelector(selectDashboardData)
+  const error = useSelector(selectDashboardError)
 
   useEffect(() => {
-    const userId = localStorage.getItem("user_id")
-    const token = localStorage.getItem("token")
-
-    if (userId && token) {
-      fetch(
-        "https://parkspotter-backened.onrender.com/accounts/park_owner_dashboard/",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Token ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok")
-          }
-          return response.json()
-        })
-        .then((data) => {
-          setDashboardData(data)
-        })
-        .catch((error) => {
-          setError(error)
-          console.error("Error fetching dashboard data:", error)
-        })
-    } else {
-      console.error("User ID or token not found in local storage.")
-    }
-  }, [])
+    dispatch(fetchDashboardData())
+  }, [dispatch])
 
   const handleChartTypeChange = (e) => {
-    setChartType(e.target.value)
+    dispatch(setChartType(e.target.value))
   }
 
   const handleFilterChange = (e) => {
-    setSelectedFilter(e.target.value)
+    dispatch(setSelectedFilter(e.target.value))
   }
 
   const handleStartDateChange = (e) => {
-    setStartDate(e.target.value)
+    dispatch(setStartDate(e.target.value))
   }
 
   const handleEndDateChange = (e) => {
-    setEndDate(e.target.value)
+    dispatch(setEndDate(e.target.value))
   }
 
   const handleMinPriceChange = (e) => {
-    setMinPrice(e.target.value)
+    dispatch(setMinPrice(e.target.value))
   }
 
   const handleMaxPriceChange = (e) => {
-    setMaxPrice(e.target.value)
+    dispatch(setMaxPrice(e.target.value))
   }
 
   const handleMinTicketsChange = (e) => {
-    setMinTickets(e.target.value)
+    dispatch(setMinTickets(e.target.value))
   }
 
   const handleMaxTicketsChange = (e) => {
-    setMaxTickets(e.target.value)
+    dispatch(setMaxTickets(e.target.value))
   }
 
   const filteredData = getFilteredData(
@@ -280,42 +279,13 @@ const ChartComponent = () => {
           <option value="Radar">Radar Chart</option>
           <option value="PolarArea">Polar Area Chart</option>
         </Select>
-        <Input
-          type="date"
-          value={startDate}
-          onChange={handleStartDateChange}
-          placeholder="Start Date"
-        />
-        <Input
-          type="date"
-          value={endDate}
-          onChange={handleEndDateChange}
-          placeholder="End Date"
-        />
-        <Input
-          type="number"
-          value={minPrice}
-          onChange={handleMinPriceChange}
-          placeholder="Min Price"
-        />
-        <Input
-          type="number"
-          value={maxPrice}
-          onChange={handleMaxPriceChange}
-          placeholder="Max Price"
-        />
-        <Input
-          type="number"
-          value={minTickets}
-          onChange={handleMinTicketsChange}
-          placeholder="Min Tickets Sold"
-        />
-        <Input
-          type="number"
-          value={maxTickets}
-          onChange={handleMaxTicketsChange}
-          placeholder="Max Tickets Sold"
-        />
+        <Select value={selectedFilter} onChange={handleFilterChange}>
+          <option value="">Select Filter</option>
+          <option value="date">Date Range</option>
+          <option value="price">Price Range</option>
+          <option value="tickets">Tickets Sold Range</option>
+        </Select>
+        {renderFilterInputs()}
       </FilterContainer>
 
       <MobileFilterContainer>
@@ -338,6 +308,7 @@ const ChartComponent = () => {
         )}
       </MobileFilterContainer>
 
+      {error && <div>Error: {error}</div>}
       <DashBoardOverView dashboardData={dashboardData} />
       <ChartContainer>{renderChart()}</ChartContainer>
     </Container>
@@ -345,4 +316,3 @@ const ChartComponent = () => {
 }
 
 export default ChartComponent
-// original

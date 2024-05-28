@@ -1,8 +1,6 @@
 import styled from "styled-components"
 import { Link } from "react-router-dom"
 
-
-
 export const Container = styled.div`
   background-color: #ffffff;
   color: #202123;
@@ -128,6 +126,9 @@ export const TopSectionDateContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `
 export const TopSectionDateBox = styled.div`
   color: #202123;
@@ -142,6 +143,10 @@ export const TopSectionDateIcon = styled.div`
   padding: 10px 20px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+  @media (max-width: 768px) {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
 `
 
 export const CardContainer = styled.div`
