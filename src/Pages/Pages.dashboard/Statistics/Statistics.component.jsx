@@ -101,6 +101,13 @@ const ChartComponent = () => {
         borderColor: "rgba(153,102,255,1)",
         borderWidth: 1,
       },
+      {
+        label: "Employee Expenses",
+        data: filteredData.employeeExpenses, // Added employee expenses
+        backgroundColor: "rgba(255,99,132,0.2)",
+        borderColor: "rgba(255,99,132,1)",
+        borderWidth: 1,
+      },
     ],
   }
 
@@ -125,17 +132,16 @@ const ChartComponent = () => {
 
   return (
     <Container>
-      <FilterComponent >
-      <Select value={chartType} onChange={handleChartTypeChange}>
-        <option value="Line">Line Chart</option>
-        <option value="Bar">Bar Chart</option>
-        <option value="Pie">Pie Chart</option>
-        <option value="Doughnut">Doughnut Chart</option>
-        <option value="Radar">Radar Chart</option>
-        <option value="PolarArea">Polar Area Chart</option>
-      </Select>
+      <FilterComponent>
+        <Select value={chartType} onChange={handleChartTypeChange}>
+          <option value="Line">Line Chart</option>
+          <option value="Bar">Bar Chart</option>
+          <option value="Pie">Pie Chart</option>
+          <option value="Doughnut">Doughnut Chart</option>
+          <option value="Radar">Radar Chart</option>
+          <option value="PolarArea">Polar Area Chart</option>
+        </Select>
       </FilterComponent>
-      
 
       {error && <div>Error: {error}</div>}
       <DashBoardOverView dashboardData={dashboardData} />
