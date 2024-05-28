@@ -1,4 +1,3 @@
-// Utility function to format date and time for datetime-local input
 export const formatDateTime = (date) => {
     const pad = (num) => (num < 10 ? '0' + num : num);
     const year = date.getFullYear();

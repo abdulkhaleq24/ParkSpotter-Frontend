@@ -10,20 +10,20 @@ import {
   Title,
   TotalAmount,
 } from "./CreateTicket.styled"
-import SlotSelector from "./SlotSelector" // Import the SlotSelector component
+import SlotSelector from "./SlotSelection/SlotSelection.component"
 import toast from "react-hot-toast"
 import { formatDateTime } from "./Util/formatDateTime"
 
 function CreateTicket() {
   const [vehicle, setVehicle] = useState("")
   const [phone, setPhone] = useState("")
-  const [checkInTime, setCheckInTime] = useState(formatDateTime(new Date())) // Auto-populate check-in time
+  const [checkInTime, setCheckInTime] = useState(formatDateTime(new Date()))
   const [checkoutTime, setCheckoutTime] = useState("")
   const [totalAmount, setTotalAmount] = useState(0)
   const [zones, setZones] = useState([])
   const [selectedZone, setSelectedZone] = useState("")
-  const [slots, setSlots] = useState([]) // State for slots
-  const [selectedSlot, setSelectedSlot] = useState(null) // State for selected slot
+  const [slots, setSlots] = useState([])
+  const [selectedSlot, setSelectedSlot] = useState(null)
 
   const role = localStorage.getItem("role")
   const userId = localStorage.getItem("user_id")
@@ -86,7 +86,6 @@ function CreateTicket() {
         }
         setZones(zonesData)
 
-        // Fetch slots data
         const slotResponse = await fetch(
           "https://parkspotter-backened.onrender.com/accounts/slot/",
           {
@@ -118,7 +117,7 @@ function CreateTicket() {
     const checkIn = new Date(checkInTime)
     const checkout = new Date(checkoutTime)
     const durationInMinutes = (checkout - checkIn) / 60000
-    const price = Math.max(0, durationInMinutes * 1) // 1 tk per minute
+    const price = Math.max(0, durationInMinutes * 1)
     setTotalAmount(price)
   }
 
@@ -132,7 +131,7 @@ function CreateTicket() {
         plate_number: vehicle,
         mobile_no: phone,
       },
-      slot: selectedSlot, // Add selected slot to the ticket data
+      slot: selectedSlot,
     }
 
     try {
@@ -238,3 +237,4 @@ function CreateTicket() {
 }
 
 export default CreateTicket
+// original
