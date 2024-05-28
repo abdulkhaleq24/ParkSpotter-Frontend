@@ -1,6 +1,6 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import { Line, Bar, Pie, Doughnut, Radar, PolarArea } from "react-chartjs-2"
+import { useState } from "react";
+import styled from "styled-components";
+import { Line, Bar, Pie, Doughnut, Radar, PolarArea } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,7 +13,7 @@ import {
   Title,
   Tooltip,
   Legend,
-} from "chart.js"
+} from "chart.js";
 
 ChartJS.register(
   CategoryScale,
@@ -26,7 +26,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend
-)
+);
 
 const Container = styled.div`
   padding: 20px;
@@ -35,30 +35,50 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 
 const FilterContainer = styled.div`
   margin-bottom: 20px;
   width: 100%;
-  max-width: 800px;
   display: flex;
   flex-direction: row;
+  column-gap: 10px;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   background: #202123;
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 20px;
-`
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const MobileFilterContainer = styled.div`
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+`;
+
+const MobileFilterInputs = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
 
 const Select = styled.select`
-  padding: 12px;
+  padding: 8px;
   font-size: 14px;
   border: 2px solid #202123;
   border-radius: 8px;
   outline: none;
   width: 100%;
-  max-width: 300px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s;
 
@@ -66,7 +86,7 @@ const Select = styled.select`
   &:focus {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   }
-`
+`;
 
 const Input = styled.input`
   padding: 8px;
@@ -74,9 +94,7 @@ const Input = styled.input`
   border: 2px solid #202123;
   border-radius: 8px;
   outline: none;
-  margin-bottom: 10px;
   width: 100%;
-  max-width: 300px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s;
 
@@ -84,19 +102,18 @@ const Input = styled.input`
   &:focus {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   }
-`
+`;
 
 const ChartContainer = styled.div`
   width: 100%;
-  max-width: 900px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-`
+`;
 
 const dummyData = {
   labels: ["January", "February", "March", "April", "May", "June", "July"],
   ticketsSold: [65, 59, 80, 81, 56, 55, 40],
   revenueGenerated: [2800, 4800, 4000, 1900, 8600, 2700, 3800],
-}
+};
 
 const getFilteredData = (
   startDate,
@@ -106,19 +123,19 @@ const getFilteredData = (
   minTickets,
   maxTickets
 ) => {
-  const start = startDate ? new Date(startDate) : null
-  const end = endDate ? new Date(endDate) : null
+  const start = startDate ? new Date(startDate) : null;
+  const end = endDate ? new Date(endDate) : null;
 
   const filteredData = {
     labels: [],
     ticketsSold: [],
     revenueGenerated: [],
-  }
+  };
 
   dummyData.labels.forEach((label, index) => {
-    const date = new Date(2021, index) 
-    const price = dummyData.revenueGenerated[index]
-    const tickets = dummyData.ticketsSold[index]
+    const date = new Date(2021, index);
+    const price = dummyData.revenueGenerated[index];
+    const tickets = dummyData.ticketsSold[index];
 
     if (
       (!start || date >= start) &&
@@ -128,56 +145,56 @@ const getFilteredData = (
       (!minTickets || tickets >= minTickets) &&
       (!maxTickets || tickets <= maxTickets)
     ) {
-      filteredData.labels.push(label)
-      filteredData.ticketsSold.push(tickets)
-      filteredData.revenueGenerated.push(price)
+      filteredData.labels.push(label);
+      filteredData.ticketsSold.push(tickets);
+      filteredData.revenueGenerated.push(price);
     }
-  })
+  });
 
-  return filteredData
-}
+  return filteredData;
+};
 
 const ChartComponent = () => {
-  const [chartType, setChartType] = useState("Line")
-  const [filterType, setFilterType] = useState("")
-  const [startDate, setStartDate] = useState("")
-  const [endDate, setEndDate] = useState("")
-  const [minPrice, setMinPrice] = useState("")
-  const [maxPrice, setMaxPrice] = useState("")
-  const [minTickets, setMinTickets] = useState("")
-  const [maxTickets, setMaxTickets] = useState("")
+  const [chartType, setChartType] = useState("Line");
+  const [selectedFilter, setSelectedFilter] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [minTickets, setMinTickets] = useState("");
+  const [maxTickets, setMaxTickets] = useState("");
 
   const handleChartTypeChange = (e) => {
-    setChartType(e.target.value)
-  }
+    setChartType(e.target.value);
+  };
 
-  const handleFilterTypeChange = (e) => {
-    setFilterType(e.target.value)
-  }
+  const handleFilterChange = (e) => {
+    setSelectedFilter(e.target.value);
+  };
 
   const handleStartDateChange = (e) => {
-    setStartDate(e.target.value)
-  }
+    setStartDate(e.target.value);
+  };
 
   const handleEndDateChange = (e) => {
-    setEndDate(e.target.value)
-  }
+    setEndDate(e.target.value);
+  };
 
   const handleMinPriceChange = (e) => {
-    setMinPrice(e.target.value)
-  }
+    setMinPrice(e.target.value);
+  };
 
   const handleMaxPriceChange = (e) => {
-    setMaxPrice(e.target.value)
-  }
+    setMaxPrice(e.target.value);
+  };
 
   const handleMinTicketsChange = (e) => {
-    setMinTickets(e.target.value)
-  }
+    setMinTickets(e.target.value);
+  };
 
   const handleMaxTicketsChange = (e) => {
-    setMaxTickets(e.target.value)
-  }
+    setMaxTickets(e.target.value);
+  };
 
   const filteredData = getFilteredData(
     startDate,
@@ -186,7 +203,7 @@ const ChartComponent = () => {
     maxPrice,
     minTickets,
     maxTickets
-  )
+  );
 
   const data = {
     labels: filteredData.labels,
@@ -206,7 +223,7 @@ const ChartComponent = () => {
         borderWidth: 1,
       },
     ],
-  }
+  };
 
   const chartOptions = {
     responsive: true,
@@ -353,45 +370,12 @@ const ChartComponent = () => {
         bottom: 20,
       },
     },
-  }
+  };
 
-  const renderChart = () => {
-    switch (chartType) {
-      case "Line":
-        return <Line data={data} options={chartOptions} />
-      case "Bar":
-        return <Bar data={data} options={chartOptions} />
-      case "Pie":
-        return <Pie data={data} options={chartOptions} />
-      case "Doughnut":
-        return <Doughnut data={data} options={chartOptions} />
-      case "Radar":
-        return <Radar data={data} options={chartOptions} />
-      case "PolarArea":
-        return <PolarArea data={data} options={chartOptions} />
-      default:
-        return <Line data={data} options={chartOptions} />
-    }
-  }
-
-  return (
-    <Container>
-      <FilterContainer>
-        <Select value={chartType} onChange={handleChartTypeChange}>
-          <option value="Line">Line Chart</option>
-          <option value="Bar">Bar Chart</option>
-          <option value="Pie">Pie Chart</option>
-          <option value="Doughnut">Doughnut Chart</option>
-          <option value="Radar">Radar Chart</option>
-          <option value="PolarArea">Polar Area Chart</option>
-        </Select>
-        <Select value={filterType} onChange={handleFilterTypeChange}>
-          <option value="">Select Filter Type</option>
-          <option value="timeRange">Time Range</option>
-          <option value="priceRange">Price Range</option>
-          <option value="ticketsRange">Tickets Sold Range</option>
-        </Select>
-        {filterType === "timeRange" && (
+  const renderFilterInputs = () => {
+    switch (selectedFilter) {
+      case "date":
+        return (
           <>
             <Input
               type="date"
@@ -406,8 +390,9 @@ const ChartComponent = () => {
               placeholder="End Date"
             />
           </>
-        )}
-        {filterType === "priceRange" && (
+        );
+      case "price":
+        return (
           <>
             <Input
               type="number"
@@ -422,8 +407,9 @@ const ChartComponent = () => {
               placeholder="Max Price"
             />
           </>
-        )}
-        {filterType === "ticketsRange" && (
+        );
+      case "tickets":
+        return (
           <>
             <Input
               type="number"
@@ -438,11 +424,104 @@ const ChartComponent = () => {
               placeholder="Max Tickets Sold"
             />
           </>
-        )}
+        );
+      default:
+        return null;
+    }
+  };
+
+  const renderChart = () => {
+    switch (chartType) {
+      case "Line":
+        return <Line data={data} options={chartOptions} />;
+      case "Bar":
+        return <Bar data={data} options={chartOptions} />;
+      case "Pie":
+        return <Pie data={data} options={chartOptions} />;
+      case "Doughnut":
+        return <Doughnut data={data} options={chartOptions} />;
+      case "Radar":
+        return <Radar data={data} options={chartOptions} />;
+      case "PolarArea":
+        return <PolarArea data={data} options={chartOptions} />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <Container>
+      <FilterContainer>
+        <Select value={chartType} onChange={handleChartTypeChange}>
+          <option value="Line">Line Chart</option>
+          <option value="Bar">Bar Chart</option>
+          <option value="Pie">Pie Chart</option>
+          <option value="Doughnut">Doughnut Chart</option>
+          <option value="Radar">Radar Chart</option>
+          <option value="PolarArea">Polar Area Chart</option>
+        </Select>
+        <Input
+          type="date"
+          value={startDate}
+          onChange={handleStartDateChange}
+          placeholder="Start Date"
+        />
+        <Input
+          type="date"
+          value={endDate}
+          onChange={handleEndDateChange}
+          placeholder="End Date"
+        />
+        <Input
+          type="number"
+          value={minPrice}
+          onChange={handleMinPriceChange}
+          placeholder="Min Price"
+        />
+        <Input
+          type="number"
+          value={maxPrice}
+          onChange={handleMaxPriceChange}
+          placeholder="Max Price"
+        />
+        <Input
+          type="number"
+          value={minTickets}
+          onChange={handleMinTicketsChange}
+          placeholder="Min Tickets Sold"
+        />
+        <Input
+          type="number"
+          value={maxTickets}
+          onChange={handleMaxTicketsChange}
+          placeholder="Max Tickets Sold"
+        />
       </FilterContainer>
+
+      <MobileFilterContainer>
+        <Select value={chartType} onChange={handleChartTypeChange}>
+          <option value="Line">Line Chart</option>
+          <option value="Bar">Bar Chart</option>
+          <option value="Pie">Pie Chart</option>
+          <option value="Doughnut">Doughnut Chart</option>
+          <option value="Radar">Radar Chart</option>
+          <option value="PolarArea">Polar Area Chart</option>
+        </Select>
+        <Select value={selectedFilter} onChange={handleFilterChange}>
+          <option value="">Select Filter</option>
+          <option value="date">Date Range</option>
+          <option value="price">Price Range</option>
+          <option value="tickets">Tickets Sold Range</option>
+        </Select>
+        {selectedFilter && (
+          <MobileFilterInputs>{renderFilterInputs()}</MobileFilterInputs>
+        )}
+      </MobileFilterContainer>
+
       <ChartContainer>{renderChart()}</ChartContainer>
     </Container>
-  )
-}
+  );
+};
 
-export default ChartComponent
+export default ChartComponent;
+// original
