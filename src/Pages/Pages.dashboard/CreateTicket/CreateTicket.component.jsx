@@ -6,7 +6,6 @@ import {
   Input,
   Label,
   Select,
-  StaticParkingNumber,
   Title,
   TotalAmount,
 } from "./CreateTicket.styled"
@@ -227,9 +226,7 @@ function CreateTicket() {
           Total Amount:{" "}
           <span style={{ fontWeight: "bold" }}>{totalAmount}tk</span>
         </TotalAmount>
-        <StaticParkingNumber>
-          Parking Number: Zone 1, Parking Lot 7
-        </StaticParkingNumber>
+
         <Button onClick={generateParkingTicket}>Generate Parking Ticket</Button>
       </Container>
     </>
