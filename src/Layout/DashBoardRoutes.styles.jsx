@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
-import * as css from "../Utils/Styles/styles";
+import styled from "styled-components"
+import { NavLink } from "react-router-dom"
+import * as css from "../Utils/Styles/styles"
 
 // Dashboard starts
 
@@ -10,7 +10,7 @@ export const Container = styled.div`
   height: 100vh;
   background-color: ${css.secondaryColor};
   color: ${css.primaryColor};
-`;
+`
 
 export const Header = styled.div`
   display: flex;
@@ -18,13 +18,13 @@ export const Header = styled.div`
   align-items: center;
   padding: 1rem;
   color: #fff;
-  background-color: #202123;
+  background-color: #405189;
   // border-bottom: 4px solid #fff;
-`;
+`
 
 export const MenuButton = styled.div`
   cursor: pointer;
-`;
+`
 
 export const MenuIcon = styled.svg`
   width: 30px;
@@ -35,14 +35,14 @@ export const MenuIcon = styled.svg`
   &:hover {
     fill: ${css.complimentaryColor};
   }
-`;
+`
 
 export const MenuContainer = styled.div`
   width: ${(props) => (props.open ? "240px" : "0px")};
   transition: width 0.3s ease;
   border-right: 1px solid #202123;
   ${"" /* overflow: hidden; */}
-  background-color: #202123;
+  background-color: #405189;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border-top: 4px solid #fff;
   ${
@@ -109,20 +109,23 @@ export const MenuContainer = styled.div`
   @media (max-width: 768px) {
     width: ${(props) => (props.open ? "200px" : "0px")};
   }
-`;
+`
 
 export const MenuItem = styled(NavLink)`
   display: block;
   text-decoration: none;
-  padding: 10px;
+  padding: 12px;
   color: ${css.secondaryColor};
   font-size: 1rem;
   transition: background-color 0.3s ease;
-  margin: 10px 5px;
-  border-radius: 25px;
+  margin: 10px 15px 10px 0;
+  border-top-right-radius: 99px;
+  border-bottom-right-radius: 99px;
 
   &:hover {
-    background-color: ${css.complimentaryColor};
+    background-color: #fff;
+    color: #202123;
+
     font-weight: bold;
     font-weight: bold;
   }
@@ -131,7 +134,7 @@ export const MenuItem = styled(NavLink)`
     font-size: 0.9rem;
     font-size: 0.9rem;
   }
-`;
+`
 
 export const Content = styled.div`
   display: flex;
@@ -146,7 +149,7 @@ export const Content = styled.div`
 
   -ms-overflow-style: none;
   scrollbar-width: none;
-`;
+`
 export const OutletWrapper = styled.div`
   flex: 1;
   background-color: ${css.secondaryColor};
@@ -154,7 +157,7 @@ export const OutletWrapper = styled.div`
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
   overflow-y: auto;
   min-height: calc(100vh - 64px);
-`;
+`
 
 // Dashboard ends
 
@@ -162,7 +165,7 @@ export const OutletWrapper = styled.div`
 export const DropdownContainer = styled.div`
   position: relative;
   display: inline-block;
-`;
+`
 
 export const CircularImageContainer = styled.div`
   width: 40px;
@@ -170,13 +173,13 @@ export const CircularImageContainer = styled.div`
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
-`;
+`
 
 export const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-`;
+`
 
 export const DropdownContent = styled.div`
   display: ${(props) => (props.isOpen ? "block" : "none")};
@@ -190,7 +193,7 @@ export const DropdownContent = styled.div`
   @media (max-width: 768px) {
     min-width: 120px;
   }
-`;
+`
 
 export const DropdownItem = styled.button`
   color: black;
@@ -205,5 +208,5 @@ export const DropdownItem = styled.button`
     background-color: #ddd;
     border-radius: 10px;
   }
-`;
+`
 // Profile Dropdown style End

@@ -17,7 +17,7 @@ export const FilterContainer = styled.div`
   column-gap: 10px;
   align-items: center;
   justify-content: center;
-  background: #202123;
+  background: #405189;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 20px 15px;
 
@@ -31,7 +31,7 @@ export const MobileFilterContainer = styled.div`
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  background-color: #202123;
+  background-color: #405189;
   padding: 35px;
   border-radius: 0;
   border: 0;
@@ -49,7 +49,7 @@ export const MobileFilterInputs = styled.div`
 export const Select = styled.select`
   padding: 8px;
   font-size: 13px;
-  border: 3px solid #5f9ea0;
+  border: 3px solid #202123;
   border-radius: 4px;
   outline: none;
   width: 100%;
@@ -65,7 +65,7 @@ export const Select = styled.select`
 export const Input = styled.input`
   padding: 8px;
   font-size: 13px;
-  border: 3px solid #264348;
+  border: 3px solid #202123;
   border-radius: 4px;
   outline: none;
   width: 100%;
@@ -80,7 +80,12 @@ export const Input = styled.input`
 
 export const ChartContainer = styled.div`
   width: 100%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  background-color: #f3f3f9;
 `
 
 export const DashBoardOverViewContainer = styled.div`
