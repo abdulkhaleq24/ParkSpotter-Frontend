@@ -1,4 +1,4 @@
-export const chartOptions = {
+const chartOptions = {
   responsive: true,
   plugins: {
     legend: {
@@ -318,3 +318,6 @@ export const chartOptions = {
     intersect: false,
   },
 }
+
+
+export default chartOptions
