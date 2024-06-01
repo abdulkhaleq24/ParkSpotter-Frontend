@@ -32,8 +32,17 @@ const AvailableParkingSlotTest = () => {
 
         if (userRole === "park_owner") {
           // Fetch all zones
+          const token = localStorage.getItem("token")
+
           const zonesResponse = await fetch(
-            "https://parkspotter-backened.onrender.com/accounts/zone/"
+            "https://parkspotter-backened.onrender.com/accounts/zone/",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${token}`,
+              },
+            }
           )
           if (!zonesResponse.ok) {
             throw new Error("Failed to fetch zones")
@@ -63,9 +72,23 @@ const AvailableParkingSlotTest = () => {
           }
           const parkOwnerId = employeeData.park_owner_id
           // Fetch all zones
+          const token = localStorage.getItem("token")
+          if (!token) {
+            console.error("Token not found in local storage")
+            return
+          }
           const zonesResponse = await fetch(
-            "https://parkspotter-backened.onrender.com/accounts/zone/"
+            "https://parkspotter-backened.onrender.com/accounts/zone/",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Token ${token}`,
+              },
+            }
           )
+
+          console.log({ zonesResponse })
           if (!zonesResponse.ok) {
             throw new Error("Failed to fetch zones")
           }
