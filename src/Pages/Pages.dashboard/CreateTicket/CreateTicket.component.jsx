@@ -124,12 +124,11 @@ function CreateTicket() {
 
   const generateParkingTicket = async () => {
     const selectedZoneData = zones.find((zone) => zone.name === selectedZone);
-    console.log(selectedZoneData);
     const ticket = {
       zone: selectedZoneData ? selectedZoneData.id : null,
       // zone: selectedZoneData ? selectedZoneData.park_owner : null,
       check_in_time: checkInTime,
-      approximate_check_out_time: checkoutTime,
+      appoximate_check_out_time: checkoutTime,
       employee: userId,
       vehicle: {
         plate_number: vehicle,
