@@ -20,28 +20,6 @@ import {
 } from "./UnpaidTickets.styled";
 
 const UnpaidTickets = () => {
-  // const tickets = [
-  //   {
-  //     number: "12345",
-  //     carMake: "Toyota",
-  //     carNumberPlate: "ABC123",
-  //     date: "2023-05-15",
-  //     paymentAmount: "50.00",
-  //   },
-  //   {
-  //     number: "67890",
-  //     carMake: "Honda",
-  //     carNumberPlate: "XYZ789",
-  //     date: "2023-05-16",
-  //     paymentAmount: "30.00",
-  //   },
-  //   // Add more tickets as needed
-  // ];
-
-  // const [search, setSearch] = useState("");
-  // const [filter, setFilter] = useState("all");
-  // const [minPrice, setMinPrice] = useState("");
-  // const [maxPrice, setMaxPrice] = useState("");
 
   const [tickets, setTickets] = useState([]);
   const [search, setSearch] = useState("");

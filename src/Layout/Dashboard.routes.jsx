@@ -101,7 +101,7 @@ const Dashboard = () => {
             Create Parking Ticket
           </MenuItem>
           <MenuItem to={"/dashboard/AvailableParkingSlot"}>
-            Available Parking Slot
+            Available Slots
           </MenuItem>
           <MenuItem to={"/dashboard/UnpaidTickets"}>Unpaid tickets</MenuItem>
           <MenuItem to={"/dashboard/RegisterEmployee"}>
