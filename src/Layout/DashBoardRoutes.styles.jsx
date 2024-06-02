@@ -5,9 +5,6 @@ import * as css from "../Utils/Styles/styles"
 // Dashboard starts
 
 
-
-
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -132,16 +129,19 @@ export const MenuItem = styled(NavLink)`
   &:hover {
     background-color: #fff;
     color: #202123;
-
     font-weight: bold;
+  }
+
+  &.active {
+    background-color: #fff; 
+    color: #202123; 
     font-weight: bold;
   }
 
   @media (max-width: 768px) {
     font-size: 0.9rem;
-    font-size: 0.9rem;
   }
-`
+`;
 
 export const Content = styled.div`
   display: flex;

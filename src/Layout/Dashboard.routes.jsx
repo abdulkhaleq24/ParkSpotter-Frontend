@@ -95,20 +95,20 @@ const Dashboard = () => {
       </Header>
       <Content>
         <MenuContainer open={menuOpen}>
-          <MenuItem to={"/"}>Home</MenuItem>
-          <MenuItem to={"/dashboard"}>Overview</MenuItem>
-          <MenuItem to={"/dashboard/CreateParkingTicket"}>
+          <MenuItem to={"/"} exact activeClassName="active">Home</MenuItem>
+          <MenuItem to={"/dashboard"} end activeClassName="active">Overview</MenuItem>
+          <MenuItem to={"/dashboard/CreateParkingTicket"} activeClassName="active">
             Create Parking Ticket
           </MenuItem>
-          <MenuItem to={"/dashboard/AvailableParkingSlot"}>
+          <MenuItem to={"/dashboard/AvailableParkingSlot"} activeClassName="active">
             Available Slots
           </MenuItem>
-          <MenuItem to={"/dashboard/UnpaidTickets"}>Unpaid tickets</MenuItem>
-          <MenuItem to={"/dashboard/RegisterEmployee"}>
+          <MenuItem to={"/dashboard/UnpaidTickets"} activeClassName="active">Unpaid tickets</MenuItem>
+          <MenuItem to={"/dashboard/RegisterEmployee"} activeClassName="active">
             Register Employee
           </MenuItem>
-          <MenuItem to={"/dashboard/TicketPayment"}>Ticket Payment</MenuItem>
-          <MenuItem to={"/dashboard/EmployeeList"}>Employee List</MenuItem>
+          <MenuItem to={"/dashboard/TicketPayment"} activeClassName="active">Ticket Payment</MenuItem>
+          <MenuItem to={"/dashboard/EmployeeList"} activeClassName="active">Employee List</MenuItem>
         </MenuContainer>
         <OutletWrapper>
           <Outlet />
