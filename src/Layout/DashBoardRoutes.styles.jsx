@@ -5,9 +5,6 @@ import * as css from "../Utils/Styles/styles"
 // Dashboard starts
 
 
-
-
-
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -28,6 +25,7 @@ export const Header = styled.div`
 
 export const MenuButton = styled.div`
   cursor: pointer;
+  
 `
 
 export const MenuIcon = styled.svg`
@@ -49,8 +47,7 @@ export const MenuContainer = styled.div`
   background-color: #405189;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   border-top: 4px solid #fff;
-  ${
-    "" /* height: 89vh;
+  ${"" /* height: 89vh;
   overflow: scroll;
   overflow-x: hidden;
   scrollbar-color: #ddd transparent;
@@ -111,7 +108,10 @@ export const MenuContainer = styled.div`
   }
 
   @media (max-width: 768px) {
-    width: ${(props) => (props.open ? "200px" : "0px")};
+    position: fixed;
+    top: 15;
+    left: 0;
+    z-index: 999;
   }
 `
 
@@ -129,16 +129,19 @@ export const MenuItem = styled(NavLink)`
   &:hover {
     background-color: #fff;
     color: #202123;
-
     font-weight: bold;
+  }
+
+  &.active {
+    background-color: #fff; 
+    color: #202123; 
     font-weight: bold;
   }
 
   @media (max-width: 768px) {
     font-size: 0.9rem;
-    font-size: 0.9rem;
   }
-`
+`;
 
 export const Content = styled.div`
   display: flex;
